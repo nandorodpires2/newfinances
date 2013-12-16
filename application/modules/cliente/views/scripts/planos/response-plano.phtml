@@ -1,0 +1,12 @@
+<div id="pages">
+    <div id="planos-response-plano">
+        <?php echo View_Helper_Messeges::getMessages($this->messages); ?>          
+        <?php if ($this->status == Application_Controller::PAID) : ?>
+        PAGO
+        <?php elseif ($this->status == Application_Controller::WAITING_PAYMENT) : ?>
+        AGUARDANDO
+        <?php else : ?>
+        OUTRO MOTIVO
+        <?php endif; ?>        
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<div id="pages">
+    <div id="excluir-movimentacao">
+        <p>
+            <label>Tem certeza que deseja excluir essa movimentacao?</label>
+        </p>
+        <p>
+            <?php echo $this->dadosMovimentacao->descricao_movimentacao; ?>
+        </p>
+        <form method="post">
+            <p>
+                <input type="submit" name="btnResposta" value="Sim Apagar" />
+                <input type="submit" name="btnResposta" value="Cancelar" />
+            </p>        
+        </form>
+    </div>
+</div>

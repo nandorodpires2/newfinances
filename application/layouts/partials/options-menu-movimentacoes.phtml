@@ -1,0 +1,26 @@
+<div id="options-bar" class="background-orange">        
+    <a href="<?php
+    echo $this->url(array(
+        'controller' => 'movimentacoes',
+        'action' => 'nova-receita'
+    ), null, true);
+    ?>">
+        <img src="<?php echo $this->baseUrl('views/img/icon_receita.png'); ?>" title="Nova Receita" /> 
+    </a>    
+    <a href="<?php
+    echo $this->url(array(
+        'controller' => 'movimentacoes',
+        'action' => 'nova-despesa'
+    ), null, true);
+    ?>">
+        <img src="<?php echo $this->baseUrl('views/img/icon_despesa.png'); ?>" title="Nova Despesa" /> 
+    </a>
+    <a href="<?php
+    echo $this->url(array(
+        'controller' => 'movimentacoes',
+        'action' => 'transferencia'
+    ), null, true);
+    ?>">
+        <img src="<?php echo $this->baseUrl('views/img/transfer.png'); ?>" title="Transferência" /> 
+    </a>    
+</div>

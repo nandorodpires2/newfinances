@@ -1,0 +1,112 @@
+<?php $auth = Zend_Auth::getInstance()->getIdentity(); ?>
+<div id="cssmenu-box">
+    <div id='cssmenu'>
+        <ul>
+            <li><a href='<?php echo $this->url(array(
+                'module' => 'cliente',
+                'controller' => 'index',
+                'action' => 'index'
+            ), null, true); ?>'><span>Início</span></a></li>
+            <li class='has-sub'><a href='<?php echo $this->url(array(
+                     'module' => 'cliente',
+                     'controller' => 'movimentacoes',
+                     'action' => 'index'
+                  ), null, true); ?>'><span>Lançamentos</span></a>
+               <ul>                                
+                  <li><a href='<?php echo $this->url(array(
+                     'module' => 'cliente',
+                     'controller' => 'movimentacoes',
+                     'action' => 'nova-receita'
+                  ), null, true); ?>'><span>Nova Receita</span></a></li>
+                  <li><a href='<?php echo $this->url(array(
+                     'module' => 'cliente',
+                     'controller' => 'movimentacoes',
+                     'action' => 'nova-despesa'
+                  ), null, true); ?>'><span>Nova Despesa</span></a></li>
+                  <li class='last'><a href='<?php echo $this->url(array(
+                     'module' => 'cliente',
+                     'controller' => 'movimentacoes',
+                     'action' => 'transferencia'
+                  ), null, true); ?>'><span>Tranferência</span></a></li>
+               </ul>
+            </li>
+            <li><a href='<?php echo $this->url(array(
+                'module' => 'cliente',
+                'controller' => 'metas',
+                'action' => 'index'
+            ), null, true); ?>'><span>Orçamentos</span></a></li>
+            <li><a href='<?php echo $this->url(array(
+                'module' => 'cliente',
+                'controller' => 'relatorios',
+                'action' => 'index'
+            ), null, true); ?>'><span>Relatórios</span></a></li>
+            <li class='has-sub'><a href='<?php echo $this->url(array(
+                     'module' => 'cliente',
+                     'controller' => 'configuracoes',
+                     'action' => 'index'
+                  ), null, true); ?>'><span>Configurações</span></a>
+               <ul>                                
+                  <li><a href='<?php echo $this->url(array(
+                     'module' => 'cliente',
+                     'controller' => 'configuracoes',
+                     'action' => 'nova-conta'
+                  ), null, true); ?>'><span>Nova Conta</span></a></li>
+                  <li class='last'><a href='<?php echo $this->url(array(
+                     'module' => 'cliente',
+                     'controller' => 'configuracoes',
+                     'action' => 'novo-cartao'
+                  ), null, true); ?>'><span>Novo Cartão</span></a></li>                                  
+               </ul>
+            </li>
+            <?php if ($auth->id_plano == 7) : ?>
+            <li class='last'><a href='<?php echo $this->url(array(
+                'module' => 'gestor',
+                'controller' => 'index',
+                'action' => 'index'
+            ), null, true); ?>'><span>Painel</span></a></li>
+            <?php endif; ?>
+        </ul>
+    </div>
+</div>
+
+<?php if ($auth->id_plano == 7) : ?>
+<div id="cssmenu-box">
+    <div id='cssmenu'>
+        <ul>
+            <li><a href='<?php echo $this->url(array(
+                'module' => 'cliente',
+                'controller' => 'index',
+                'action' => 'index'
+            ), null, true); ?>'><span>Fale Conosco</span></a></li>
+            <li class='has-sub'><a href='<?php echo $this->url(array(
+                     'module' => 'cliente',
+                     'controller' => 'movimentacoes',
+                     'action' => 'index'
+                  ), null, true); ?>'><span>Chamados</span></a>
+               <ul>                                
+                  <li><a href='<?php echo $this->url(array(
+                     'module' => 'cliente',
+                     'controller' => 'movimentacoes',
+                     'action' => 'nova-receita'
+                  ), null, true); ?>'><span>Novo Chamado</span></a></li>                  
+                  <li><a href='<?php echo $this->url(array(
+                     'module' => 'cliente',
+                     'controller' => 'movimentacoes',
+                     'action' => 'nova-receita'
+                  ), null, true); ?>'><span>Enviar Mensagem</span></a></li>                  
+               </ul>
+            </li>
+            <li><a href='<?php echo $this->url(array(
+                'module' => 'cliente',
+                'controller' => 'metas',
+                'action' => 'index'
+            ), null, true); ?>'><span>Preferências</span></a></li>
+            <li><a href='<?php echo $this->url(array(
+                'module' => 'cliente',
+                'controller' => 'metas',
+                'action' => 'index'
+            ), null, true); ?>'><span>Ajuda</span></a></li>
+        </ul>
+    </div>
+</div>
+<?php endif; ?>

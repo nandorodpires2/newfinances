@@ -1,0 +1,28 @@
+<div id="pages">
+    <div id="gestor-pagseguro-index">
+        <div class="list-pagseguro">
+            <table class="tabless-green">
+                <tr>
+                    <td>Data Solicitação</td>
+                    <td>Usuário</td>
+                    <td>Bruto</td>
+                    <td>Líquido</td>
+                    <td>Status</td>
+                    <td>Ações</td>
+                </tr>
+                <?php foreach ($this->dadosTransacao as $dados) : ?>
+                <tr class="align_center">
+                    <td><?php echo View_Helper_Date::getDataView($dados['data']); ?></td>
+                    <td><?php echo $dados['cpf']; ?></td>
+                    <td><?php echo View_Helper_Currency::getCurrency($dados['valor']); ?></td>
+                    <td><?php echo View_Helper_Currency::getCurrency($dados['receber']); ?></td>
+                    <td><?php echo $dados['status']; ?></td>
+                    <td>
+                        <a href="">Ver</a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+        </div>
+    </div>
+</div>

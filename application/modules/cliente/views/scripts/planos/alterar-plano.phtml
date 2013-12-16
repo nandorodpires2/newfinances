@@ -1,0 +1,17 @@
+<div id="pages">
+    <div id="planos-alterar-planos">
+        <?php echo View_Helper_Messeges::getMessages($this->messages); ?>          
+        <span>Plano atual: <?php echo $this->dadosPlano->descricao_plano; ?></span><br />        
+        <?php if ($this->dadosPlano->data_encerramento) : ?>
+        <span>Vencimento do plano: <?php echo View_Helper_Date::getDataView($this->dadosPlano->data_encerramento); ?></span><br />        
+        <?php endif; ?>
+        <?php echo $this->formPlanosUsuario; ?>
+        <?php if (isset ($this->url)) : ?>
+        <p>
+            Você será direcionado para o site do PagSeguro. 
+            Caso ocorra algum problema 
+            <a href="<?php echo $this->url; ?>"> Clique aqui</a>
+        </p>
+        <?php endif; ?>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+<?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/gestor.css')); ?>
+<div id="mini-dash">
+    <ul>
+        <li>
+            <a href="<?php echo $this->url(array(
+                'module' => 'gestor',
+                'controller' => 'usuarios',
+                'action' => 'index'
+            )); ?>">
+                <img src="<?php echo $this->baseUrl('views/img/gestor/icon_dash_users.png'); ?>" />
+            </a>
+        </li>
+        <li>
+            <a href="<?php echo $this->url(array(
+                'module' => 'gestor',
+                'controller' => 'planos',
+                'action' => 'index'
+            )); ?>">
+                <img src="<?php echo $this->baseUrl('views/img/gestor/icon_dash_planos.png'); ?>" />
+            </a>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,17 @@
+/* 
+    Document   : gestor
+    Created on : 08/11/2013, 15:10:11
+    Author     : Realter
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+#mini-dash { float: left; width: 100%; }
+#mini-dash ul { margin: 0; }
+#mini-dash li { float: left; list-style: none; margin: 3px; border: 2px solid #366097; }
+#mini-dash a { text-decoration: none; }
+#mini-dash img { width: 35px; border: 0; }

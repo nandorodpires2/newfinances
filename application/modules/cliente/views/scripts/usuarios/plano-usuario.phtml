@@ -1,0 +1,13 @@
+<div id="pages">
+    <div id="plano-usuario">
+        <div class="dados-usuario">
+            <span>Olá <?php echo $this->dadosUsuario->nome_completo; ?></span>
+        </div>
+        <?php echo $this->formPlanoUsuario; ?>
+        <a href="<?php echo $this->url(array(
+            'module' => 'cliente',
+            'controller' => 'index',
+            'action' => 'index'
+        ), null, true); ?>">Continuar no Plano Básico</a>
+    </div>
+</div>

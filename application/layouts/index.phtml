@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <?php $auth = Zend_Auth::getInstance()->getIdentity(); ?>
+    <link rel="icon" href="<?php echo $this->baseUrl('views/img/icon_logo.png'); ?>" />    
+    <?php header("Content-Type: text/html; charset=UTF-8",true); ?>
+    <?php echo $this->headTitle(); ?>    
+    <!-- arquivos css -->        
+    <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/styles.css')); ?> 
+    <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/default.css')); ?> 
+    <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/jquery-ui-1.10.3.css')); ?> 
+    <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/menu_1.css')); ?> 
+    <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/index/index.css')); ?>    
+    <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/table.css')); ?>
+    
+    <!-- arquivos js -->
+    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery-2.0.3.js')); ?>
+    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery-ui-1.10.3.js')); ?>    
+    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery.ui.datepicker-pt-BR.js')); ?>    
+    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery.maskedinput.js')); ?>
+    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery.maskMoney.js')); ?>          
+    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/application.js')); ?>
+    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/facebook.js')); ?>
+    <?php //echo $this->headScript()->appendFile($this->baseUrl('views/js/jsapi.js')); ?>
+    
+    <body>      
+        <div id="content-all">
+            <!-- loading -->
+            <div id="loading" class="">
+                <div class='image-loading'>
+                    <img src="<?php echo $this->baseUrl('views/img/logo_newfinances.png'); ?>" width="240px"/>
+                    <img class="margim-left-10px" src="<?php echo $this->baseUrl('views/img/loader.gif'); ?>" width="50px"/>                    
+                    <div class="wait">Por favor aguarde...</div>
+                </div>
+            </div>
+            <?php if (Zend_Auth::getInstance()->hasIdentity()) : ?>
+            <div id="a">
+                <div id="aba-saldo-open"></div>
+                <div id="aba-saldo-close"></div>
+                <div id="box-saldo" class="fundo-white">
+                    <div class="movimentacoes">    
+                        <div class="fundo-visao-geral">
+                            <label>Saldo em caixa</label>
+                        </div>
+                        <?php foreach ($this->saldos as $saldo) : ?>
+                        <div class="saldo-conta">
+                            <div class="conta">
+                                <span><?php echo $saldo->descricao_conta; ?></span>
+                                <span class="descricao-mini"> - <?php echo $saldo->descricao_tipo_conta; ?></span>
+                            </div>
+                            <div class="saldo">
+                                <span><?php echo View_Helper_Currency::getCurrency($saldo->saldo); ?></span>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                        <div class="saldo-total">
+                            <span>Saldo Total: <?php echo View_Helper_Currency::getCurrency($this->saldo_total); ?></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php endif; ?>
+            <div id="wrapper">
+                <div id="header" class="fundo-white">
+                    <div class="logo">
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'cliente',
+                            'controller' => 'index',
+                            'action' => 'index'
+                        ), null, true); ?>">
+                            <img src="<?php echo $this->baseUrl('views/img/logo_newfinances.png'); ?>" />
+                        </a>
+                    </div>
+                    <div style="position: absolute; top: 40px; left: 45%;">
+                        <span style="font-size: 20px; font-weight: bold;">
+                            <?php echo ($_SERVER['SERVER_NAME'] == "localhost") ? "Base de Testes" : ""; ?>
+                        </span>
+                    </div>
+                    <div class="user-info">                        
+                        <?php if (Zend_Auth::getInstance()->hasIdentity()) : ?>
+                        <!--
+                        <div class="curtir">
+                            <span style="margin: 3px 0; padding-left: 3px;"><b>Redes Sociais: </b></span><br />
+                            <div class="fb-like" style="margin-top: 2px; margin-left: 15px; padding-left: 3px;" 
+                                 data-href="http://newfinances.w.pw/public/" 
+                                 data-layout="button_count" 
+                                 data-action="like" 
+                                 data-show-faces="true" 
+                                 data-share="false">                            
+                            </div>
+                            <div id="fb-root"></div>                            
+                        </div>
+                        -->
+                        <div class="user-name">                        
+                            <span>Seja bem-vindo(a) <?php echo $auth->nome_completo; ?></span>
+                            <span>| Plano: <?php echo $auth->descricao_plano; ?></span>
+                            <br />                                            
+                        </div>
+                        <div class="menu-user">
+                            <?php foreach (View_Helper_Menu::setViewMenuPosicao(2) as $menu) : ?>                
+                            <li> | </li>
+                            <li>
+                                <a href="<?php echo $this->url(array( 
+                                    'module' => $menu->module,
+                                    'controller' => $menu->controller,
+                                    'action' => $menu->action
+                                ), null, true); ?>"><?php echo $menu->texto_menu; ?></a>
+                            </li>                        
+                            <?php endforeach; ?>                          
+                        </div>                    
+                        <?php endif; ?>             
+                    </div>
+                </div>
+                <div id="faux">
+                    <!-- content -->      
+                    <div id="leftcolumn">               
+                        <?php if (Zend_Auth::getInstance()->hasIdentity()) : ?>
+                            <?php echo $this->partial("menu.phtml"); ?>
+                        <?php endif; ?>                                                                    
+                    </div>
+                    <div id="rightcolumn" class="">
+                        <div id="pages">
+                             <div class="curtir">                            
+                                <div class="fb-like"
+                                     data-href="http://newfinances.w.pw/" 
+                                     data-layout="button_count" 
+                                     data-action="like" 
+                                     data-show-faces="true" 
+                                     data-share="false">                            
+                                </div>
+                                <div id="fb-root"></div>                            
+                            </div>
+                        </div>
+                        <?php echo $this->layout()->content; ?>                                                 
+                    </div>
+                </div>
+            </div>
+            <button name="to-top" id="to-top">Voltar ao topo</button>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,61 @@
+<div id="pages">
+    <div id="gestor-planos-index">
+        <div id="options-bar">
+            <a href="<?php echo $this->url(array(
+                'module' => 'gestor',
+                'controller' => 'planos',
+                'action' => 'novo-valor-plano'
+            ), null, true); ?>">Novo Plano</a>
+        </div>
+        <div class="lista-planos">
+            <table class="tabless-green">
+                <tr>
+                    <td>Plano</td>
+                    <td>Tempo</td>
+                    <td>Ativo</td>
+                    <td>Usuário</td>
+                    <td>Cobrança</td>
+                </tr>
+                <?php foreach ($this->planos as $plano) : ?>
+                <tr class="align_center">
+                    <td class="align_left"><?php echo $plano->descricao_plano; ?></td>
+                    <td class="align_left"><?php echo $plano->tempo_plano . ' ' . $plano->unidade_tempo_plano; ?></td>
+                    <td><?php echo $plano->ativo_plano ? 'Sim' : 'Não'; ?></td>
+                    <td><?php echo $plano->usuario_plano ? 'Sim' : 'Não'; ?></td>
+                    <td><?php echo $plano->cobranca ? 'Sim' : 'Não'; ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </table>            
+        </div>
+        <div id="options-bar">
+            <a href="<?php echo $this->url(array(
+                'module' => 'gestor',
+                'controller' => 'planos',
+                'action' => 'novo-valor-plano'
+            ), null, true); ?>">Novo Valor</a>
+        </div>
+        <div class="lista-planos-valores">
+            <table class="tabless-green">
+                <tr>
+                    <td>Plano</td>
+                    <td>Tempo</td>
+                    <td>Valor</td>
+                    <td width="80">Ativo</td>
+                    <td width="80">Plano Usuário</td>
+                </tr>
+                <?php foreach ($this->planosValores as $valor) : ?>
+                <tr>
+                    <td><?php echo $valor->descricao_plano; ?></td>
+                    <td class="align_center">
+                        <?php echo $valor->tempo_plano . ' '; ?>
+                        <?php echo $valor->unidade_tempo_plano; ?>
+                    </td>
+                    <td class="align_right"><?php echo View_Helper_Currency::getCurrency($valor->valor_plano); ?></td>
+                    <td class="align_center"><?php echo $valor->ativo_plano ? 'Sim' : 'Não'; ?></td>
+                    <td class="align_center"><?php echo $valor->usuario ? 'Sim' : 'Não'; ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+        </div>
+    </div>
+</div>

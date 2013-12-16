@@ -1,0 +1,156 @@
+<?php echo $this->headScript()->appendFile($this->baseUrl('views/js/index/index.js')); ?>
+<div id="pages">
+    <div id="index-index">         
+        <div class="box_1">
+            &nbsp;
+            <!--
+            <div class="faturas">                
+                <div class="fundo-visao-geral">
+                    <label>Cartões de Crédito</label>
+                </div>
+                <table width='100%'>                    
+                    <tr>
+                        <th>CARTÃO</th>
+                    </tr>         
+                    <?php foreach ($this->cartoes as $cartao) : ?>
+                    <tr>
+                        <td>
+                            <?php echo $cartao->bandeira_cartao; ?> - 
+                            <?php echo $cartao->descricao_cartao; ?>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </table>
+            </div>
+            -->
+        </div>
+        <div class="box_2">
+            <div class="metas">                
+                <div class="fundo-visao-geral">
+                    <label>Orçamentos</label>
+                </div>
+                <table>
+                    <?php if ($this->metas->count() > 0) : ?>
+                    <tr>
+                        <th>Categoria</th>
+                        <th>Meta</th>
+                        <th>Total Gasto</th>
+                        <th>Porcentagem</th>
+                        <th>Projeção</th>
+                        <th colspan="2">Ações</th>
+                    </tr>                
+                    <?php foreach ($this->metas as $meta) : ?>
+                    <tr>
+                        <td>
+                            <span><?php echo $meta->descricao_categoria; ?></span>
+                        </td>                    
+                        <td>
+                            <span><?php echo View_Helper_Currency::getCurrency($meta->valor_meta); ?></span>
+                        </td>                    
+                        <td>
+                            <span><?php echo View_Helper_Currency::getCurrency($meta->total); ?></span>
+                        </td>
+                        <td>
+                            <span><?php echo number_format($meta->porcentagem, 2, ',', ''); ?>%</span>
+                        </td>
+                        <td>
+                            <span><?php echo View_Helper_Meta::getProjecaoMeta($meta->porcentagem); ?>%</span>
+                        </td>
+                        <td>
+                            <a href="">Ver</a>
+                        </td>
+                        <td>
+                            <a href="">Editar</a>
+                        </td>
+                    </tr>                    
+                    <?php endforeach; ?>
+                    <!--
+                    <tr>
+                        <th>Total: </th>
+                        <td><?php echo View_Helper_Currency::getCurrency($this->total_meta); ?></td>
+                        <td><?php echo View_Helper_Currency::getCurrency($this->total_gastos); ?></td>
+                        <td><?php echo View_Helper_Meta::getPorcentagemTotalGastos($this->total_meta, $this->total_gastos); ?></td>
+                        <td><?php echo View_Helper_Meta::getProjecaoMeta(View_Helper_Meta::getPorcentagemTotalGastos($this->total_meta, $this->total_gastos)); ?>%</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    -->
+                    <?php else : ?>
+                    <tr>
+                        <td>Você ainda não gastou sobre nunhuma meta cadastrada.</td>
+                    </tr>
+                    <?php endif; ?>
+                </table>
+            </div>
+            <div class="lancamentos">                
+                <div class="fundo-visao-geral">
+                    <label>Meus Avisos</label>
+                </div>
+                <div class="pendencias">
+                    <?php if ($this->pendencias->count() > 0) : ?>                                        
+                    <div class="lista-pendencias">
+                        <table>
+                            <tr>
+                                <th>Pendências (<?php echo $this->pendencias->count(); ?>)</th>
+                            </tr>
+                            <tr>
+                                <th>Data</th>
+                                <th>Descrição</th>
+                                <th>Valor</th>
+                            </tr>
+                            <?php foreach ($this->pendencias as $pendencia) : ?>
+                            <tr>
+                                <td><?php echo View_Helper_Date::getDataView($pendencia->data_movimentacao); ?></td>
+                                <td><?php echo $pendencia->descricao_movimentacao; ?></td>
+                                <td><?php echo View_Helper_Currency::getCurrency($pendencia->valor_movimentacao); ?></td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    </div>
+                    <?php endif; ?>
+                </div>
+                <div class="receitas">
+                    <div class="lista-receitas">
+                        <table>
+                            <tr>
+                                <th>Receitas (<?php echo $this->receitas->count(); ?>)</th>
+                            </tr>
+                            <tr>
+                                <th>Data</th>
+                                <th>Descrição</th>
+                                <th>Valor</th>
+                            </tr>
+                            <?php foreach ($this->receitas as $receita) : ?>
+                            <tr>
+                                <td><?php echo View_Helper_Date::getDataView($receita->data_movimentacao); ?></td>
+                                <td><?php echo $receita->descricao_movimentacao; ?></td>
+                                <td><?php echo View_Helper_Currency::getCurrency($receita->valor_movimentacao); ?></td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    </div>
+                </div>
+                <div class="despesas">
+                    <div class="lista-despesas">
+                        <table>
+                            <tr>
+                                <th>Despesas (<?php echo $this->despesas->count(); ?>)</th>
+                            </tr>
+                            <tr>
+                                <th>Data</th>
+                                <th>Descrição</th>
+                                <th>Valor</th>
+                            </tr>
+                            <?php foreach ($this->despesas as $despesa) : ?>
+                            <tr>
+                                <td><?php echo View_Helper_Date::getDataView($despesa->data_movimentacao); ?></td>
+                                <td><?php echo $despesa->descricao_movimentacao; ?></td>
+                                <td><?php echo View_Helper_Currency::getCurrency($despesa->valor_movimentacao); ?></td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </table>                        
+                    </div>
+                </div>
+            </div>            
+        </div>
+    </div>
+</div>

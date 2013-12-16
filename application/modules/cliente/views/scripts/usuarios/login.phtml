@@ -1,0 +1,15 @@
+<?php echo $this->headScript()->appendFile($this->baseUrl('views/js/usuario/login.js')); ?>
+<?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/usuarios/login.css')); ?> 
+<div id="usuarios-login">
+    <div id="pages">
+        <?php echo $this->formUsuariosLogin; ?>
+        <a href="<?php echo $this->url(array(
+            'controller' => 'usuarios',
+            'action' => 'novo-usuario'
+        ), null, true); ?>">Novo Usuário</a><br />
+        <a href="<?php echo $this->url(array(
+            'controller' => 'politica',
+            'action' => 'index'
+        )); ?>">Política de Privacidade</a>
+    </div>    
+</div>

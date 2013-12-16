@@ -1,0 +1,11 @@
+<?php echo $this->headScript()->appendFile($this->baseUrl('views/js/usuario/novo-usuario.js')); ?>
+<div id="pages">
+    <div id="novo-usuario">
+        <?php echo View_Helper_Messeges::getMessages($this->messages); ?>              
+        <?php echo $this->formNovoUsuario; ?>
+        <div id="fechar"><a href="#" id="fechar_box">Fechar [X]</a></div>
+        <div id="politica-privacidade">
+            <?php echo $this->partial("politica/index.phtml"); ?>
+        </div>
+    </div>
+</div>

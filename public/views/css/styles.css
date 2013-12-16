@@ -1,0 +1,145 @@
+* { padding: 0; margin: 0; }
+li { list-style: none; }
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin: 0;
+    /*background: #CFCFCF;*/
+    background: url('../img/bg/bg_money_orange_1.jpg') repeat;
+    background-attachment: fixed;
+    background-position: center center;
+}
+
+#a {
+    position: fixed;
+    top: 130px;
+    right: 0;    
+}
+
+#aba-saldo-open {
+    float: left;    
+    width: 50px;
+    height: 40px;
+    background: url('../img/aba-open.png') no-repeat;
+    cursor: default;
+}
+#aba-saldo-close {
+    float: left;    
+    width: 50px;
+    height: 40px;
+    background: url('../img/aba-close.png') no-repeat;
+    display: none;
+}
+
+#box-saldo {
+    float: left;
+    width: 450px;
+    display: none;
+}
+
+#content-all {    
+    width: 1366px;    
+    margin: 0 auto;
+}
+
+#wrapper { 
+    margin: 0 auto;
+    width: 90%;    
+}
+#faux {
+    margin-bottom: 10px;    
+    width: 100%
+}
+#header {
+    position: relative;
+    color: #333;
+    width: 100%;
+    height: 100px;
+    margin: 0;
+    border: 1px solid #DCDCDC;
+}
+#header .logo { position: absolute; top: 0; width: 30%; }
+.logo img { width: 240px; margin: 10px 20px; }
+#header .user-info { position: absolute; width: 50%; right: 0; text-align: right; padding: 0; }
+#header .user-name { padding: 2px 0; width: 100%; font-weight: bold; }
+#header .menu-user li { float: right; list-style: none; margin: 0; padding: 2px 3px; text-align: right; }
+#header .menu-user a { color: #1d5fa1; font-size: 14px; } 
+#header .menu-user a:hover { color: #FF8C00; font-size: 14px; } 
+
+#navigation {    
+    width: 100%;
+    height: 25px;
+    color: #333;
+    padding-bottom: 10px;
+    margin: 0;
+    border-bottom: 1px solid #DCDCDC;
+}
+
+#rightcolumn { 
+    display: inline;
+    color: #333;
+    margin:5px 0;
+    padding: 10px 0.9%;
+    width: 80%;
+    float: right;    
+}
+
+/* para o login */
+#login-layout {     
+    display: inline;
+    color: #333;
+    margin: 10px 1%;
+    width: 98%;
+    float: left;    
+}
+
+#leftcolumn { 
+    float: left;
+    color: #333;
+    margin: 5px 0.9%;
+    padding:0;    
+    width: 16%;
+    display: inline;
+    position: relative;
+    min-height: 50px;
+}
+/*
+#faux, #leftcolumn, #login-layout, #header { background: url('../img/bg/bg_white_gray.jpg') repeat; }
+#rightcolumn { background: url('../img/bg/bg_light_blue.jpg') repeat; }
+*/
+.clear { clear: both; background: none; }
+
+#to-top {    
+    position: fixed;
+    bottom: 20px;
+    right: 10px;
+    height: 40px;
+    display: block;
+    color: #FF8C00;
+}
+
+#loading {
+    display: none;
+    position: fixed;
+    top: auto;
+    left: auto;
+    width:100%;
+    height: 100%;
+    margin: -5px;
+    background-color: rgba(0.5,0.5,0.5,0.5);
+    z-index: 9999;    
+}
+#loading .image-loading { position: absolute; top: 40%; left: 40%; padding: 20px; background: #FFF; border: 2px solid #FF8C00; }
+#loading .wait { font-family: verdana; color: #0000CD; text-align: center; margin-top: 10px; font-weight: bold; }
+.opt-lancamentos { float: left; width: 100%; }
+
+.curtir {
+    float: left;
+    text-align: left;
+    width: 100%;
+    margin: 2px 0;
+}
+
+.direitos {float: left; width: 100%; }
+

@@ -1,0 +1,81 @@
+<?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/configuracoes/index.css')); ?>
+<?php echo $this->headScript()->appendFile($this->baseUrl('views/js/configuracoes/index.js')); ?>
+<div id="pages">
+    <div id="configuracoes-index">        
+        <?php echo View_Helper_Messeges::getMessages($this->messages); ?>    
+        <div class="lista-contas">
+            <table class="tabless-green">
+                <tr>
+                    <td>Descrição</td>
+                    <td>Tipo Conta</td>
+                    <td>Saldo Inicial</td>   
+                    <td colspan="2">Ações</td>
+                </tr>                
+                <?php foreach ($this->contas as $conta) : ?>
+                <tr>
+                    <td><?php echo $conta->descricao_conta; ?></td>                    
+                    <td><?php echo $conta->descricao_tipo_conta; ?></td>                    
+                    <td><?php echo View_Helper_Currency::getCurrency($conta->saldo_inicial); ?></td>
+                    <td>
+                        <a href="<?php echo $this->url(array(
+                            'controller' => 'configuracoes',
+                            'action' => 'editar-conta',
+                            'id_conta' => $conta->id_conta
+                        )); ?>">
+                            <img class="img-actions" src="<?php echo $this->baseUrl('views/img/icon_edit.png'); ?>" title="Editar" />
+                        </a>
+                    </td>
+                    <td>
+                        <a href="<?php echo $this->url(array(
+                            'controller' => 'configuracoes',
+                            'action' => 'excluir-conta',
+                            'id_conta' => $conta->id_conta
+                        )); ?>">
+                            <img class="img-actions" src="<?php echo $this->baseUrl('views/img/icon_delete.png'); ?>" title="Excluir" />
+                        </a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+        </div>
+        <div class="lista-cartoes">
+            <table class="tabless-green">
+                <tr>
+                    <td>Descrição</td>
+                    <td>Bandeira</td> 
+                    <td>Limite</td>                    
+                    <td>Dia Fechamento</td>                    
+                    <td>Dia Vencimento</td>                    
+                    <td colspan="2">Ações</td>
+                </tr>
+                <?php foreach ($this->cartoes as $cartao) : ?>
+                <tr>                    
+                    <td><?php echo $cartao->descricao_cartao; ?></td>
+                    <td><?php echo $cartao->bandeira_cartao; ?></td>
+                    <td><?php echo View_Helper_Currency::getCurrency($cartao->limite_cartao); ?></td>
+                    <td><?php echo $cartao->fechamento_cartao; ?></td>
+                    <td><?php echo $cartao->vencimento_cartao; ?></td>
+                    <td>
+                        <a href="<?php echo $this->url(array(
+                            'controller' => 'configuracoes',
+                            'action' => 'editar-cartao',
+                            'id_cartao' => $cartao->id_cartao
+                        )); ?>">
+                            <img class="img-actions" src="<?php echo $this->baseUrl('views/img/icon_edit.png'); ?>" title="Editar" />
+                        </a>
+                    </td>
+                    <td>
+                        <a href="<?php echo $this->url(array(
+                            'controller' => 'configuracoes',
+                            'action' => 'excluir-cartao',
+                            'id_cartao' => $cartao->id_cartao
+                        )); ?>">
+                            <img class="img-actions" src="<?php echo $this->baseUrl('views/img/icon_delete.png'); ?>" title="Editar" />
+                        </a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <link rel="icon" href="<?php echo $this->baseUrl('views/img/icon_logo.png'); ?>" />    
+    <?php header("Content-Type: text/html; charset=UTF-8",true); ?>
+    <?php echo $this->headTitle(); ?>    
+    <!-- arquivos css -->        
+    <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/styles.css')); ?> 
+    <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/default.css')); ?> 
+    <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/jquery-ui-1.10.3.css')); ?> 
+    <!-- arquivos js -->
+    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery-2.0.3.js')); ?>
+    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery-ui-1.10.3.js')); ?>    
+    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery.ui.datepicker-pt-BR.js')); ?>    
+    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery.maskedinput.js')); ?>
+    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery.maskMoney.js')); ?>    
+    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/application.js')); ?>    
+    <body>    
+        <div id="wrapper">
+            <div id="header" class="fundo-white">
+                <div class="logo">
+                    <a href="<?php echo $this->url(array(
+                        'module' => 'cliente',
+                        'controller' => 'index',
+                        'action' => 'index'
+                    ), null, true); ?>">
+                        <img src="<?php echo $this->baseUrl('views/img/logo_newfinances.png'); ?>" />
+                    </a>
+                </div>                  
+                <div style="position: absolute; top: 40px; left: 45%;">
+                    <span style="font-size: 20px; font-weight: bold;">
+                        <?php echo ($_SERVER['SERVER_NAME'] == "localhost") ? "Base de Testes" : ""; ?>
+                    </span>
+                </div>
+            </div>
+            <div id="faux">
+                <!-- content -->
+                <div id="login-layout">
+                    <?php echo $this->layout()->content; ?>                                                 
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

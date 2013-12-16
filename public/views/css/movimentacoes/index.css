@@ -1,0 +1,75 @@
+/* 
+    Document   : index
+    Created on : 05/09/2013, 17:23:31
+    Author     : Realter
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+#movimentacoes-index {
+    float: left;
+    width: 100%;
+    background: #FFF;
+}
+
+.lista-movimentacoes {
+    float: left;
+    width: 98%;    
+    padding: 7px 1%;          
+}
+
+.data-movimentacao {
+    float: left;
+    width: 100%;
+    padding: 5px 0;
+    margin: 7px 0 0 0;
+    background: #DCDCDC;
+}
+
+/* subtitulos lista */
+#subtitulo-lista { font-weight: bold; }
+.subtitulo-tipo { float: left; width: 7%; text-align: center; }
+.subtitulo-descricao { float: left; width: 49%; text-align: left; }
+.subtitulo-categoria { float: left; width: 12%; text-align: left; }
+.subtitulo-valor { float: left; width: 10%; text-align: right; } 
+.subtitulo-status { float: left; width: 10%; text-align: center; }
+.subtitulo-acoes { float: left; width: 12%; text-align: center; }
+
+/* lista */
+#dados-movimentacao { float: left; width: 100%; border-bottom: 1px solid #DCDCDC; }
+.tipo-movimentacao { float: left; width: 7%; height: 20px; text-align: center; padding: 5px 0; }
+.descricao-movimentacao { float: left; width: 49%; /*height: 20px;*/ padding: 5px 0; }
+.categoria-movimentacao { float: left; width: 12%; height: 20px; padding: 5px 0; }
+.valor-movimentacao { float: left; width: 10%; height: 20px; padding: 5px 0; text-align: right; }
+.status-movimentacao { float: left; width: 10%; height: 20px; text-align: center; padding: 5px 0; }
+.acoes-movimentacao { float: left; width: 12%; height: 20px;  text-align: center; padding: 5px 0; }
+
+.status-movimentacao img { width: 15px; }
+.acoes-movimentacao img { width: 15px; margin: 0 3px; }
+
+/* totais dia */
+.totais-movimentacao-dia { 
+    float: left; 
+    text-align: right; 
+    width: 99.8%; 
+    margin: 2px 0; 
+    padding: 3px 0; 
+    background: #F8F8FF; 
+}
+
+.saldo-dia-realizado { font-size: 13px; font-style: italic; color: blue; margin-right: 5px; }
+.saldo-dia-previsto { font-size: 12px; font-style: italic; color: gray; margin-right: 5px; }
+
+/* totais mes */
+.totais-mes { float: left; width: 100%; text-align: right; margin: 3px 0 0 0; padding: 3px 0; background: #F5F5F5; border-top: 2px solid #87CEEB; }
+.saldo-mes-realizado { font-size: 15px; margin-right: 5px; padding: 2px 0; font-weight: bold;}
+.saldo-mes-previsto { font-size: 14px; margin-right: 5px; padding: 2px 0; font-style: italic; }
+
+.pendente { background: #FFFACD; }
+
+
+

@@ -1,0 +1,46 @@
+<div id="pages">
+    <div id="gestor-funcionalidades-index">
+        <div class="lista-funcionalidades">
+            <div id="grid">                
+                <div id="options-bar">
+                    <a href="<?php echo $this->url(array(
+                        'module' => 'gestor',
+                        'controller' => 'funcionalidades',
+                        'action' => 'nova-funcionalidade'
+                    )); ?>">Nova Funcionalidade</a>
+                </div>
+                <table class="tabless-green">                                        
+                    <tr>
+                        <td>ID</td>
+                        <td>Título</td>
+                        <td>Módulo</td>
+                        <td>Controle</td>
+                        <td>Ação</td>
+                        <td>Posição</td>
+                        <td>Label Menu</td>
+                        <td>Ações</td>
+                    </tr>                    
+                    <?php foreach ($this->funcionalidades as $funcionalidade) : ?>                    
+                        <tr>
+                            <td><?php echo $funcionalidade->id_funcionalidade; ?></td>                                
+                            <td class="align_left"><?php echo $funcionalidade->titulo; ?></td>                                
+                            <td><?php echo $funcionalidade->module; ?></td>
+                            <td><?php echo $funcionalidade->controller; ?></td>
+                            <td><?php echo $funcionalidade->action; ?></td>
+                            <td><?php echo $funcionalidade->posicao; ?></td>
+                            <td><?php echo $funcionalidade->texto_menu; ?></td>
+                            <td>
+                                <a href="<?php echo $this->url(array(
+                                    'module' => 'gestor',
+                                    'controller' => 'funcionalidades',
+                                    'action' => 'editar-funcionalidade',
+                                    'id_funcionalidade' => $funcionalidade->id_funcionalidade
+                                )); ?>">Editar</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>                    
+                </table>
+            </div>
+        </div>        
+    </div>
+</div>

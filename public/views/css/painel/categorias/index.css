@@ -1,0 +1,18 @@
+/* 
+    Document   : index
+    Created on : 09/12/2013, 13:23:40
+    Author     : Realter
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+.nova-categoria { margin-bottom: 20px; }
+
+.lista-categorias {
+    float: left;
+    width: 100%;    
+}

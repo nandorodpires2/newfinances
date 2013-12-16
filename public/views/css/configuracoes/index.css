@@ -1,0 +1,11 @@
+/* 
+    Document   : index
+    Created on : 17/10/2013, 15:01:02
+    Author     : Realter
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+#configuracoes-index { float: left; width: 100%; }
+
+.lista-contas, .lista-cartoes { float: left; width: 100%; margin: 10px 0; }

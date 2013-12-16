@@ -1,0 +1,14 @@
+#menu {
+    width: 100%;
+}
+
+#menu ul {    
+    margin-top: 0;
+    margin-left: -10px;
+}
+
+#menu li {
+    list-style: none;
+    margin-right: 3px;
+    float: left;
+}

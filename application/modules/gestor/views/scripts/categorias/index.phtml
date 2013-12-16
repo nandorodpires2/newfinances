@@ -1,0 +1,38 @@
+<?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/painel/categorias/index.css')); ?>
+<div id="pages">
+    <div id="gestor-categorias-index">
+        <div class="nova-categoria">
+            <fieldset>
+                <legend>Nova Categoria</legend>
+                <?php echo $this->form; ?>
+            </fieldset>                          
+        </div>
+        <div class="lista-categorias">
+            <table class="tabless-green">                
+                <tr>
+                    <td>ID</th>
+                    <td>Categoria</td>
+                    <td>Ativo</td>                        
+                    <td colspan="2">Ações</td>                         
+                </tr>                
+                <?php foreach ($this->categorias as $categoria) : ?>
+                <tr>
+                    <td class="align_center"><?php echo $categoria->id_categoria; ?></td>
+                    <td><?php echo $categoria->descricao_categoria; ?></td>
+                    <td class="align_center"><?php echo $categoria->ativo_categoria ? 'Sim' : 'Não'; ?></td>
+                    <td class="align_center">
+                        <a href="">
+                            <img src="<?php echo $this->baseUrl("views/img/icon_edit.png"); ?>" width="20" />
+                        </a>
+                    </td>
+                    <td class="align_center">
+                        <a href="">
+                            <img src="<?php echo $this->baseUrl("views/img/icon_delete.png"); ?>" width="20" />
+                        </a>
+                    </td>                        
+                </tr>
+                <?php endforeach; ?>                
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+/* 
+    Document   : index
+    Created on : 30/08/2013, 17:05:29
+    Author     : Fernando Rodrigues
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+#index-index {}
+
+.box_1 { float: left; width: 50%; margin: 0; }
+.box_2 { float: left; width: 50%; margin: 0; }
+
+.movimentacoes, .lancamentos, .faturas, .metas {  width: 97.8%; border: 1px solid #DCDCDC; margin-bottom: 10px; background: #FFF; }
+
+.movimentacoes { float: left; }
+.saldo-conta { float: left; width: 100%; padding: 2px 0; border-bottom: 1px solid #DCDCDC; }
+.conta { float: left; width: 66%; padding: 3px 5px; }
+.saldo { float: left; width: 29%; text-align: right; padding: 3px 5px; }
+.saldo-total { float: right; width: 100%; text-align: right; font-size: 20px; padding: 5px 5px; font-weight: bold; color: green; }
+
+.lancamentos { float: left; }
+.faturas { float: left; }
+
+.metas { float: left; }
+.meta-descricao { float: left; width: 58%; padding: 3px 4px; border-bottom: 1px solid #696969; }
+.valor-meta { float: left; width: 18%; text-align: right; padding: 3px 4px; border-bottom: 1px solid #DCDCDC; }
+.total-meta { float: left; width: 18%; text-align: right; padding: 3px 4px; border-bottom: 1px solid #DCDCDC; }
+
+

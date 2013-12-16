@@ -1,0 +1,37 @@
+<div id="pages">
+    <div id="gestor-bancos-index">
+        <fieldset>
+            <legend>Novo Banco</legend>
+            <?php echo $this->form; ?>
+        </fieldset>
+        <div class="tabless-green">
+            <table>
+                <tr>
+                    <td>ID</td>
+                    <td>Nome</td>
+                    <td>Logo</td>
+                    <td>Status</td>
+                    <td colspan="2">Ações</td>
+                </tr>                
+                <?php foreach ($this->bancos as $banco) : ?>
+                <tr>
+                    <td><?php echo $banco->id_banco; ?></td>
+                    <td><?php echo $banco->nome_banco; ?></td>
+                    <td><?php echo $banco->logo_banco ? $banco->logo_banco : "Nenhum"; ?></td>
+                    <td><?php echo $banco->ativo_banco ? "Ativo" : "Inativo"; ?></td>
+                    <td>
+                        <a href="">
+                            <img src="<?php echo $this->baseUrl('views/img/icon_edit.png'); ?>" title="Editar" width="20" />
+                        </a>
+                    </td>
+                    <td>
+                        <a href="">
+                            <?php echo $banco->ativo_banco ? "Desativar" : "Ativar"; ?>
+                        </a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>                
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,93 @@
+<?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/painel/index.css')); ?>
+<div id="pages">
+    <div id="gestor-index-index">
+        <div class="dashboard user">
+            <center><span>Usuários</span></center>
+            <a href="<?php echo $this->url(array(
+                'module' => 'gestor',
+                'controller' => 'usuarios',
+                'action' => 'index'
+            )); ?>">
+                <img src="<?php echo $this->baseUrl('views/img/gestor/icon_dash_users.png'); ?>"
+            </a>
+        </div>
+        <div class="dashboard plano">
+            <center><span>Planos</span></center>
+            <a href="<?php echo $this->url(array(
+                'module' => 'gestor',
+                'controller' => 'planos',
+                'action' => 'index'
+            )); ?>">
+                <img src="<?php echo $this->baseUrl('views/img/gestor/icon_dash_planos.png'); ?>"
+            </a>
+        </div>
+        <div class="dashboard categoria">
+            <center><span>Categorias</span></center>
+            <a href="<?php echo $this->url(array(
+                'module' => 'gestor',
+                'controller' => 'categorias',
+                'action' => 'index'
+            )); ?>">
+                <img src="<?php echo $this->baseUrl('views/img/gestor/icon_dash_categorias.png'); ?>"
+            </a>
+        </div>
+        <div class="dashboard banco">
+            <center><span>Bancos</span></center>
+            <a href="<?php echo $this->url(array(
+                'module' => 'gestor',
+                'controller' => 'bancos',
+                'action' => 'index'
+            )); ?>">
+                <img src="<?php echo $this->baseUrl('views/img/gestor/icon_dash_bancos.png'); ?>"
+            </a>
+        </div>
+        <div class="dashboard cidades">
+            <center><span>Cidades</span></center>
+            <a href="">
+                <img src="<?php echo $this->baseUrl('views/img/gestor/icon_dash_cidades.png'); ?>"
+            </a>
+        </div>
+        <div class="dashboard calls">
+            <center><span>Chamados</span></center>
+            <a href="">
+                <img src="<?php echo $this->baseUrl('views/img/gestor/icon_dash_calls.png'); ?>"
+            </a>
+        </div>
+        <div class="dashboard menus">
+            <center><span>Menus</span></center>
+            <a href="">
+                <img src="<?php echo $this->baseUrl('views/img/gestor/icon_dash_menus.png'); ?>"
+            </a>
+        </div>
+        <div class="dashboard maintanence">
+            <center><span>Funcionalidades</span></center>
+            <a href="<?php echo $this->url(array(
+                'module' => 'gestor',
+                'controller' => 'funcionalidades',
+                'action' => 'index'
+            )); ?>">
+                <img src="<?php echo $this->baseUrl('views/img/gestor/icon_dash_maintenance.png'); ?>"
+            </a>
+        </div>
+        <div class="dashboard tasks">
+            <center><span>Crons</span></center>
+            <a href="<?php echo $this->url(array(
+                'module' => 'gestor',
+                'controller' => 'crons',
+                'action' => 'index'
+            )); ?>">
+                <img src="<?php echo $this->baseUrl('views/img/gestor/icon_dash_tasks.png'); ?>"
+            </a>
+        </div>
+        <div class="dashboard maintanence">
+            <center><span>PagSeguro</span></center>
+            <a href="<?php echo $this->url(array(
+                'module' => 'gestor',
+                'controller' => 'pagseguro',
+                'action' => 'index'
+            )); ?>">
+                <img src="<?php echo $this->baseUrl('views/img/gestor/icon_business.png'); ?>"
+            </a>
+        </div>
+    </div>
+</div>

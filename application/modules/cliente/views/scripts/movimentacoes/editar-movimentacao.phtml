@@ -1,0 +1,7 @@
+<?php echo $this->headScript()->appendFile($this->baseUrl('views/js/movimentacoes/editar-movimentacao.js')); ?>
+<div id="pages">
+    <div id="editar-movimentacao">            
+        <?php echo View_Helper_Messeges::getMessages($this->messages); ?>              
+        <?php echo $this->formMovimentacoes; ?>
+    </div>
+</div>

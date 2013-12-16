@@ -1,0 +1,72 @@
+<?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/meta/index.css')); ?>
+<?php echo $this->headScript()->appendFile($this->baseUrl('views/js/meta/index.js')); ?>
+<div id="pages">
+    <div id="metas-index"> 
+        <fieldset>
+            <legend>Novo Orçamento</legend>
+            <form method="post">
+                <div class="">
+                    <div id="hidden">
+                        <?php echo $this->formMetas->id_usuario; ?> 
+                        <?php echo $this->formMetas->mes_meta; ?> 
+                        <?php echo $this->formMetas->ano_meta; ?> 
+                    </div>
+                    <div id="categoria-meta">
+                        <?php echo $this->formMetas->id_categoria; ?> 
+                    </div>
+                    <div id="valor-meta">
+                        <?php echo $this->formMetas->valor_meta; ?> 
+                    </div>
+                    <div id="repetir-meta">
+                        <?php echo $this->formMetas->repetir; ?> 
+                        <span id="label-repetir-meta">Repete o lançamento desta meta para os outros meses.</span>
+                    </div>
+                    <div id="submit-meta">
+                        <?php echo $this->formMetas->submit; ?> 
+                    </div>
+                </div>
+            </form>     
+        </fieldset>        
+        <div style="margin-top: 10px;">
+            <table class="tabless-green">
+                <tr>
+                    <td>Categoria</td>
+                    <td>Meta</td>
+                    <td colspan="2">Ações</td>
+                </tr>
+                <?php if ($this->metasUsuario->count() > 0) : ?>
+                <?php foreach ($this->metasUsuario as $meta) : ?>
+                <tr>
+                    <td><?php echo $meta->descricao_categoria; ?></td>
+                    <td><?php echo View_Helper_Currency::getCurrency($meta->valor_meta); ?></td>
+                    <td>
+                        <a href="<?php echo $this->url(array(
+                            'action' => 'editar-meta',
+                            'id_meta' => $meta->id_meta
+                        )); ?>">
+                            <img src="<?php echo $this->baseUrl('views/img/icon_edit.png'); ?>" title="Editar" width="20" />
+                        </a>
+                    </td>
+                    <td>
+                        <a href="<?php echo $this->url(array(
+                            'action' => 'excluir-meta',
+                            'id_meta' => $meta->id_meta
+                        )); ?>">
+                            <img src="<?php echo $this->baseUrl('views/img/icon_delete.png'); ?>" title="Editar"  width="20" />
+                        </a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+                <tr>
+                    <th>Total: </th>
+                    <td colspan="2"><?php echo View_Helper_Currency::getCurrency($this->total_meta); ?></td>
+                </tr>
+                <?php else : ?>
+                <tr>
+                    <td>Nenhuma meta cadastrada</td>
+                </tr>
+                <?php endif; ?>
+            </table>
+        </div>
+    </div>
+</div>
