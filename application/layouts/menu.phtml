@@ -56,6 +56,11 @@
                      'controller' => 'configuracoes',
                      'action' => 'novo-cartao'
                   ), null, true); ?>'><span>Novo Cartão</span></a></li>                                  
+                  <li class='last'><a href='<?php echo $this->url(array(
+                     'module' => 'cliente',
+                     'controller' => 'configuracoes',
+                     'action' => 'alterar-senha'
+                  ), null, true); ?>'><span>Alterar Senha</span></a></li>                                  
                </ul>
             </li>
             <?php if ($auth->id_plano == 7) : ?>

@@ -44,13 +44,19 @@ class Application_Controller extends Zend_Controller_Action {
     public $_modelUsuario;
     public $_modelPlano;
     public $_modelPagamento;
+    public $_modelCartao;
+    public $_modelConta;
+    public $_modelMovimentacao;
 
     /* FORMS */
     public $_formUsuariosPlanosUsuario;
     public $_formUsuariosLogin;
     public $_formNovoUsuario;
     public $_formPlanoUsuario;
-    
+    public $_formConfiguracoesCartao;
+    public $_formConfiguracoesConta;
+    public $_formConfiguracoesSenha;
+
     /* PAGSEGURO CREDENTIALS */
     public $_credentials;
 
@@ -64,13 +70,18 @@ class Application_Controller extends Zend_Controller_Action {
         $this->_modelUsuario = new Model_Usuario();
         $this->_modelBanco = new Model_Banco();
         $this->_modelPlano = new Model_Plano();
-        $this->_modelPagamento = new Model_Pagamento();
+        $this->_modelPagamento = new Model_Pagamento();        
+        $this->_modelCartao = new Model_Cartao();
+        $this->_modelConta = new Model_Conta();
+        $this->_modelMovimentacao = new Model_Movimentacao();
         
         $this->_formUsuariosPlanosUsuario = new Form_Usuarios_PlanoUsuario();
         $this->_formUsuariosLogin = new Form_Usuarios_Login();
         $this->_formNovoUsuario = new Form_Usuarios_NovoUsuario();
-        $this->_formPlanoUsuario = new Form_Usuarios_PlanoUsuario();
-        
+        $this->_formPlanoUsuario = new Form_Usuarios_PlanoUsuario();        
+        $this->_formConfiguracoesCartao = new Form_Configuracoes_Cartao();
+        $this->_formConfiguracoesConta = new Form_Configuracoes_Conta();        
+        $this->_formConfiguracoesSenha = new Form_Configuracoes_Senha();
         
         $credentials = new PagSeguroAccountCredentials(  
             'nandorodpires@gmail.com',   

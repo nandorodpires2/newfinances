@@ -10,30 +10,11 @@
  *
  * @author Realter
  */
-class ConfiguracoesController extends Zend_Controller_Action {
+class ConfiguracoesController extends Application_Controller {
 
-    protected $_session;
-            
-    protected $_modelCartao;
-    protected $_modelConta;
-    protected $_modelMovimentacao;
-
-    protected $_formConfiguracoesCartao;
-    protected $_formConfiguracoesConta;
-
-    public function init() {
-        
-        $this->_session = Zend_Auth::getInstance()->getIdentity();
-        
-        $this->_modelCartao = new Model_Cartao();
-        $this->_modelConta = new Model_Conta();
-        $this->_modelMovimentacao = new Model_Movimentacao();
-        
-        $this->_formConfiguracoesCartao = new Form_Configuracoes_Cartao();
-        $this->_formConfiguracoesConta = new Form_Configuracoes_Conta();
-        
-        $this->view->messages = Controller_Helper_Messeges::getMesseges();
-        
+    public function init() {        
+        parent::init();
+        $this->view->messages = Controller_Helper_Messeges::getMesseges();                
     }
     
     public function indexAction() {
@@ -257,6 +238,55 @@ class ConfiguracoesController extends Zend_Controller_Action {
             Controller_Helper_Messeges::setMesseges($msm);
             $this->_redirect("configuracoes/");
         }  
+        
+    }
+    
+    /**
+     * alterar senha
+     */
+    public function alterarSenhaAction() {
+        
+        // envia o form para a view
+        $this->view->form = $this->_formConfiguracoesSenha;
+        
+        if ($this->_request->isPost()) {
+            $dadosNovaSenha = $this->_request->getPost();
+            if ($this->_formConfiguracoesSenha->isValid($dadosNovaSenha)) {
+                $dadosNovaSenha = $this->_formConfiguracoesSenha->getValues();
+                
+                $dadosUsuaio = $this->_modelUsuario->fetchRow("id_usuario = {$this->_session->id_usuario}");
+                $senha_atual = md5($dadosNovaSenha['senha_atual']);
+                $senha_nova = md5($dadosNovaSenha['senha_nova']);
+                $senha_confirma = md5($dadosNovaSenha['confirma_senha']);           
+                
+                // verifica se a senha atual esta correta
+                if ($senha_atual === $dadosUsuaio['senha_usuario']) {
+                    // verifica se a nova senha e diferente da senha atual
+                    if ($senha_nova !== $dadosUsuaio['senha_usuario']) {
+                        // verifica se a confirmacao da senha bate com a nova senha
+                        if ($senha_nova === $senha_confirma) {
+                            // atualiza a senha
+                            $dadosUpdateSenha['senha_usuario'] = $senha_nova;
+                            $whereUpdateSenha = "id_usuario = " . $this->_session->id_usuario;
+                            
+                            try {
+                                $this->_modelUsuario->update($dadosUpdateSenha, $whereUpdateSenha);
+                                $this->_redirect("configuracoes/");
+                            } catch (Zend_Db_Exception $error) {
+                                echo $error->getMessage();
+                            }
+                        } else {
+                            die('confirma senha nao bate');
+                        }
+                    } else{
+                        die('A mesma');
+                    }                    
+                } else {
+                    die('diferente');
+                }
+                
+            }
+        }
         
     }
 }
