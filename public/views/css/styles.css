@@ -5,10 +5,12 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 13px;
     margin: 0;
-    /*background: #CFCFCF;*/
+    background: #CFCFCF;
+    /*
     background: url('../img/bg/bg_money_orange_1.jpg') repeat;
     background-attachment: fixed;
     background-position: center center;
+    */
 }
 
 #a {
