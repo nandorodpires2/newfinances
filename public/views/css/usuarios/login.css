@@ -12,7 +12,31 @@ root {
 
 #usuarios-login {
     float: left;
-    width: 98%;
-    margin: 1%;
+    width: 100%;
+    margin: 0;
 }
  
+.site-area {
+    float: left;
+    width: 70%;
+}
+
+.login-area {    
+    float: right;
+    width: 28%;
+    padding: 10px;
+    border: 1px solid #696969;
+    background: rgb(255,255,231);
+}
+
+.bar {
+    float: left;
+    width: 100%;
+    margin: 9px 0;
+    padding: 7px 0;
+    text-align: center;
+    bottom: 0;
+    border: 1px solid #5fbf00;
+}
+
+.bar li { float: left; padding: 5px 8px;}

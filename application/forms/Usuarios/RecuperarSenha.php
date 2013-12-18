@@ -6,37 +6,34 @@
  */
 
 /**
- * Description of Login
+ * Description of RecuperarSenha
  *
- * @author Fernando Rodrigues
+ * @author Realter
  */
-class Form_Usuarios_Login extends Zend_Form {
+class Form_Usuarios_RecuperarSenha extends Zend_Form {
 
     public function init() {
         
-        $this->setAttrib('id', 'form_usuarios_login')
+        $this->setAttrib('id', 'formUsuariosRecuperarSenha')
                 ->setMethod('post');
         
-        // email
+        // email_cadastrado
         $this->addElement('text', 'email_usuario', array(
-            'label' => 'E-mail: ',
+            'label' => 'Digite o e-mail cadastrado: ',
             'size' => '40px',
             'required' => true
         ));
         
-        // senha
-        $this->addElement('password', 'senha_usuario', array(
-            'label' => 'Senha: ',
-            'required' => true            
-        ));
-        
-        //submit
+        // submit
         $this->addElement('submit', 'submit', array(
-            'label' => 'Entrar',
+            'label' => 'Enviar',
             'class' => 'submit'
         ));
         
+        
     }
     
+    
 }
+
 

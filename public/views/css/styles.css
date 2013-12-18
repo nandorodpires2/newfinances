@@ -87,12 +87,10 @@ body {
 }
 
 /* para o login */
-#login-layout {     
-    display: inline;
-    color: #333;
-    margin: 10px 1%;
-    width: 98%;
-    float: left;    
+#login-layout { 
+    position: relative;    
+    width: 100%;
+    margin: 0;
 }
 
 #leftcolumn { 

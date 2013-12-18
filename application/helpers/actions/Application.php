@@ -39,5 +39,16 @@ class Controller_Helper_Application extends Zend_Controller_Action_Helper_Abstra
         return $cpf_only_number = str_replace(array('.', '-'), '', $cpf);
     }
     
+    
+    /**
+     * gera uma senha provisoria 
+     */
+    public static function geraSenhaUsuario() {
+        
+        $cod = rand(123456, 987654);
+        
+        return $cod;
+        
+    }
 }
 

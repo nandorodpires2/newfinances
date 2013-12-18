@@ -58,6 +58,9 @@ $(document).ready(function (){
     // limite cartao
     $("#limite_cartao").maskMoney({symbol:'', thousands:'.', decimal:',', symbolStay: true});   
     
+    // valor plano
+    $("#valor_plano").maskMoney({symbol:'', thousands:'.', decimal:',', symbolStay: true});   
+    
     // campo data movimentacao
     $("#data_movimentacao").mask("99/99/9999");    
     

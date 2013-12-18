@@ -47,6 +47,7 @@ class Application_Controller extends Zend_Controller_Action {
     public $_modelCartao;
     public $_modelConta;
     public $_modelMovimentacao;
+    public $_modelCategoria;
 
     /* FORMS */
     public $_formUsuariosPlanosUsuario;
@@ -55,6 +56,12 @@ class Application_Controller extends Zend_Controller_Action {
     public $_formConfiguracoesCartao;
     public $_formConfiguracoesConta;
     public $_formConfiguracoesSenha;
+    // form plano valor
+    public $_formPlanosValor;
+    // form para nova categoria
+    public $_formNovaCategoria;
+    // form de recuperacao de senha
+    public $_formUsuariosRecuperarSenha;
 
     /* PAGSEGURO CREDENTIALS */
     public $_credentials;
@@ -73,6 +80,8 @@ class Application_Controller extends Zend_Controller_Action {
         $this->_modelCartao = new Model_Cartao();
         $this->_modelConta = new Model_Conta();
         $this->_modelMovimentacao = new Model_Movimentacao();
+        $this->_modelCategoria = new Model_Categoria();
+        
         
         $this->_formUsuariosPlanosUsuario = new Form_Usuarios_PlanoUsuario();
         $this->_formUsuariosLogin = new Form_Usuarios_Login();
@@ -80,6 +89,9 @@ class Application_Controller extends Zend_Controller_Action {
         $this->_formConfiguracoesCartao = new Form_Configuracoes_Cartao();
         $this->_formConfiguracoesConta = new Form_Configuracoes_Conta();        
         $this->_formConfiguracoesSenha = new Form_Configuracoes_Senha();
+        $this->_formPlanosValor = new Form_Planos_Valor();
+        $this->_formNovaCategoria = new Form_Categorias_NovaCategoria();
+        $this->_formUsuariosRecuperarSenha = new Form_Usuarios_RecuperarSenha();
         
         $credentials = new PagSeguroAccountCredentials(  
             'nandorodpires@gmail.com',   

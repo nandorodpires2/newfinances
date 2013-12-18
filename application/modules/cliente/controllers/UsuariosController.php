@@ -15,6 +15,8 @@ class UsuariosController extends Zend_Controller_Action {
     protected $_formNovoUsuario;
     protected $_formPlanoUsuario;
     
+    protected $_formUsuariosRecuperarSenha;
+    
     const PLANO_BASICO = 8;
     const VALOR_PLANO_BASICO = 9;
 
@@ -30,6 +32,8 @@ class UsuariosController extends Zend_Controller_Action {
         $this->_formUsuariosLogin = new Form_Usuarios_Login();
         $this->_formNovoUsuario = new Form_Usuarios_NovoUsuario();
         $this->_formPlanoUsuario = new Form_Usuarios_PlanoUsuario();
+        
+        $this->_formUsuariosRecuperarSenha = new Form_Usuarios_RecuperarSenha();
         
         $this->view->messages = Controller_Helper_Messeges::getMesseges();
     }
@@ -269,6 +273,59 @@ class UsuariosController extends Zend_Controller_Action {
             }
         }
         
+        
+    }
+    
+    /**
+     * recuperar senha do usuario
+     */
+    public function recuperarSenhaAction() {
+        $this->_helper->layout->setLayout("login");
+        
+        $this->view->formUsuariosRecuperarSenha = $this->_formUsuariosRecuperarSenha;
+        
+        if ($this->_request->isPost()) {
+            $dadosRecuperarSenha = $this->_request->getPost();
+            if ($this->_formUsuariosRecuperarSenha->isValid($dadosRecuperarSenha)) {
+                $dadosRecuperarSenha = $this->_formUsuariosRecuperarSenha->getValues();
+                
+                // verificar se existe o email
+                $dadosUsuario = $this->_modelUsuario->getDadosUsuario($dadosRecuperarSenha['email_usuario']);
+                
+                if ($dadosUsuario) {                
+                    // caso exista gera um novo codigo
+                    $senha = Controller_Helper_Application::geraSenhaUsuario();                    
+                    
+                    // atualiza o codigo e a flag de alterar 
+                    $dadosUpdateSenha['senha_usuario'] = md5($senha);
+                    $whereUpdateSenha = "id_usuario = $dadosUsuario->id_usuario";
+                    $this->_modelUsuario->update($dadosUpdateSenha, $whereUpdateSenha);                    
+                    
+                    // envia o codigo pro e-mail
+                    $mail = new Zend_Mail('utf-8');
+
+                    $bodyHtml = "
+                        <p>Sua senha foi alterada:</p>
+                        <p>Senha: {$senha}</p>
+                    ";
+                    
+                    $mail->setBodyHtml($bodyHtml);
+                    $mail->setFrom('email@portal.redemorar.com.br', 'NewFinances - Controle Financeiro');
+                    $mail->addTo("nandorodpires@gmail.com");
+                    //$mail->addTo('tiago@realter.com.br');
+                    //$mail->setReplyTo('email@portal.redemorar.com.br');
+                    $mail->setSubject('Nova Senha');
+
+                    $mail->send(Zend_Registry::get('mail_transport'));
+                    
+                } else {
+                    die('false');
+                }
+                
+                
+                
+            }
+        }
         
     }
 

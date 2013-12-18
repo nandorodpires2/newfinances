@@ -10,18 +10,10 @@
  *
  * @author Realter
  */
-class Gestor_CategoriasController extends Zend_Controller_Action {
-
-    protected $_modelCategoria;
-    
-    protected $_formNovaCategoria;
-
-    protected $_myGrid;
+class Gestor_CategoriasController extends Application_Controller {
 
     public function init() {
-        $this->_modelCategoria = new Model_Categoria();
-        $this->_formNovaCategoria = new Form_Categorias_NovaCategoria();
-        $this->_myGrid = new MyGrid_Grid();
+        parent::init();
     }
     
     public function indexAction() {

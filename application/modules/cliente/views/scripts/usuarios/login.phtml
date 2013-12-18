@@ -2,14 +2,50 @@
 <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/usuarios/login.css')); ?> 
 <div id="usuarios-login">
     <div id="pages">
-        <?php echo $this->formUsuariosLogin; ?>
-        <a href="<?php echo $this->url(array(
-            'controller' => 'usuarios',
-            'action' => 'novo-usuario'
-        ), null, true); ?>">Novo Usuário</a><br />
-        <a href="<?php echo $this->url(array(
-            'controller' => 'politica',
-            'action' => 'index'
-        )); ?>">Política de Privacidade</a>
-    </div>    
+        <div class="site-area">
+            sads
+        </div>
+        <div class="login-area">
+            <form method="post">
+                <table>
+                    <tr>
+                        <td colspan="2"><?php echo $this->formUsuariosLogin->email_usuario; ?></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><?php echo $this->formUsuariosLogin->senha_usuario; ?></td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $this->formUsuariosLogin->submit; ?></td>                        
+                    </tr>
+                </table>
+                <center><a href="<?php echo $this->url(array(
+                    'module' => 'cliente',
+                    'controller' => 'usuarios',
+                    'action' => 'recuperar-senha'
+                )); ?>">Esqueci a senha</a></center>
+            </form>            
+            <div class="bar">
+                <ul>
+                    <li>
+                        <a href="<?php echo $this->url(array(
+                            'controller' => 'usuarios',
+                            'action' => 'novo-usuario'
+                        ), null, true); ?>">Cadastre-se</a><br />
+                    </li>
+                    <li>
+                        <a href="<?php echo $this->url(array(
+                            'controller' => 'politica',
+                            'action' => 'index'
+                        )); ?>">Política de Privacidade</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $this->url(array(
+                            'controller' => 'politica',
+                            'action' => 'index'
+                        )); ?>">Termo</a>
+                    </li>
+                </ul>
+            </div>
+        </div>    
+    </div>
 </div>

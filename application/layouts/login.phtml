@@ -16,7 +16,7 @@
     <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/application.js')); ?>    
     <body>    
         <div id="wrapper">
-            <div id="header" class="fundo-white">
+            <div id="header">
                 <div class="logo">
                     <a href="<?php echo $this->url(array(
                         'module' => 'cliente',
@@ -32,12 +32,9 @@
                     </span>
                 </div>
             </div>
-            <div id="faux">
-                <!-- content -->
-                <div id="login-layout">
-                    <?php echo $this->layout()->content; ?>                                                 
-                </div>
-            </div>
+            <div id="login-layout">
+                <?php echo $this->layout()->content; ?>                                                 
+            </div>            
         </div>
     </body>
 </html>

@@ -8,6 +8,13 @@ defined('APPLICATION_PATH')
 defined('CRONS_PATH')
     || define('CRONS_PATH', realpath(dirname(__FILE__) . '/../public/crons'));
 
+// Define path to public directory
+defined('PUBLIC_PATH') || define('PUBLIC_PATH', realpath(dirname(__FILE__)));
+/*
+defined('PUBLIC_PATH')
+    || define('PUBLIC_PATH', realpath(dirname(__FILE__) . '/../public/'));
+*/
+
 $server = $_SERVER['SERVER_NAME'];
 
 // verifica em qual base a aplicacao esta

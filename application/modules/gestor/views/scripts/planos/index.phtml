@@ -39,8 +39,7 @@
                 <tr>
                     <td>Plano</td>
                     <td>Tempo</td>
-                    <td>Valor</td>
-                    <td width="80">Ativo</td>
+                    <td>Valor</td>                    
                     <td width="80">Plano Usuário</td>
                 </tr>
                 <?php foreach ($this->planosValores as $valor) : ?>
@@ -50,8 +49,7 @@
                         <?php echo $valor->tempo_plano . ' '; ?>
                         <?php echo $valor->unidade_tempo_plano; ?>
                     </td>
-                    <td class="align_right"><?php echo View_Helper_Currency::getCurrency($valor->valor_plano); ?></td>
-                    <td class="align_center"><?php echo $valor->ativo_plano ? 'Sim' : 'Não'; ?></td>
+                    <td class="align_right"><?php echo View_Helper_Currency::getCurrency($valor->valor_plano); ?></td>                    
                     <td class="align_center"><?php echo $valor->usuario ? 'Sim' : 'Não'; ?></td>
                 </tr>
                 <?php endforeach; ?>
