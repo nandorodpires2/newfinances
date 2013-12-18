@@ -8,6 +8,7 @@
                     <td>Bruto</td>
                     <td>Líquido</td>
                     <td>Status</td>
+                    <td>Liberação</td>
                     <td>Ações</td>
                 </tr>
                 <?php foreach ($this->dadosTransacao as $dados) : ?>
@@ -15,8 +16,9 @@
                     <td><?php echo View_Helper_Date::getDataView($dados['data']); ?></td>
                     <td><?php echo $dados['cpf']; ?></td>
                     <td><?php echo View_Helper_Currency::getCurrency($dados['valor']); ?></td>
-                    <td><?php echo View_Helper_Currency::getCurrency($dados['receber']); ?></td>
+                    <td><?php echo View_Helper_Currency::getCurrency($dados['receber']); ?></td>                    
                     <td><?php echo $dados['status']; ?></td>
+                    <td><?php echo $dados['data_liberacao'] ? View_Helper_Date::getDataView($dados['data_liberacao']) : ' - '; ?></td>
                     <td>
                         <a href="">Ver</a>
                     </td>

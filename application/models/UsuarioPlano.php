@@ -57,5 +57,29 @@ class Model_UsuarioPlano extends Zend_Db_Table {
         return $this->fetchRow($select);
     }
     
+    /**
+     * verifica se usuario ja experimentou o plano full
+     */
+    public function alredyExperience($id_usuario) {
+        
+        $select = $this->select()
+                ->from(array('up' => $this->_name), array(
+                    'qtde' => 'count(*)'
+                ))
+                ->setIntegrityCheck(false)
+                ->joinInner(array('p' => 'plano'), 'up.id_plano = p.id_plano', array())
+                ->where('p.usuario_plano = ?', 1)
+                ->where('p.cobranca = ?', 0)
+                ->where('up.id_usuario = ?', $id_usuario);
+        
+        $query = $this->fetchRow($select);
+        
+        if ($query->qtde > 0) {
+            return false;
+        }
+        return true;
+        
+    }
+    
 }
 

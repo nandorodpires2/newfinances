@@ -51,8 +51,7 @@ class Application_Controller extends Zend_Controller_Action {
     /* FORMS */
     public $_formUsuariosPlanosUsuario;
     public $_formUsuariosLogin;
-    public $_formNovoUsuario;
-    public $_formPlanoUsuario;
+    public $_formNovoUsuario;    
     public $_formConfiguracoesCartao;
     public $_formConfiguracoesConta;
     public $_formConfiguracoesSenha;
@@ -77,8 +76,7 @@ class Application_Controller extends Zend_Controller_Action {
         
         $this->_formUsuariosPlanosUsuario = new Form_Usuarios_PlanoUsuario();
         $this->_formUsuariosLogin = new Form_Usuarios_Login();
-        $this->_formNovoUsuario = new Form_Usuarios_NovoUsuario();
-        $this->_formPlanoUsuario = new Form_Usuarios_PlanoUsuario();        
+        $this->_formNovoUsuario = new Form_Usuarios_NovoUsuario();        
         $this->_formConfiguracoesCartao = new Form_Configuracoes_Cartao();
         $this->_formConfiguracoesConta = new Form_Configuracoes_Conta();        
         $this->_formConfiguracoesSenha = new Form_Configuracoes_Senha();

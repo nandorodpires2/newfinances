@@ -1,6 +1,10 @@
 <div id="pages">
     <div id="nova-conta">        
-        <?php echo View_Helper_Messeges::getMessages($this->messages); ?>              
-        <?php echo $this->formConfoguracoesConta; ?>
+        <?php echo View_Helper_Messeges::getMessages($this->messages); ?>       
+        <fieldset>
+            <legend><?php echo $this->titulo; ?></legend>
+            <?php echo $this->formConfoguracoesConta; ?>
+        </fieldset>
+        
     </div>
 </div>

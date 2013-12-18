@@ -1,0 +1,69 @@
+/* 
+    Document   : alterar-plano
+    Created on : 17/12/2013, 13:04:28
+    Author     : Realter
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+#planos-alterar-planos {
+    float: left;
+    width: 97%;
+    margin: 0 1%;
+    padding: 7px 5px;
+    background: #FFFFFF;
+}
+
+#planos-alterar-planos p {
+    margin: 10px 0;
+}
+
+.info-pagseguro {
+    float: left;
+    width: 96%;
+    margin: 0 2%;
+    padding: 5px;
+    background: #FFF;
+}
+
+#choise-plano {
+    float: left;
+    width: 31%;
+    margin: 5px 1%;
+    border: 1px solid #3f7f00;
+    padding: 7px 0;
+    background: rgb(255,255,231);
+}
+
+.plano-trial, .choise-basico { padding: 15px; }
+
+.plano-trial {
+    margin-top: 10px;
+}
+
+.choise-basico {
+    
+}
+
+.trial {
+    display: inline-block;
+    color: #fff;
+    background-color: #eb8f00;
+    box-shadow: 1px 1px 1px #999;
+    border-radius: 4px;        
+    padding: 5px 20px;
+    text-decoration: none;
+    box-sizing: border-box;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    border: 0px;    
+}
+
+.trial:hover {
+    background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,.15));
+    cursor: pointer;
+    color: #1d5fa1;    
+    background-color: #eb8f00;
+    box-shadow: 1px 1px 1px #999;
+    border-radius: 4px;
+}

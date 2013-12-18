@@ -1,17 +1,42 @@
+<?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/planos/alterar-plano.css')); ?>
+<?php echo $this->headScript()->appendFile($this->baseUrl('views/js/planos/index.js')); ?>
 <div id="pages">
     <div id="planos-alterar-planos">
-        <?php echo View_Helper_Messeges::getMessages($this->messages); ?>          
-        <span>Plano atual: <?php echo $this->dadosPlano->descricao_plano; ?></span><br />        
-        <?php if ($this->dadosPlano->data_encerramento) : ?>
-        <span>Vencimento do plano: <?php echo View_Helper_Date::getDataView($this->dadosPlano->data_encerramento); ?></span><br />        
-        <?php endif; ?>
-        <?php echo $this->formPlanosUsuario; ?>
-        <?php if (isset ($this->url)) : ?>
-        <p>
-            Você será direcionado para o site do PagSeguro. 
-            Caso ocorra algum problema 
-            <a href="<?php echo $this->url; ?>"> Clique aqui</a>
-        </p>
-        <?php endif; ?>
+        <?php echo View_Helper_Messeges::getMessages($this->messages); ?>
+        <div class="cabecalho">
+            <p><b><span>Olá </b><?php echo strtoupper($this->usuario); ?></span></p>
+            <span>Seu plano atual é: <?php echo $this->dadosPlano->descricao_plano; ?></span><br />        
+            <?php if ($this->dadosPlano->data_encerramento) : ?>
+            <span>Vencimento do plano: <?php echo View_Helper_Date::getDataView($this->dadosPlano->data_encerramento); ?></span><br />        
+            <?php endif; ?>
+        </div>
+        
+        <?php foreach ($this->formPlanosUsuario->id_plano->getMultiOptions() as $key => $form) : ?>
+            <form method="<?php echo $this->formPlanosUsuario->getMethod(); ?>" id="<?php echo $this->formPlanosUsuario->getAttrib('id'); ?>">                
+                <div id="choise-plano">
+                    <input type="hidden" name="id_plano" id="id_plano" value="<?php echo $key; ?>" />
+                    <?php echo $this->formPlanosUsuario->id_usuario; ?>
+                    <div class="descricao-plano">
+                        <center><h3><?php echo $form; ?></h3></center>
+                    </div>
+                    <center><?php echo $this->formPlanosUsuario->submit; ?></center>
+                </div>
+            </form>
+        <?php endforeach; ?>
+        <center>
+            <!-- experimentar o plano por 30 dias -->
+            <div class="plano-trial">
+                <form method="<?php echo $this->formPlanosUsuario->getMethod(); ?>" id="<?php echo $this->formPlanosUsuario->getAttrib('id'); ?>">                
+                    <input type="hidden" name="id_plano" id="id_plano" value="<?php echo $this->planoExperiencia->id_plano; ?>" />
+                    <?php echo $this->formPlanosUsuario->id_usuario; ?>
+                    <center>
+                        <?php echo $this->formPlanosUsuario->submit->setLabel(
+                            "Experimente por {$this->planoExperiencia->tempo_plano} {$this->planoExperiencia->unidade_tempo_plano}"
+                        ); ?>
+                    </center>                    
+                </form>
+            </div>
+        </center>
+        <?php echo $this->partial('planos/info-pagamento.phtml'); ?>
     </div>
 </div>

@@ -13,22 +13,25 @@ $status = ($server == 'localhost') ? 'development' : 'production';
 defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : $status));
 
-set_include_path(implode(PATH_SEPARATOR, array(
-    realpath(APPLICATION_PATH . '/../../library'),
-    // realpath(APPLICATION_PATH . '/models'),
-    get_include_path(),
-)));
+if ($status == 'development') {
+    set_include_path(implode(PATH_SEPARATOR, array(
+        realpath(APPLICATION_PATH . '/../../library'),
+        // realpath(APPLICATION_PATH . '/models'),
+        get_include_path(),
+    )));
+} else {
+    set_include_path(implode(PATH_SEPARATOR, array(
+        realpath(APPLICATION_PATH . '/../library'),
+        // realpath(APPLICATION_PATH . '/models'),
+        get_include_path(),
+    )));
+}
 
 require_once 'Zend/Application.php';
 require_once 'Zend/Loader/Autoloader.php';
 
 $autoloader = Zend_Loader_Autoloader::getInstance();
 $autoloader->setFallbackAutoloader(true);
-
-$server = $_SERVER['SERVER_NAME'];
-
-// verifica em qual base a aplicacao esta
-$status = ($server == 'localhost') ? 'development' : 'production';
 
 $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', $status);
 

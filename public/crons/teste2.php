@@ -39,7 +39,7 @@
             Descrição: {$notificacao['descricao_movimentacao']}<br/>
             Valor: {$valor}<br/>
         ";
-    
+        
         try {    
             // create mail object
             $mail = new Zend_Mail('utf-8');

@@ -42,10 +42,28 @@ class Model_Plano extends Zend_Db_Table {
                 ))
                 ->where('p.usuario_plano = ?', 1)
                 ->where('p.ativo_plano = ?', 1)
-                ->where('pv.usuario = ?', 1);
+                ->where('pv.usuario = ?', 1)
+                ->where('p.cobranca = ?', 1);
         
         return $this->fetchAll($select);
         
+    }
+    
+    /**
+     * retorna o plano de experiencia 
+     */
+    public function getPlanoExperiencia() {
+        $select = $this->select()
+            ->from(array('p' => $this->_name), array(
+                'p.id_plano',
+                'p.descricao_plano',
+                'p.tempo_plano',
+                'p.unidade_tempo_plano'                                       
+            ))                
+            ->where('p.usuario_plano = ?', 1)                
+            ->where('p.cobranca = ?', 0);
+        
+        return $this->fetchRow($select);
     }
     
 }

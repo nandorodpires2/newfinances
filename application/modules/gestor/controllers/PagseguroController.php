@@ -58,10 +58,18 @@ class Gestor_PagseguroController extends Application_Controller {
                 $dadosTransacao[$key]['cpf'] = $transaction->getReference();
                 $dadosTransacao[$key]['valor'] = $transaction->getGrossAmount();
                 $dadosTransacao[$key]['receber'] = $transaction->getNetAmount();
-                //$dadosTransacao[$key]['taxas'] = $transaction->getFreeAmount();
+                $dadosTransacao[$key]['ultima_data'] = $transaction->getLastEventDate();
+                
+                if ($dadosTransacao[$key]['status'] == 'Pago') {
+                    $ultima_data = View_Helper_Date::getDataView($transaction->getLastEventDate());
+                    $zendDate->setDate($ultima_data);                
+
+                    $dadosTransacao[$key]['data_liberacao'] = $zendDate->addDay(14)->toString("YYYY-MM-d");
+                    //$dadosTransacao[$key]['taxas'] = $transaction->getFreeAmount();
+                } else {
+                    $dadosTransacao[$key]['data_liberacao'] = false;
+                }
             }
-            
-            //Zend_Debug::dump($transactions[0]); die();
             
             $this->view->dadosTransacao = $dadosTransacao;
             

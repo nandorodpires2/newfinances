@@ -1,14 +1,48 @@
+<?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/planos/alterar-plano.css')); ?>
 <div id="pages">
     <div id="plano-usuario">
         <?php echo View_Helper_Messeges::getMessages($this->messages); ?>
         <div class="dados-usuario">
             <span>Olá <?php echo $this->dadosUsuario->nome_completo; ?></span>
         </div>
-        <?php echo $this->formPlanoUsuario; ?>
-        <a href="<?php echo $this->url(array(
-            'module' => 'cliente',
-            'controller' => 'index',
-            'action' => 'index'
-        ), null, true); ?>">Continuar no Plano Básico</a>
+        <?php foreach ($this->formPlanosUsuario->id_plano->getMultiOptions() as $key => $form) : ?>
+            <form method="<?php echo $this->formPlanosUsuario->getMethod(); ?>" id="<?php echo $this->formPlanosUsuario->getAttrib('id'); ?>">                
+                <div id="choise-plano">
+                    <input type="hidden" name="id_plano" id="id_plano" value="<?php echo $key; ?>" />
+                    <?php echo $this->formPlanosUsuario->id_usuario; ?>
+                    <div class="descricao-plano">
+                        <center><h3><?php echo $form; ?></h3></center>
+                    </div>
+                    <center><?php echo $this->formPlanosUsuario->submit; ?></center>
+                </div>
+            </form>
+        <?php endforeach; ?>
+        <center>
+            <?php if ($this->flagExperience) : ?>
+            <!-- experimentar o plano por 30 dias -->
+            <div class="plano-trial">
+                <form method="<?php echo $this->formPlanosUsuario->getMethod(); ?>" id="<?php echo $this->formPlanosUsuario->getAttrib('id'); ?>">                
+                    <input type="hidden" name="id_plano" id="id_plano" value="<?php echo $this->planoExperiencia->id_plano; ?>" />
+                    <?php echo $this->formPlanosUsuario->id_usuario; ?>
+                    <center>
+                        <?php echo $this->formPlanosUsuario->submit->setLabel(
+                            "Experimente por 30 dias"
+                        ); ?>
+                    </center>                    
+                </form>
+            </div>
+            <?php endif; ?>
+            <!-- escolher continuar no plano basico -->
+            <div class="choise-basico">
+                <a href="<?php echo $this->url(array(
+                    'module' => 'cliente',
+                    'controller' => 'index',
+                    'action' => 'index'
+                ), null, true); ?>" class="plano-basico">
+                    <span>Continuar no plano atual</span>
+                </a>
+            </div>
+        </center>
+        <?php echo $this->partial('planos/info-pagamento.phtml'); ?>
     </div>
 </div>

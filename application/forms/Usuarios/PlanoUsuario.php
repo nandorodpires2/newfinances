@@ -27,12 +27,13 @@ class Form_Usuarios_PlanoUsuario extends Zend_Form {
         // id_plano
         $this->addElement("radio", "id_plano", array(
             'label' => 'Planos: ',
-            'multioptions' => $formDefault->getPlanos()
+            'multioptions' => $formDefault->getPlanos(),
+            'registerInArrayValidator' => false 
         ));
         
         // submit
         $this->addElement("submit", "submit", array(
-            'label' => 'Continuar',
+            'label' => 'Escolher',
             'class' => 'submit'
         ));
         
