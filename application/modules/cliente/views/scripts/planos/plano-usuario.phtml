@@ -10,12 +10,10 @@
                 <div id="choise-plano">
                     <input type="hidden" name="id_plano" id="id_plano" value="<?php echo $key; ?>" />
                     <?php echo $this->formPlanosUsuario->id_usuario; ?>
-                    <!--
                     <div class="descricao-plano">
                         <center><h3><?php echo $form; ?></h3></center>
                     </div>
-                    -->
-                    <?php echo View_Helper_Planos::getBannerPlano($key); ?>
+                    <?php //echo View_Helper_Planos::getBannerPlano($key); ?>
                     <center><?php echo $this->formPlanosUsuario->submit; ?></center>
                 </div>
             </form>

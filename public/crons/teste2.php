@@ -25,8 +25,12 @@
     ";
     
     $notificacoes = $db->fetchAll($sql);
+    
+    //Zend_Debug::dump(Zend_Registry::get("mail_transport")); die();
+    
         
     $count = 0;
+    $errors = 0;
     foreach ($notificacoes as $key => $notificacao) {
         
         $valor = $currency->toCurrency($notificacao['valor_movimentacao']);
@@ -51,7 +55,8 @@
             
             $count++;
                 
-        } catch (Exception $error) {
+        } catch (Zend_Mail_Exception $error) {
+            $errors++;
             echo $error->getMessage();
         }
     
@@ -71,6 +76,7 @@
         )
     ";
     $db->query($sql_insert);
-    echo "success";
+    echo "Errors: " . $errors . "<br />";
+    echo "Rows: " . $count . "<br />";    
         
 ?>
