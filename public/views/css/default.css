@@ -64,9 +64,6 @@ legend { font-weight: bold; color: #696969; font-size: 15px; }
     float: right;
 }
 
-/* grid */
-
-
 .img-actions {
     border: none;
     width: 18px;
@@ -74,7 +71,6 @@ legend { font-weight: bold; color: #696969; font-size: 15px; }
 }
 
 .descricao-mini { font-style: italic; font-size: 12px; color: gray; }
-
 
 .submit {
     display: inline-block;
@@ -248,3 +244,26 @@ legend { font-weight: bold; color: #696969; font-size: 15px; }
 .align_right { text-align: right; }
 .align_left { text-align: left; }
 .align_justify { text-align: justify; }
+
+/* messages */
+.message-success {
+    float: left; 
+    width: 98%; 
+    margin: 15px 1%; 
+    background: #4876FF; 
+    text-align: center;
+    color: #006400;
+    border: 1px solid #0068B4; 
+}
+
+.message-alert {
+    float: left; 
+    width: 70%; 
+    margin: 15px 14.5%; 
+    background: #EEEE00; 
+    text-align: center;
+    padding: 7px;
+    font-size: 17px;
+    color: #FF0000;
+    border: 1px solid #FFB90F; 
+}

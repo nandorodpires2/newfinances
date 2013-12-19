@@ -48,6 +48,8 @@ class Application_Controller extends Zend_Controller_Action {
     public $_modelConta;
     public $_modelMovimentacao;
     public $_modelCategoria;
+    // model de cupom de desconto
+    public $_modelCupomDesconto;
 
     /* FORMS */
     public $_formUsuariosPlanosUsuario;
@@ -81,6 +83,7 @@ class Application_Controller extends Zend_Controller_Action {
         $this->_modelConta = new Model_Conta();
         $this->_modelMovimentacao = new Model_Movimentacao();
         $this->_modelCategoria = new Model_Categoria();
+        $this->_modelCupomDesconto = new Model_CupomDesconto();
         
         
         $this->_formUsuariosPlanosUsuario = new Form_Usuarios_PlanoUsuario();

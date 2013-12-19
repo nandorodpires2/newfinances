@@ -13,8 +13,11 @@
                     <div class="descricao-plano">
                         <center><h3><?php echo $form; ?></h3></center>
                     </div>
-                    <?php //echo View_Helper_Planos::getBannerPlano($key); ?>
-                    <center><?php echo $this->formPlanosUsuario->submit; ?></center>
+                    <?php //echo View_Helper_Planos::getBannerPlano($key); ?>                    
+                    <center>
+                        <?php echo $this->formPlanosUsuario->cupom; ?>
+                        <?php echo $this->formPlanosUsuario->submit; ?>
+                    </center>
                 </div>
             </form>
         <?php endforeach; ?>

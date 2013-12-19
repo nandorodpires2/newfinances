@@ -70,8 +70,9 @@ class Model_UsuarioPlano extends Zend_Db_Table {
                 ->joinInner(array('p' => 'plano'), 'up.id_plano = p.id_plano', array())
                 ->where('p.usuario_plano = ?', 1)
                 ->where('p.cobranca = ?', 0)
-                ->where('up.id_usuario = ?', $id_usuario);
-        
+                ->where('up.id_usuario = ?', $id_usuario)
+                ->where('up.id_plano in(3, 4, 5)');
+                
         $query = $this->fetchRow($select);
         
         if ($query->qtde > 0) {

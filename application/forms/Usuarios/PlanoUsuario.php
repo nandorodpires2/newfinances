@@ -31,6 +31,11 @@ class Form_Usuarios_PlanoUsuario extends Zend_Form {
             'registerInArrayValidator' => false 
         ));
         
+        // cupom de desconto
+        $this->addElement('text', 'cupom', array(
+            'label' => 'Cupom de desconto: '
+        ));
+        
         // submit
         $this->addElement("submit", "submit", array(
             'label' => 'Escolher',

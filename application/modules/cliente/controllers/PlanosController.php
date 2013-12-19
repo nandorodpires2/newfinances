@@ -33,13 +33,16 @@ class PlanosController extends Application_Controller {
         $dadosUsuario = $this->_modelUsuario->fetchRow("id_usuario = {$last_id}");
 
         $this->view->dadosUsuario = $dadosUsuario;
-
+        
         // envia o form dos planos pagos para a view
         $this->_formUsuariosPlanosUsuario->id_usuario->setValue($this->_session->id_usuario);
         $this->view->formPlanosUsuario = $this->_formUsuariosPlanosUsuario;
         
+        // verifica o plano atual do usuario
+        $planoUsuario = $this->_modelUsuarioPlano->getPlanoAtual($this->_session->id_usuario);
+        
         // verifica se o usuario pode experimentar o plano
-        if ($this->_modelUsuarioPlano->alredyExperience($this->_session->id_usuario)) {
+        if (Controller_Helper_Plano::canExperience($planoUsuario)) {
             $this->view->flagExperience = true;
             // envia o plano de experiencia de 30 dias para a view
             $planoExperiencia = $this->_modelPlano->getPlanoExperiencia();
@@ -64,7 +67,7 @@ class PlanosController extends Application_Controller {
 
                     // buscando os dados do plano escolhido
                     $dadosPlano = $this->_modelPlanoValor->getPlanoValorUsuario($dadosPlanoUsuario['id_plano']);
-
+                    
                     try {
                         $paymentRequest = new PagSeguroPaymentRequest();
                         $paymentRequest->addItem('0001', $dadosPlano->descricao_plano, 1, $dadosPlano->valor_plano);
@@ -75,6 +78,17 @@ class PlanosController extends Application_Controller {
                         //$paymentRequest->setSender($dadosUsuario->nome_completo, $dadosUsuario->email_usuario);
                         $paymentRequest->addParameter('senderCPF', $cpf_usuario);
                         $paymentRequest->setReference($dadosUsuario->cpf_usuario);
+                        
+                        // verifica se tem copom de desconto
+                        if ($dadosPlanoUsuario['cupom'] !== '') {                            
+                            // valida o cupom
+                            $dadosCupomDesconto = $this->_modelCupomDesconto->getDescontoCupom($dadosPlanoUsuario['cupom'], $this->_session->id_usuario);                                                        
+                            if ($dadosCupomDesconto) {
+                                // calcula o desconto
+                                $desconto = ($dadosPlano->valor_plano * ($dadosCupomDesconto->porcentagem / 100)) * -1;
+                                $paymentRequest->setExtraAmount($desconto);                                
+                            }
+                        }
                         
                         // Informando as credenciais  
                         $credentials = $this->_credentials;
@@ -100,7 +114,7 @@ class PlanosController extends Application_Controller {
                         ));
                     }
                 } else {
-
+                    
                     // busca os dados do plano atual
                     $dadosPlanoAtual = $this->_modelUsuarioPlano->getPlanoAtual($last_id);
 
@@ -110,26 +124,24 @@ class PlanosController extends Application_Controller {
                     $this->_modelUsuarioPlano->update($dadosDesativaPlano, $whereDesativaPlano);
 
                     // cadastra o novo plano
-                    $dadosPlanoUsuario['id_usuario'] = $last_id;
-                    $dadosPlanoUsuario['data_aderido'] = Controller_Helper_Date::getDatetimeNowDb();
-                    $dadosPlanoUsuario['data_encerramento'] = Controller_Helper_Date::getDataEncerramentoPlano(
-                                    $dadosPlanoUsuario['data_aderido'], $dadosPlanoUsuario['id_plano']
+                    $dadosPlanoUsuarioNovo['id_usuario'] = $last_id;
+                    $dadosPlanoUsuarioNovo['data_aderido'] = Controller_Helper_Date::getDatetimeNowDb();
+                    $dadosPlanoUsuarioNovo['data_encerramento'] = Controller_Helper_Date::getDataEncerramentoPlano(
+                                $dadosPlanoUsuarioNovo['data_aderido'], $dadosPlanoUsuario['id_plano']
                     );
-                    $dadosPlanoUsuario['ativo_plano'] = 1;
-
+                    $dadosPlanoUsuarioNovo['ativo_plano'] = 1;
+                    $dadosPlanoUsuarioNovo['id_plano'] = (int)$dadosPlanoUsuario['id_plano'];
+                            
                     // buscar o valor do plano
                     $planoValor = $this->_modelPlanoValor->fetchRow("id_plano = {$dadosPlanoUsuario['id_plano']} and usuario = 1");
-                    $dadosPlanoUsuario['id_plano_valor'] = $planoValor->id_plano_valor;
+                    $dadosPlanoUsuarioNovo['id_plano_valor'] = $planoValor->id_plano_valor;
 
                     try {
-                        $this->_modelUsuarioPlano->insert($dadosPlanoUsuario);
+                        $this->_modelUsuarioPlano->insert($dadosPlanoUsuarioNovo);
                         // seta a mensagem de parabens
                         // redireciona para a pagina principal
                         $this->_redirect("index/");
-                    } catch (Zend_Exception $error) {
-                        
-                        die('erro');
-                        
+                    } catch (Zend_Exception $error) {                        
                         echo $error->getMessage();
                     }
                 }
@@ -211,10 +223,20 @@ class PlanosController extends Application_Controller {
                     $mail->setSubject('Pagamento confirmado');
 
                     $mail->send(Zend_Registry::get('mail_transport'));
+                    
+                    $this->desativaCupom($dadosPlanoRequisitado->id_usuario);
                 }                
                 
             } else if ($result == "FALSO") {
-                //O post não foi validado pelo PagSeguro.                
+                
+                $dadosTransacao = $this->_request->getPost();
+                $transaction_id = $dadosTransacao['notificationCode'];
+                $transaction = $this->getTransaction($transaction_id);
+                
+                // recupero o status da transacao
+                $status = (int)$transaction->getStatus()->getValue();
+                
+                
             } else {
                 $result = "ERRO";                
                 //Erro na integração com o PagSeguro.
@@ -223,7 +245,7 @@ class PlanosController extends Application_Controller {
             // envia o email para o usuario
             $mail = new Zend_Mail('utf-8');
 
-            $mail->setBodyHtml("um post do PagSeguro foi enviado - {$result} <p>{$transacaoID}</p><p>{$post}</p>");
+            $mail->setBodyHtml("um post do PagSeguro foi enviado - {$result} <p>{$transacaoID}</p><p>{$post}</p><p>Status: {$status}</p>");
             $mail->setFrom('email@portal.redemorar.com.br', 'NewFinances - Controle Financeiro');
             $mail->addTo("nandorodpires@gmail.com");
             //$mail->addTo('tiago@realter.com.br');
@@ -299,6 +321,8 @@ class PlanosController extends Application_Controller {
                     $mail->setSubject('Pagamento confirmado');
 
                     $mail->send(Zend_Registry::get('mail_transport'));
+                    
+                    $this->desativaCupom($dadosPlanoRequisitado->id_usuario);
 
                 } else {
                     // atualizar o processo              
@@ -328,6 +352,24 @@ class PlanosController extends Application_Controller {
         return $transaction;
     }
        
+    /**
+     * atualiza a tabela de cupom para os cupons utilizados
+     */
+    protected function desativaCupom($id_usuario) {
+        
+        // verifica se tem cupom
+        $cupom = $this->_modelCupomDesconto->getCupom($id_usuario);
+        
+        if ($cupom) {        
+            $dadosDesativaCupom['utilizado'] = 1;
+            $dadosDesativaCupom['data_utilizado'] = Controller_Helper_Date::getDatetimeNowDb();
+            $whereDesativaCupom = "id_cupom_desconto = " . $cupom->id_cupom_desconto;
+
+            $this->_modelCupomDesconto->update($dadosDesativaCupom, $whereDesativaCupom);
+        }
+        
+    }
+
     /*
     public function alterarPlanoAction() {
 

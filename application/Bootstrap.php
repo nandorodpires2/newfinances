@@ -10,7 +10,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         Zend_Registry::set('config', $config);
         
         $mail_config = array(            
-            'auth' => $config->mail->auth,            
+            'auth' => $config->mail->auth,        
             'username' => $config->mail->username,
             'password' => $config->mail->password
         );
@@ -54,6 +54,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         $controller->registerPlugin(new Plugin_Plano()); 
         //$controller->registerPlugin(new Plugin_Application());
         $controller->registerPlugin(new Plugin_Saldos());
+        $controller->registerPlugin(new Plugin_Acl());
     }
        
     /**

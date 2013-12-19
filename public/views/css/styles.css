@@ -62,8 +62,8 @@ body {
 }
 #header .logo { position: absolute; top: 0; width: 30%; }
 .logo img { width: 240px; margin: 10px 20px; }
-#header .user-info { position: absolute; width: 50%; right: 0; text-align: right; padding: 0; }
-#header .user-name { padding: 2px 0; width: 100%; font-weight: bold; }
+#header .user-info { position: absolute; width: 30%; top: 10px; right: 15px; text-align: right; padding: 0;}
+#header .user-name { padding: 5px 0; width: 100%; font-weight: bold; }
 #header .menu-user li { float: right; list-style: none; margin: 0; padding: 2px 3px; text-align: right; }
 #header .menu-user a { color: #1d5fa1; font-size: 14px; } 
 #header .menu-user a:hover { color: #FF8C00; font-size: 14px; } 

@@ -70,6 +70,10 @@ class IndexController extends Zend_Controller_Action
         $this->view->despesas = $despesas;
         
     }
+    
+    public function denyAction() {
+        
+    }
 
 }
 

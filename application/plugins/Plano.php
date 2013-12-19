@@ -23,8 +23,9 @@ class Plugin_Plano extends Zend_Controller_Plugin_Abstract {
             $modelPlano = new Model_Plano();
             
             $planoUsuario = $modelUsuarioPlano->fetchRow("id_usuario = {$id_usuario} and ativo_plano = 1", "id_usuario_plano desc");
-            $plano = $modelPlano->fetchRow("id_plano = {$planoUsuario->id_plano} and ativo_plano = 1");
             
+            $plano = $modelPlano->fetchRow("id_plano = {$planoUsuario->id_plano} and ativo_plano = 1");
+                        
             // caso tenha expirado inativa o plano atual e cadastra no plano básico
             if ($this->verificaDataEncerramento($planoUsuario->data_encerramento)) {                
                 $dadosInativacaoPlano['ativo_plano'] = 0;
