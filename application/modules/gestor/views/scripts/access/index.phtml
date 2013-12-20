@@ -1,0 +1,7 @@
+<?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/painel/access/index.css')); ?>
+<div id='pages'>
+    <div id="gestor-access-index">
+        <h3>Permissões para o plano: <?php echo $this->plano->descricao_plano; ?></h3>        
+        <?php echo $this->formAccessPermissao; ?>           
+    </div>
+</div>

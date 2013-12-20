@@ -84,6 +84,11 @@ $(document).ready(function (){
         $("#aba-saldo-close").hide();
     })
     
+    // fechar box alerta plano basico
+    $("#fechar").click(function (){
+        $("#plano-basico").hide("slow");
+    })
+    
 });
 
 function baseUrl() {

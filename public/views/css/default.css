@@ -267,3 +267,15 @@ legend { font-weight: bold; color: #696969; font-size: 15px; }
     color: #FF0000;
     border: 1px solid #FFB90F; 
 }
+
+.message-error {
+    float: left; 
+    width: 70%; 
+    margin: 15px 14.5%; 
+    background: #FF4040; 
+    text-align: center;
+    padding: 7px;
+    font-size: 17px;
+    color: #000;
+    border: 1px solid #CC0000; 
+}

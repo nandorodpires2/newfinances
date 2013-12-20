@@ -23,6 +23,14 @@
     <?php //echo $this->headScript()->appendFile($this->baseUrl('views/js/jsapi.js')); ?>
     
     <body>      
+        <?php if($this->planoBasico) : ?>
+        <div id="plano-basico">
+            VOCÊ ESTÁ NO PLANO BÁSICO
+            <div class="fechar" id="fechar">
+                <a href="#">[X] Fechar</a>
+            </div>
+        </div>
+        <?php endif; ?>
         <div id="content-all">
             <!-- loading -->
             <div id="loading" class="">

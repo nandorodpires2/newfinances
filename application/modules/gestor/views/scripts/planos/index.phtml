@@ -15,6 +15,7 @@
                     <td>Ativo</td>
                     <td>Usuário</td>
                     <td>Cobrança</td>
+                    <td>Permissões</td>
                 </tr>
                 <?php foreach ($this->planos as $plano) : ?>
                 <tr class="align_center">
@@ -22,7 +23,19 @@
                     <td class="align_left"><?php echo $plano->tempo_plano . ' ' . $plano->unidade_tempo_plano; ?></td>
                     <td><?php echo $plano->ativo_plano ? 'Sim' : 'Não'; ?></td>
                     <td><?php echo $plano->usuario_plano ? 'Sim' : 'Não'; ?></td>
-                    <td><?php echo $plano->cobranca ? 'Sim' : 'Não'; ?></td>
+                    <td><?php echo $plano->cobranca ? 'Sim' : 'Não'; ?></td>                    
+                    <td>
+                        <?php if ($plano->ativo_plano) : ?>
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'gestor',
+                            'controller' => 'access',
+                            'action' => 'index',
+                            'id_plano' => $plano->id_plano
+                        ), null, true); ?>">
+                            <span>Editar</span>
+                        </a>
+                        <?php endif; ?>
+                    </td>
                 </tr>
                 <?php endforeach; ?>
             </table>            

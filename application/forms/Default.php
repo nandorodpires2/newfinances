@@ -201,5 +201,21 @@ class Form_Default extends Zend_Form {
         
     }
     
+    /**
+     * retorna as funcionalidade do sistema
+     */
+    public function getFuncionalidades() {
+        $multiOptions = array();
+        
+        $modelFuncionalidades = new Model_Funcionalidade();
+        $funcionalidades = $modelFuncionalidades->getFuncionalidades();
+        
+        foreach ($funcionalidades as $funcionalidade) {
+            $multiOptions[$funcionalidade->id_funcionalidade] = "  -  " . $funcionalidade->descricao_permissao;
+        }
+        
+        return $multiOptions;
+    }
+    
 }
 

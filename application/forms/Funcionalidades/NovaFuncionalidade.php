@@ -44,6 +44,12 @@ class Form_Funcionalidades_NovaFuncionalidade extends Zend_Form {
         ));
         
         // titulo
+        $this->addElement("text", "descricao_permissao", array(
+            'label' => 'Título Permissão:',
+            'required' => true
+        ));
+        
+        // titulo
         $this->addElement("text", "subtitulo", array(
             'label' => 'Sub-título:'
         ));

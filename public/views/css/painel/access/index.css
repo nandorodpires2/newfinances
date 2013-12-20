@@ -1,0 +1,20 @@
+/* 
+    Document   : index
+    Created on : 20/12/2013, 12:08:59
+    Author     : Realter
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+#gestor-access-index { }
+
+#formAccessPermissao { 
+    text-align: left;
+    font-size: 17px;
+    padding: 10px 0;
+}
+

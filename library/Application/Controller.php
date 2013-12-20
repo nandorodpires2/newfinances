@@ -33,6 +33,9 @@ class Application_Controller extends Zend_Controller_Action {
     const REFUNDED = 6;
     const CANCELLED = 7;
     
+    // CONSTANTS PLANOS
+    const PLANO_BASICO = 8;
+
     /* SESSIONS */
     public $_hasIdentity;
     public $_session;
@@ -50,6 +53,10 @@ class Application_Controller extends Zend_Controller_Action {
     public $_modelCategoria;
     // model de cupom de desconto
     public $_modelCupomDesconto;
+    // model de funcionalidade
+    public $_modelFuncionalidade;
+    // model de plano funcionalidade
+    public $_modelPlanoFuncionalidade;
 
     /* FORMS */
     public $_formUsuariosPlanosUsuario;
@@ -64,6 +71,8 @@ class Application_Controller extends Zend_Controller_Action {
     public $_formNovaCategoria;
     // form de recuperacao de senha
     public $_formUsuariosRecuperarSenha;
+    // form de permissoes plano
+    public $_formAccessPermissao;
 
     /* PAGSEGURO CREDENTIALS */
     public $_credentials;
@@ -84,7 +93,8 @@ class Application_Controller extends Zend_Controller_Action {
         $this->_modelMovimentacao = new Model_Movimentacao();
         $this->_modelCategoria = new Model_Categoria();
         $this->_modelCupomDesconto = new Model_CupomDesconto();
-        
+        $this->_modelFuncionalidade = new Model_Funcionalidade();    
+        $this->_modelPlanoFuncionalidade = new Model_PlanoFuncionalidade();
         
         $this->_formUsuariosPlanosUsuario = new Form_Usuarios_PlanoUsuario();
         $this->_formUsuariosLogin = new Form_Usuarios_Login();
@@ -95,6 +105,7 @@ class Application_Controller extends Zend_Controller_Action {
         $this->_formPlanosValor = new Form_Planos_Valor();
         $this->_formNovaCategoria = new Form_Categorias_NovaCategoria();
         $this->_formUsuariosRecuperarSenha = new Form_Usuarios_RecuperarSenha();
+        $this->_formAccessPermissao = new Form_Access_Permissao();
         
         $credentials = new PagSeguroAccountCredentials(  
             'nandorodpires@gmail.com',   
@@ -102,6 +113,9 @@ class Application_Controller extends Zend_Controller_Action {
         );
         $this->setCredentials($credentials);
         
+        // verifica se esta no plano basico
+        $this->view->planoBasico = $this->verificaPlanoBasico();      
+                
     }
     
     public function setLayout($layout) {
@@ -157,5 +171,22 @@ class Application_Controller extends Zend_Controller_Action {
         return $status_name;
         
     }
+    
+    /**
+     * verifica se se o usuario esta no plano basico
+     */
+    public function verificaPlanoBasico() {
+        
+        $planoUsuario = $this->_modelUsuarioPlano->getPlanoAtual($this->_session->id_usuario);
+        
+        if ($planoUsuario->id_plano == self::PLANO_BASICO) {
+            return true;
+        } else {
+            return false;
+        }
+        
+        
+    }
+    
 }
 

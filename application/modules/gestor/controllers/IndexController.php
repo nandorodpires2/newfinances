@@ -21,10 +21,6 @@ class Gestor_IndexController extends Zend_Controller_Action
 
     public function indexAction() {
         
-        if ($this->_session->id_plano != 7) {
-            die('Falha ao acessar');
-        }
-        
     }
 
 }
