@@ -23,15 +23,15 @@ class Model_VwMovimentacao extends Zend_Db_Table {
      * @param type $mes
      * @return type
      */
-    public function getDatasMes($mes, $id_usuario) {
+    public function getDatasMes($ano, $mes, $id_usuario) {
         $select = $this->select()
                 ->from($this->_name, array(
                     'data_movimentacao',
                     'dia' => 'day(data_movimentacao)'
                 ))
-                ->where("month(data_movimentacao) = ?", $mes)
-                ->where("id_usuario = ?", $id_usuario)
-                ->where(("year(data_movimentacao) = year(now())"))
+                ->where("year(data_movimentacao) = ?", $ano)
+                ->where("month(data_movimentacao) = ?", $mes)                
+                ->where("id_usuario = ?", $id_usuario)                
                 ->group("data_movimentacao");
                 
         return $this->fetchAll($select);

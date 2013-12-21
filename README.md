@@ -1,4 +1,0 @@
-newfinances
-===========
-
-Sistema New Finances

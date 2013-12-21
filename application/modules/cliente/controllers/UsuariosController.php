@@ -149,19 +149,29 @@ class UsuariosController extends Zend_Controller_Action {
                                 
                                 $this->_modelUsuarioPlano->insert($planoBasico);
                                 
-                                // envia o email para o novo usuario                                
-                                $mail = new Zend_Mail('utf-8');
+                                try {
+                                    // envia o email para o novo usuario                                
+                                    $mail = new Zend_Mail('utf-8');
 
-                                $mail->setBodyHtml("Seu cadastro foi realizado com sucesso! Seja Bem vindo ao NewFinances");
-                                $mail->setFrom('email@portal.redemorar.com.br', 'NewFinances - Controle Financeiro');
-                                $mail->addTo("nandorodpires@gmail.com");
-                                //$mail->addTo('tiago@realter.com.br');
-                                //$mail->setReplyTo('email@portal.redemorar.com.br');
-                                $mail->setSubject('Seja Bem Vindo');
+                                    $mail->setBodyHtml("Seu cadastro foi realizado com sucesso! Seja Bem vindo ao NewFinances");
+                                    $mail->setFrom('email@portal.redemorar.com.br', 'NewFinances - Controle Financeiro');
+                                    $mail->addTo("nandorodpires@gmail.com");
+                                    //$mail->addTo('tiago@realter.com.br');
+                                    //$mail->setReplyTo('email@portal.redemorar.com.br');
+                                    $mail->setSubject('Seja Bem Vindo');
 
-                                $mail->send(Zend_Registry::get('mail_transport'));
+                                    $mail->send(Zend_Registry::get('mail_transport'));
                                 
-                                
+                                } catch (Exception $error) {
+                                    $messeges = array(
+                                        array(                                         
+                                            "alert" => "Houve um problema ao mandar o e-mail"
+                                        )
+                                    );
+                                    
+                                    $this->view->messages = $messeges; 
+                                }
+
                                 // autenticando o novo usuario
                                 $ZendAuth = Zend_Auth::getInstance();                
                                 $adapter = $this->_modelUsuario->validaUsuario($email, md5($senha));

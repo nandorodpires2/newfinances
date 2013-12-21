@@ -50,18 +50,20 @@ class MovimentacoesController extends Zend_Controller_Action {
     public function indexAction()
     {
         
+        // enviando os forms de filtros para a view
         $this->view->formMes = $this->_formMes;
         $this->view->formDias = $this->_formDias;
         $this->view->formBusca = $this->_formBusca;
         
         // buscar as movimentacoes por dia do mes atual        
-        $mes = $this->_getParam("mes") == null ? (int)date('m') : (int)$this->_getParam("mes");
+        $ano = (int)$this->_getParam("ano", date('Y'));
+        $mes = (int)$this->_getParam("mes", date('m'));
         
         // popula o combo de mes
-        $this->_formMes->populate(array("mes" => $mes));
+        $this->_formMes->populate(array("mes" => $mes, "ano" => $ano));
         
         // busca as datas onde possui lancamentos
-        $datasMes = $this->_modelVwMovimentacao->getDatasMes($mes, $this->_session->id_usuario);        
+        $datasMes = $this->_modelVwMovimentacao->getDatasMes($ano, $mes, $this->_session->id_usuario);        
                       
         if ($datasMes->count() > 0) {
         

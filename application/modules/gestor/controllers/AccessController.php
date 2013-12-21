@@ -25,8 +25,7 @@ class Gestor_AccessController extends Application_Controller {
         
         $this->view->plano = $plano;
         
-        // buscar as funcionalidades
-        $funcionalidades  = $this->_modelFuncionalidade->getFuncionalidades();        
+        // buscar as funcionalidades        
         $funcionalidadesPlano = $this->_modelPlanoFuncionalidade->getFuncionalidadesPlano($id_plano);
         
         $populate = array();
@@ -38,6 +37,7 @@ class Gestor_AccessController extends Application_Controller {
         $this->_formAccessPermissao->populate($populate);
         $this->view->formAccessPermissao = $this->_formAccessPermissao;
         
+        /*
         $dadosFuncionalidade = array();
         foreach ($funcionalidades as $key => $funcionalidade) {
             
@@ -50,6 +50,7 @@ class Gestor_AccessController extends Application_Controller {
         }
         
         $this->view->dadosFuncionalidade = $dadosFuncionalidade;
+        */
         
         /**
          * atualiza as permissoes

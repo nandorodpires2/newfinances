@@ -7,7 +7,7 @@ $(document).ready(function (){
 
     $("#dia").change(function (){
         
-        var dia = $(this).val();
+        var dia = $(this).val();        
         
         $("html,body").animate(
             {
@@ -17,7 +17,7 @@ $(document).ready(function (){
         );    
     });
     
-    $("#mes").change(function (){
+    $("#mes").change(function () {
         $("#formMes").submit();
     });
     
@@ -33,7 +33,7 @@ function status(id_movimentacao, status) {
     
     // verifica se e base de teste
     if (host == "localhost") {
-        base_url = "http://" + host + "/finances/public/movimentacoes/status";        
+        base_url = "http://" + host + "/newfinances/public/movimentacoes/status";        
     } else {
         base_url = "http://" + host + "/public/movimentacoes/status";        
     }

@@ -208,13 +208,28 @@ class Form_Default extends Zend_Form {
         $multiOptions = array();
         
         $modelFuncionalidades = new Model_Funcionalidade();
-        $funcionalidades = $modelFuncionalidades->getFuncionalidades();
+        $funcionalidades = $modelFuncionalidades->getFuncionalidadesPermissao();
         
         foreach ($funcionalidades as $funcionalidade) {
             $multiOptions[$funcionalidade->id_funcionalidade] = "  -  " . $funcionalidade->descricao_permissao;
         }
         
         return $multiOptions;
+    }
+    
+    public function getTiposChamados() {
+        
+        $multiOptions = array('' => 'Selecione...');
+        
+        $modelTipoChamado = new Model_TipoChamado();
+        $tiposChamados = $modelTipoChamado->fetchAll("ativo = 1", "descricao asc");
+        
+        foreach ($tiposChamados as $tipo) {
+            $multiOptions[$tipo->id_tipo_chamado] = $tipo->descricao;
+        }
+        
+        return $multiOptions;
+        
     }
     
 }

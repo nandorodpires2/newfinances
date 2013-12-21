@@ -17,9 +17,27 @@ class Form_Mes extends Zend_Form {
         $this->setAttrib('id', 'formMes')
                 ->setMethod("post");
         
+        // ano
+        $this->addElement("select", "ano", array(
+            'label' => 'Ano: ',
+            'multioptions' => array(
+                '2012' => '2012',
+                '2013' => '2013',
+                '2014' => '2014'
+            ),
+            'value' => date('Y'),
+            'decorators' => array(
+                'ViewHelper',
+                'Description',
+                'Errors',                
+                array(array('td' => 'HtmlTag'), array('tag' => 'td')),
+                array('Label', array('tag' => 'td')),
+            )
+        ));
+        
         // mes
         $this->addElement("select", "mes", array(
-            'label' => 'Selecione o mês: ',
+            'label' => 'Mês: ',
             'multioptions' => $this->getMonthsYear(),
             'decorators' => array(
                 'ViewHelper',

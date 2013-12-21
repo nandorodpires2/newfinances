@@ -100,7 +100,8 @@
                         -->
                         <div class="user-name">                        
                             <span>Seja bem-vindo(a) <?php echo $auth->nome_completo; ?></span>                            
-                            <br />                                            
+                            <br />          
+                            <span>Plano Atual: <?php echo $this->planoAtual; ?></span>
                         </div>
                         <div class="menu-user">
                             <?php foreach (View_Helper_Menu::setViewMenuPosicao(2) as $menu) : ?>                

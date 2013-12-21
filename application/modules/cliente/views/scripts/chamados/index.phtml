@@ -1,0 +1,33 @@
+<div id="pages">
+    <div id="chamados-index">
+        <div class="lista-chamados">
+            <table class="tabless-green">
+                <tr>
+                    <td>Data</td>
+                    <td>Assunto</td>
+                    <td>Status</td>                    
+                    <td colspan="2">Ações</td>                    
+                </tr>
+                <?php if ($this->chamados->count() > 0) : ?>
+                <?php foreach ($this->chamados as $chamado) : ?>
+                <tr>
+                    <td><?php echo View_Helper_Date::getDataView($chamado->data_abertura); ?></td>
+                    <td><?php echo $chamado->assunto; ?></td>
+                    <td><?php echo $chamado->status; ?></td>
+                    <td>
+                        <a href="">Ver</a>
+                    </td>
+                    <td>
+                        <a href="">Reabir</a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+                <?php else : ?>
+                <tr>
+                    <td colspan="5" class="align_center">Nenhum chamado aberto</td>
+                </tr>
+                <?php endif; ?>
+            </table>
+        </div>
+    </div>
+</div>

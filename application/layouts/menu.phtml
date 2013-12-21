@@ -85,38 +85,36 @@
     <div id='cssmenu'>
         <ul>
             <li><a href='<?php echo $this->url(array(
-                'module' => 'cliente',
-                'controller' => 'index',
+                'module' => 'gestor',
+                'controller' => 'chamados',
                 'action' => 'index'
-            ), null, true); ?>'><span>Fale Conosco</span></a></li>
+            ), null, true); ?>'><span>Chamados</span></a></li>            
+            <li><a href='<?php echo $this->url(array(
+                'module' => 'gestor',
+                'controller' => 'ajuda',
+                'action' => 'index'
+            ), null, true); ?>'><span>Ajuda</span></a></li>            
+        </ul>
+    </div>
+</div>
+<?php else : ?>
+<div id="cssmenu-box">
+    <div id='cssmenu'>
+        <ul>
             <li class='has-sub'><a href='<?php echo $this->url(array(
                      'module' => 'cliente',
-                     'controller' => 'movimentacoes',
+                     'controller' => 'chamados',
                      'action' => 'index'
-                  ), null, true); ?>'><span>Chamados</span></a>
+                  ), null, true); ?>'>
+                    <span>Chamados</span></a>
                <ul>                                
                   <li><a href='<?php echo $this->url(array(
                      'module' => 'cliente',
-                     'controller' => 'movimentacoes',
-                     'action' => 'nova-receita'
+                     'controller' => 'chamados',
+                     'action' => 'novo-chamado'
                   ), null, true); ?>'><span>Novo Chamado</span></a></li>                  
-                  <li><a href='<?php echo $this->url(array(
-                     'module' => 'cliente',
-                     'controller' => 'movimentacoes',
-                     'action' => 'nova-receita'
-                  ), null, true); ?>'><span>Enviar Mensagem</span></a></li>                  
                </ul>
-            </li>
-            <li><a href='<?php echo $this->url(array(
-                'module' => 'cliente',
-                'controller' => 'metas',
-                'action' => 'index'
-            ), null, true); ?>'><span>Preferências</span></a></li>
-            <li><a href='<?php echo $this->url(array(
-                'module' => 'cliente',
-                'controller' => 'metas',
-                'action' => 'index'
-            ), null, true); ?>'><span>Ajuda</span></a></li>
+            </li>            
         </ul>
     </div>
 </div>

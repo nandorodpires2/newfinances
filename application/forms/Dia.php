@@ -19,7 +19,7 @@ class Form_Dia extends Zend_Form {
         
         // dia
         $this->addElement("select", "dia", array(
-            'label' => 'Ir para o dia: ',
+            'label' => 'Dia: ',
             'multioptions' => $this->getDiasMes(),
             'decorators' => array(
                 'ViewHelper',
