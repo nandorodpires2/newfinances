@@ -23,7 +23,7 @@ class Gestor_PagseguroController extends Application_Controller {
         $credentials = $this->_credentials;
 
         /* Definindo a data de ínicio da consulta */  
-        $initialDate = '2013-12-01T08:50';  
+        $initialDate = '2013-12-11T13:52';  
 
         /* Definindo a data de término da consulta */  
         
@@ -31,7 +31,7 @@ class Gestor_PagseguroController extends Application_Controller {
         $finalDate = $zendDate->toString("YYYY-MM-dTH:m");        
 
         /* Definindo o número máximo de resultados por página */  
-        $maxPageResults = 20;  
+        $maxPageResults = 200;  
 
         /* Definindo o número da página */  
         $pageNumber = 1;  
@@ -74,7 +74,7 @@ class Gestor_PagseguroController extends Application_Controller {
             $this->view->dadosTransacao = $dadosTransacao;
             
         } catch (PagSeguroServiceException $error) {             
-            echo $error->getTraceAsString();
+            echo $error->getMessage(); die('Houve um erro');
         }  
      
     }

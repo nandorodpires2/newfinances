@@ -66,6 +66,9 @@ class Application_Controller extends Zend_Controller_Action {
     // model de resposta de chamado
     public $_modelChamadoResposta;
 
+    /* VIEWS */
+    public $_modelVwRelatorioAnual;
+
     /* FORMS */
     public $_formUsuariosPlanosUsuario;
     public $_formUsuariosLogin;
@@ -83,8 +86,13 @@ class Application_Controller extends Zend_Controller_Action {
     public $_formAccessPermissao;
     // form de abertura de chamado
     public $_formChamadosChamado;
+<<<<<<< HEAD
     // form de resposta de chamado
     public $_formChamadosResponder;
+=======
+    // form mes
+    public $_formMes;
+>>>>>>> dc6a476dc03e985defa1237ef57f28c462879e3d
 
     /* PAGSEGURO CREDENTIALS */
     public $_credentials;
@@ -110,6 +118,8 @@ class Application_Controller extends Zend_Controller_Action {
         $this->_modelChamado = new Model_Chamado();
         $this->_modelChamadoResposta = new Model_ChamadoResposta();
         
+        $this->_modelVwRelatorioAnual = new Model_VwRelatorioAnual();
+        
         $this->_formUsuariosPlanosUsuario = new Form_Usuarios_PlanoUsuario();
         $this->_formUsuariosLogin = new Form_Usuarios_Login();
         $this->_formNovoUsuario = new Form_Usuarios_NovoUsuario();        
@@ -121,7 +131,11 @@ class Application_Controller extends Zend_Controller_Action {
         $this->_formUsuariosRecuperarSenha = new Form_Usuarios_RecuperarSenha();
         $this->_formAccessPermissao = new Form_Access_Permissao();
         $this->_formChamadosChamado = new Form_Chamados_Chamado();
+<<<<<<< HEAD
         $this->_formChamadosResponder = new Form_Chamados_Responder;
+=======
+        $this->_formMes = new Form_Mes();
+>>>>>>> dc6a476dc03e985defa1237ef57f28c462879e3d
         
         $credentials = new PagSeguroAccountCredentials(  
             'nandorodpires@gmail.com',   

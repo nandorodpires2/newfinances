@@ -24,6 +24,7 @@ class View_Helper_Date extends Zend_View_Helper_Abstract {
     }
     
     /**
+<<<<<<< .mine
      * 
      * @param type $date
      * @return type
@@ -35,6 +36,19 @@ class View_Helper_Date extends Zend_View_Helper_Abstract {
     }
     
     /**
+=======
+     * retorna o nome do mes
+     * @param type $mes
+     */
+    public static function getMonthName($mes) {
+        $zendDate = new Zend_Date();
+        $zendDate->setMonth($mes);
+        
+        return $zendDate->get(Zend_Date::MONTH_NAME);
+    }
+
+    /**
+>>>>>>> .theirs
      * verifica se uma movimentacao nao paga esta atrasada
      */
     public static function isPending($movimentacao) {

@@ -1,5 +1,43 @@
 <div id="pages">
     <div id="relatorios">
-        RELATÓRIOS
+        <div class="filters">
+            <fieldset>
+                <legend>Filtros</legend>
+                <?php echo $this->formFilter; ?>
+            </fieldset>            
+        </div>
+        <div class="lista-relatorio-anual">
+            <table class="tabless-green">
+                <tr>
+                    <td>Mês</td>
+                    <td>Receita</td>
+                    <td>Despesa</td>
+                    <td>Saldo</td>
+                </tr>
+                <?php if ($this->relatorioAnual->count() > 0) : ?>
+                <?php foreach ($this->relatorioAnual as $relatorio) : ?>
+                <tr class="align_right">
+                    <td class="align_left"><?php echo ucfirst(View_Helper_Date::getMonthName($relatorio->mes)); ?></td>
+                    <td>
+                        <span><?php echo View_Helper_Currency::getCurrency($relatorio->receita); ?></span><br />
+                        <span class="descricao-mini">Previsto: <?php echo View_Helper_Currency::getCurrency($relatorio->receita_prev); ?></span>
+                    </td>
+                    <td>
+                        <span><?php echo View_Helper_Currency::getCurrency($relatorio->despesa); ?></span><br />
+                        <span class="descricao-mini">Previsto: <?php echo View_Helper_Currency::getCurrency($relatorio->despesa_prev); ?></span>
+                    </td>
+                    <td>
+                        <span><?php echo View_Helper_Currency::getCurrency($relatorio->saldo); ?></span><br />
+                        <span class="descricao-mini">Previsto: <?php echo View_Helper_Currency::getCurrency($relatorio->saldo_prev); ?></span>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+                <?php else : ?>
+                <tr>
+                    <td colspan="4" class="align_center">Nenhum relatório disponível</td>
+                </tr>
+                <?php endif; ?>
+            </table>
+        </div>
     </div>
 </div>
