@@ -60,6 +60,9 @@ class Application_Controller extends Zend_Controller_Action {
     // model de chamados
     public $_modelChamado;
 
+    /* VIEWS */
+    public $_modelVwRelatorioAnual;
+
     /* FORMS */
     public $_formUsuariosPlanosUsuario;
     public $_formUsuariosLogin;
@@ -77,6 +80,8 @@ class Application_Controller extends Zend_Controller_Action {
     public $_formAccessPermissao;
     // form de abertura de chamado
     public $_formChamadosChamado;
+    // form mes
+    public $_formMes;
 
     /* PAGSEGURO CREDENTIALS */
     public $_credentials;
@@ -101,6 +106,8 @@ class Application_Controller extends Zend_Controller_Action {
         $this->_modelPlanoFuncionalidade = new Model_PlanoFuncionalidade();
         $this->_modelChamado = new Model_Chamado();
         
+        $this->_modelVwRelatorioAnual = new Model_VwRelatorioAnual();
+        
         $this->_formUsuariosPlanosUsuario = new Form_Usuarios_PlanoUsuario();
         $this->_formUsuariosLogin = new Form_Usuarios_Login();
         $this->_formNovoUsuario = new Form_Usuarios_NovoUsuario();        
@@ -112,6 +119,7 @@ class Application_Controller extends Zend_Controller_Action {
         $this->_formUsuariosRecuperarSenha = new Form_Usuarios_RecuperarSenha();
         $this->_formAccessPermissao = new Form_Access_Permissao();
         $this->_formChamadosChamado = new Form_Chamados_Chamado();
+        $this->_formMes = new Form_Mes();
         
         $credentials = new PagSeguroAccountCredentials(  
             'nandorodpires@gmail.com',   

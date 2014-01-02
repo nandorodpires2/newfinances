@@ -1,5 +1,34 @@
 <div id="pages">
     <div id="relatorios">
-        RELATÓRIOS
+        <div class="filters">
+            <fieldset>
+                <legend>Filtros</legend>
+                <?php echo $this->formFilter; ?>
+            </fieldset>            
+        </div>
+        <div class="lista-relatorio-anual">
+            <table class="tabless-green">
+                <tr>
+                    <td>Mês</td>
+                    <td>Receita</td>
+                    <td>Despesa</td>
+                    <td>Saldo</td>
+                </tr>
+                <?php if ($this->relatorioAnual->count() > 0) : ?>
+                <?php foreach ($this->relatorioAnual as $relatorio) : ?>
+                <tr class="align_center">
+                    <td class="align_left"><?php echo ucfirst(View_Helper_Date::getMonthName($relatorio->mes)); ?></td>
+                    <td><?php echo View_Helper_Currency::getCurrency($relatorio->receita); ?></td>
+                    <td><?php echo View_Helper_Currency::getCurrency($relatorio->despesa); ?></td>
+                    <td><?php echo View_Helper_Currency::getCurrency($relatorio->saldo); ?></td>
+                </tr>
+                <?php endforeach; ?>
+                <?php else : ?>
+                <tr>
+                    <td colspan="4" class="align_center">Nenhum relatório disponível</td>
+                </tr>
+                <?php endif; ?>
+            </table>
+        </div>
     </div>
 </div>

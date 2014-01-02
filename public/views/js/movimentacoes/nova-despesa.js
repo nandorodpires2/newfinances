@@ -55,9 +55,6 @@ $(document).ready(function (){
         $("#repetir").hide();
     })
     
-    $("#data_movimentacao").mask("99/99/9999");    
-    $("#data_movimentacao").datepicker();
-    
 });
 
 
