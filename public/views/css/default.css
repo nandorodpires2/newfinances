@@ -18,6 +18,9 @@ img { border: none; }
 /* a */
 a { text-decoration: none; }
 
+/* span */
+span { font-family: Calibri; font-size: 14px; }
+
 /* table */
 table { width: 98%; margin: 10px 1%; }
 dd, dt { margin: 0; }

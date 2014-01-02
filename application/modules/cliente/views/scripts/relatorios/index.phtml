@@ -16,11 +16,20 @@
                 </tr>
                 <?php if ($this->relatorioAnual->count() > 0) : ?>
                 <?php foreach ($this->relatorioAnual as $relatorio) : ?>
-                <tr class="align_center">
+                <tr class="align_right">
                     <td class="align_left"><?php echo ucfirst(View_Helper_Date::getMonthName($relatorio->mes)); ?></td>
-                    <td><?php echo View_Helper_Currency::getCurrency($relatorio->receita); ?></td>
-                    <td><?php echo View_Helper_Currency::getCurrency($relatorio->despesa); ?></td>
-                    <td><?php echo View_Helper_Currency::getCurrency($relatorio->saldo); ?></td>
+                    <td>
+                        <span><?php echo View_Helper_Currency::getCurrency($relatorio->receita); ?></span><br />
+                        <span class="descricao-mini">Previsto: <?php echo View_Helper_Currency::getCurrency($relatorio->receita_prev); ?></span>
+                    </td>
+                    <td>
+                        <span><?php echo View_Helper_Currency::getCurrency($relatorio->despesa); ?></span><br />
+                        <span class="descricao-mini">Previsto: <?php echo View_Helper_Currency::getCurrency($relatorio->despesa_prev); ?></span>
+                    </td>
+                    <td>
+                        <span><?php echo View_Helper_Currency::getCurrency($relatorio->saldo); ?></span><br />
+                        <span class="descricao-mini">Previsto: <?php echo View_Helper_Currency::getCurrency($relatorio->saldo_prev); ?></span>
+                    </td>
                 </tr>
                 <?php endforeach; ?>
                 <?php else : ?>
