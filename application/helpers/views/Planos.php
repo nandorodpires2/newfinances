@@ -19,19 +19,25 @@ class View_Helper_Planos extends Zend_View_Helper_Abstract {
      * @param type $id_plano
      * @return string
      */
-    public static function getBannerPlano($id_plano) {
+    public static function getClassBannerPlano($id_plano) {
     
-        $zendView = new Zend_View();
+        $class = "";
+        switch ($id_plano) {
+            case Application_Controller::PLANO_TRIMESTRAL:
+                $class = "plano_trimestral";
+                break;
+            case Application_Controller::PLANO_SEMESTRAL:
+                $class = "plano_semestral";
+                break;
+            case Application_Controller::PLANO_ANUAL:
+                $class = "plano_anual";
+                break;
+            default:
+                $class = "";
+                break;
+        }
         
-        $img = "<img src=";
-        
-        $modelPlanoValor = new Model_PlanoValor;
-        $planoValor = $modelPlanoValor->getPlanoValorUsuario($id_plano);        
-        $banner = $planoValor->banner;
-        
-        $img .= $zendView->baseUrl('views/img/banners/' . $banner) . " width=100% />";
-        
-        return $img;
+        return $class;
         
     }
     

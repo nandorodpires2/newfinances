@@ -1,0 +1,48 @@
+<div id="pages">
+    <div id="gestor-chamados-responder">
+        <fieldset>
+            <legend><?php echo $this->titulo; ?></legend>
+            <table>
+                <tr>
+                    <th colspan="6">DADOS DO CHAMADO</th>
+                </tr>
+                <tr class="align_left">
+                    <th>Data Chamado: </th>
+                    <td><?php echo $this->dadosChamado->data_abertura; ?></td>
+                    <th>Tipo Chamado: </th>
+                    <td><?php echo $this->dadosChamado->descricao; ?></td>
+                    <th>Status: </th>
+                    <td><?php echo $this->dadosChamado->status; ?></td>
+                </tr>
+                <tr class="align_left">
+                    <th>Usuário: </th>
+                    <td><?php echo $this->dadosChamado->nome_completo; ?></td>
+                    <th>E-mail: </th>
+                    <td><?php echo $this->dadosChamado->email_usuario; ?></td>
+                    <th>CPF: </th>
+                    <td><?php echo $this->dadosChamado->cpf_usuario; ?></td>
+                </tr>          
+                <tr class="align_left">
+                    <th>Assunto:</th>
+                    <td colspan="5"><?php echo $this->dadosChamado->assunto; ?></td>
+                </tr>
+                <tr class="align_left">
+                    <th>Mensagem:</th>
+                    <td colspan="5"><?php echo $this->dadosChamado->mensagem; ?></td>                
+                </tr>
+                <?php if ($this->dadosChamado->status != 'Fechado') : ?>
+                <tr>
+                    <td colspan="2">
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'gestor',
+                            'controller' => 'chamados',
+                            'action' => 'responder'
+                        ), null, true); ?>">RESPONDER</a>
+                    </td>
+                </tr>
+                <?php endif; ?>
+            </table>
+            <?php echo $this->formChamadosResponder; ?>
+        </fieldset>
+    </div>
+</div>

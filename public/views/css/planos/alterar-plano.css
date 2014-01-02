@@ -26,13 +26,26 @@
     background: #FFF;
 }
 
-#choise-plano {
+#plano_trimestral, #plano_semestral, #plano_anual {
     float: left;
     width: 31%;
-    margin: 5px 1%;
-    border: 1px solid #3f7f00;
-    padding: 7px 0;
-    background: rgb(255,255,231);
+    height: 400px;
+    margin: 5px 1%;      
+}
+
+#plano_trimestral {    
+    background: url('../../img/banners/plano_trimestral.png') no-repeat;
+    background-size: 100% 100%;
+}
+
+#plano_semestral {
+    background: url('../../img/banners/plano_semestral.png') no-repeat;
+    background-size: 100% 100%;
+}
+
+#plano_anual {
+    background: url('../../img/banners/plano_anual.png') no-repeat;
+    background-size: 100% 100%;
 }
 
 .plano-trial, .choise-basico { padding: 15px; }

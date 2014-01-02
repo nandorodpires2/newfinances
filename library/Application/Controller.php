@@ -35,11 +35,15 @@ class Application_Controller extends Zend_Controller_Action {
     
     // CONSTANTS PLANOS
     const PLANO_BASICO = 8;
+    const PLANO_GESTOR = 7;
+    const PLANO_TRIMESTRAL = 3;
+    const PLANO_SEMESTRAL = 4;
+    const PLANO_ANUAL = 5;
 
     /* SESSIONS */
     public $_hasIdentity;
     public $_session;
-    
+
     /* MODELS */
     public $_modelBanco;
     public $_modelUsuarioPlano;
@@ -59,6 +63,8 @@ class Application_Controller extends Zend_Controller_Action {
     public $_modelPlanoFuncionalidade;
     // model de chamados
     public $_modelChamado;
+    // model de resposta de chamado
+    public $_modelChamadoResposta;
 
     /* FORMS */
     public $_formUsuariosPlanosUsuario;
@@ -77,6 +83,8 @@ class Application_Controller extends Zend_Controller_Action {
     public $_formAccessPermissao;
     // form de abertura de chamado
     public $_formChamadosChamado;
+    // form de resposta de chamado
+    public $_formChamadosResponder;
 
     /* PAGSEGURO CREDENTIALS */
     public $_credentials;
@@ -100,6 +108,7 @@ class Application_Controller extends Zend_Controller_Action {
         $this->_modelFuncionalidade = new Model_Funcionalidade();    
         $this->_modelPlanoFuncionalidade = new Model_PlanoFuncionalidade();
         $this->_modelChamado = new Model_Chamado();
+        $this->_modelChamadoResposta = new Model_ChamadoResposta();
         
         $this->_formUsuariosPlanosUsuario = new Form_Usuarios_PlanoUsuario();
         $this->_formUsuariosLogin = new Form_Usuarios_Login();
@@ -112,6 +121,7 @@ class Application_Controller extends Zend_Controller_Action {
         $this->_formUsuariosRecuperarSenha = new Form_Usuarios_RecuperarSenha();
         $this->_formAccessPermissao = new Form_Access_Permissao();
         $this->_formChamadosChamado = new Form_Chamados_Chamado();
+        $this->_formChamadosResponder = new Form_Chamados_Responder;
         
         $credentials = new PagSeguroAccountCredentials(  
             'nandorodpires@gmail.com',   
@@ -124,7 +134,7 @@ class Application_Controller extends Zend_Controller_Action {
         
         // seta o plano atual do usuario e envia para as views
         $this->view->planoAtual = $this->getPlanoAtual();
-                
+                        
     }
     
     public function setLayout($layout) {

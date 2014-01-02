@@ -41,11 +41,13 @@ class Form_Planos_Valor extends Zend_Form {
         ));
         
         // banner do plano valor
+        /*
         $this->addElement("file", "banner", array(
             'label' => 'Banner: ',
             'maxFileSize' => 2097152,
             'required' => true
         ));
+        */
         
         // submit
         $this->addElement('submit', 'submit', array(

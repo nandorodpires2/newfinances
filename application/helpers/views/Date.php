@@ -24,6 +24,17 @@ class View_Helper_Date extends Zend_View_Helper_Abstract {
     }
     
     /**
+     * 
+     * @param type $date
+     * @return type
+     */
+    public static function getDateTimeView($date) {
+        $zendDate = new Zend_Date($date);
+        
+        return $zendDate->get(Zend_Date::DATETIME_MEDIUM);
+    }
+    
+    /**
      * verifica se uma movimentacao nao paga esta atrasada
      */
     public static function isPending($movimentacao) {

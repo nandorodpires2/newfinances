@@ -150,15 +150,7 @@ class Form_Default extends Zend_Form {
         $planos = $modelPlano->getPlanosUsuario();
         
         foreach ($planos as $plano) {
-            if ($plano->valor_plano != 0) {
-                $multiOptions[$plano->id_plano] = $plano->descricao_plano . 
-                    ' - ' . 
-                    View_Helper_Currency::getCurrency($plano->valor_plano) .
-                    ' | ' .
-                    View_Helper_Currency::getCurrency($plano->valor_mes) . '/mês';
-            } else {
-                $multiOptions[$plano->id_plano] = $plano->descricao_plano;
-            }
+            $multiOptions[$plano->id_plano] = $plano->descricao_plano;
         }
         
         return $multiOptions;

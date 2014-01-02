@@ -1,5 +1,5 @@
 <div id="pages">
-    <div id="gestor-chamdos-ver-chamado">
+    <div id="chamdos-ver-chamdo">
         <table>
             <tr>
                 <th colspan="6">DADOS DO CHAMADO</th>
@@ -49,12 +49,12 @@
             <?php foreach ($this->respostasChamado as $resposta) : ?>
             <tr>
                 <td><?php echo View_Helper_Date::getDateTimeView($resposta->data_resposta); ?></td>
-                <td><?php echo $resposta->nome_completo; ?></td>
+                <td><?php echo View_Helper_Application::isGestor($resposta->id_usuario) ? "Equipe NewFinances" : $resposta->nome_completo; ?></td>
                 <td><?php echo $resposta->resposta; ?></td>
             </tr>
             <?php endforeach; ?>
         </table>
         <?php endif; ?>        
-        <?php echo $this->formChamadosResponder; ?>        
+        <?php echo $this->formChamadosResponder; ?>
     </div>
 </div>

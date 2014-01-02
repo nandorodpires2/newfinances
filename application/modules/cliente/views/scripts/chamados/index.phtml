@@ -6,19 +6,21 @@
                     <td>Data</td>
                     <td>Assunto</td>
                     <td>Status</td>                    
-                    <td colspan="2">Ações</td>                    
+                    <td>Ações</td>                    
                 </tr>
                 <?php if ($this->chamados->count() > 0) : ?>
                 <?php foreach ($this->chamados as $chamado) : ?>
                 <tr>
-                    <td><?php echo View_Helper_Date::getDataView($chamado->data_abertura); ?></td>
+                    <td><?php echo View_Helper_Date::getDateTimeView($chamado->data_abertura); ?></td>
                     <td><?php echo $chamado->assunto; ?></td>
                     <td><?php echo $chamado->status; ?></td>
                     <td>
-                        <a href="">Ver</a>
-                    </td>
-                    <td>
-                        <a href="">Reabir</a>
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'cliente',
+                            'controller' => 'chamados',
+                            'action' => 'ver-chamado',
+                            'id_chamado' => $chamado->id_chamado
+                        )); ?>">Ver</a>
                     </td>
                 </tr>
                 <?php endforeach; ?>

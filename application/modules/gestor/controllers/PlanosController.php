@@ -38,6 +38,9 @@ class Gestor_PlanosController extends Application_Controller {
             if ($this->_formPlanosValor->isValid($dadosPlanoValor)) {
                 $dadosPlanoValor = $this->_formPlanosValor->getValues();
                 
+                // busca o nome do plano
+                $plano = $this->_modelPlano->fetchRow("id_plano = {$dadosPlanoValor['id_plano']}");
+                
                 // desabilitar o plano valor atual
                 $planoValorAtivo = $this->_modelPlanoValor->fetchRow("
                     id_plano = {$dadosPlanoValor['id_plano']}
@@ -50,21 +53,15 @@ class Gestor_PlanosController extends Application_Controller {
                 // formatando o valor
                 $dadosPlanoValor['valor_plano'] = View_Helper_Currency::setCurrencyDb($dadosPlanoValor['valor_plano'], "positivo");
                 
-                // faz o upload do banner                
-                $path = PUBLIC_PATH . '/views/img/banners/';
-                $file_name = $_FILES['banner']['name'];
-                $tmp_file = $_FILES['banner']['tmp_name'];
+                // seta o banner do plano
+                $banner_plano = 'banner_' . str_replace(" ", "_", strtolower($plano->descricao_plano)) . '.png';
+                $dadosPlanoValor['banner'] = $banner_plano;
                 
                 // cadastrar o novo
-                try {                                        
-                    if(move_uploaded_file($tmp_file, $path.$file_name)) {                
-                        $this->_modelPlanoValor->update($dadosDesativaPlanoValor, $whereDesativaPlanoValor);
-
-                        $this->_modelPlanoValor->insert($dadosPlanoValor);
-                        $this->_redirect("gestor/planos/");
-                    } else {
-                        die('erro no upload');
-                    }
+                try {   
+                    $this->_modelPlanoValor->update($dadosDesativaPlanoValor, $whereDesativaPlanoValor);
+                    $this->_modelPlanoValor->insert($dadosPlanoValor);
+                    $this->_redirect("gestor/planos/");                    
                 } catch (Exception $error) {
                     echo $error->getMessage();
                 }

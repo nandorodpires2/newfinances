@@ -49,7 +49,7 @@ class Gestor_FuncionalidadesController extends Zend_Controller_Action  {
                 
                 try {
                     $this->_modelFuncionalidade->insert($dadosFuncionalidade);
-                    $this->_redirect("gestor/funcionalidades/");
+                    $this->_redirect("gestor/planos/");
                 } catch (Exception $error) {
                     echo $error->getMessage();
                 }

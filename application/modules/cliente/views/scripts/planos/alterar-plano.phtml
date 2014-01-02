@@ -13,7 +13,7 @@
         
         <?php foreach ($this->formPlanosUsuario->id_plano->getMultiOptions() as $key => $form) : ?>
             <form method="<?php echo $this->formPlanosUsuario->getMethod(); ?>" id="<?php echo $this->formPlanosUsuario->getAttrib('id'); ?>">                
-                <div id="choise-plano">
+                <div id="choise-plano" class="<?php echo View_Helper_Planos::getClassBannerPlano($key); ?>">
                     <input type="hidden" name="id_plano" id="id_plano" value="<?php echo $key; ?>" />
                     <?php echo $this->formPlanosUsuario->id_usuario; ?>
                     <div class="descricao-plano">

@@ -3,7 +3,22 @@
 <div id="usuarios-login">
     <div id="pages">
         <div class="site-area">
-            sads
+            <div class="menus">
+                <ul>
+                    <li>
+                        <a href="">Sobre o sistema</a>
+                    </li>
+                    <li>
+                        <a href="">Nossos planos</a>
+                    </li>
+                    <li>
+                        <a href="">Política de Privacidade</a>
+                    </li>
+                    <li>
+                        <a href="">Termo de compromisso</a>
+                    </li>
+                </ul>
+            </div>
         </div>
         <div class="login-area">
             <form method="post">
@@ -31,18 +46,6 @@
                             'controller' => 'usuarios',
                             'action' => 'novo-usuario'
                         ), null, true); ?>">Cadastre-se</a><br />
-                    </li>
-                    <li>
-                        <a href="<?php echo $this->url(array(
-                            'controller' => 'politica',
-                            'action' => 'index'
-                        )); ?>">Política de Privacidade</a>
-                    </li>
-                    <li>
-                        <a href="<?php echo $this->url(array(
-                            'controller' => 'politica',
-                            'action' => 'index'
-                        )); ?>">Termo</a>
                     </li>
                 </ul>
             </div>

@@ -5,14 +5,16 @@
                 <tr>
                     <td>Data</td>
                     <td>Usuário</td>
+                    <td>Tipo Chamado</td>
                     <td>Assunto</td>
                     <td>Status</td>                    
-                    <td colspan="2">Ações</td>                    
+                    <td>Ações</td>                    
                 </tr>
                 <?php foreach ($this->chamados as $chamado) : ?>
                 <tr>
-                    <td><?php echo View_Helper_Date::getDataView($chamado->data_abertura); ?></td>
-                    <td><?php echo $chamado->id_usuario; ?></td>
+                    <td><?php echo View_Helper_Date::getDateTimeView($chamado->data_abertura); ?></td>
+                    <td><?php echo $chamado->nome_completo; ?></td>
+                    <td><?php echo $chamado->descricao; ?></td>
                     <td><?php echo $chamado->assunto; ?></td>
                     <td><?php echo $chamado->status; ?></td>
                     <td>
@@ -22,9 +24,6 @@
                             'action' => 'ver-chamado',
                             'id_chamado' => $chamado->id_chamado
                         )); ?>">Ver</a>
-                    </td>
-                    <td>
-                        <a href="">Responder</a>
                     </td>
                 </tr>
                 <?php endforeach; ?>
