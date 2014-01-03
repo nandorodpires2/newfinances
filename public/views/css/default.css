@@ -32,9 +32,30 @@ legend { font-weight: bold; color: #696969; font-size: 15px; }
     float: right;
     width: 98%;
     margin-bottom: 5px;
-    padding: 15px 1%;      
-    /*background-color: rgb(255,255,231);*/
-    background-color: #F5F5F5;
+    padding: 15px 1%;          
+    background: #FFFFFF;
+    /* Theoretically for IE 8 & 9 (more valid) */	
+    /* ...but not required as filter works too */
+    /* should come BEFORE filter */
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=110)";
+
+    /* This works in IE 8 & 9 too */
+    /* ... but also 5, 6, 7 */
+    filter: alpha(opacity=110);
+
+    /* Older than Firefox 0.9 */
+    -moz-opacity:0.99;
+
+    /* Safari 1.x (pre WebKit!) */
+    -khtml-opacity: 0.99;
+
+    /* Modern!
+    /* Firefox 0.9+, Safari 2?, Chrome any?
+    /* Opera 9+, IE 9+ */
+    opacity: 0.99;
+    box-shadow: 5px 5px 2px #888888;    
+    -webkit-box-shadow: 5px 5px 2px #888888;    
+    -moz-box-shadow: 5px 5px 2px #888888;  
 }
 
 #options-bar {

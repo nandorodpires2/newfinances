@@ -1,6 +1,62 @@
-<?php echo $this->layout()->content; ?> 
-<a href="<?php echo $this->url(array(
-    'module' => 'cliente',
-    'controller' => 'usuarios',
-    'action' => 'login'
-)); ?>">Login</a>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <?php header("Content-Type: text/html; charset=UTF-8",true); ?>
+        
+        <!-- css -->
+        <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/site.css')); ?> 
+        <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/menu-site.css')); ?> 
+        
+        <!-- js -->
+        <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery-2.0.3.js')); ?>
+        
+    </head>
+    <body>
+        <div id="social-area">
+            <div style="float: left; margin: 10px 30px; ">
+                <img src="<?php echo $this->baseUrl('views/img/logo_newfinances.png'); ?>" width="280" />
+            </div>
+            <div class="redes-sociais">
+                <img src="<?php echo $this->baseUrl('views/img/icon_face_social.png'); ?>" />
+                <img src="<?php echo $this->baseUrl('views/img/icon_twitter_social.png'); ?>" />
+                <img src="<?php echo $this->baseUrl('views/img/icon_google_plus_social.png'); ?>" />
+            </div>
+        </div>
+        <div id="content-all">            
+            <div id="menus">
+                <ul id="saturday">
+                    <li>
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'site',
+                            'controller' => 'index',
+                            'action' => 'index'
+                        ), null, true); ?>" class="current"><span>Home</span></a>
+                    </li>                    
+                    <li>
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'site',
+                            'controller' => 'planos',
+                            'action' => 'index'
+                        ), null, true); ?>"><span>Planos</span></a>
+                    </li>
+                    <li class="login">
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'cliente',
+                            'controller' => 'usuarios',
+                            'action' => 'login'
+                        ), null, true); ?>"><span>Login</span></a>
+                    </li>                    
+                </ul>
+            </div>
+            <div id="content">
+                <?php echo $this->layout()->content; ?>
+            </div>
+        </div>
+        <div class="box-paseguro">
+            
+        </div>
+        <div id="footer">
+            Rodapé
+        </div>
+    </body>
+</html>

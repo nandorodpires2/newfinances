@@ -2,42 +2,27 @@
 <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/usuarios/login.css')); ?> 
 <div id="usuarios-login">
     <div id="pages">
-        <div class="site-area">
-            <div class="menus">
-                <ul>
-                    <li>
-                        <a href="">Sobre o sistema</a>
-                    </li>
-                    <li>
-                        <a href="">Nossos planos</a>
-                    </li>
-                    <li>
-                        <a href="">Política de Privacidade</a>
-                    </li>
-                    <li>
-                        <a href="">Termo de compromisso</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
         <div class="login-area">
+            <center>
+                <h3>Acesse sua conta</h3>
+            </center>
             <form method="post">
-                <table>
-                    <tr>
-                        <td colspan="2"><?php echo $this->formUsuariosLogin->email_usuario; ?></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><?php echo $this->formUsuariosLogin->senha_usuario; ?></td>
-                    </tr>
-                    <tr>
-                        <td><?php echo $this->formUsuariosLogin->submit; ?></td>                        
-                    </tr>
-                </table>
-                <center><a href="<?php echo $this->url(array(
-                    'module' => 'cliente',
-                    'controller' => 'usuarios',
-                    'action' => 'recuperar-senha'
-                )); ?>">Esqueci a senha</a></center>
+                <div class="icon-lock">
+                    <img src="<?php echo $this->baseUrl('views/img/icon_lock.png'); ?>" />
+                </div>
+                <div class="access">
+                    <table>
+                        <tr>
+                            <td colspan="2"><?php echo $this->formUsuariosLogin->email_usuario; ?></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><?php echo $this->formUsuariosLogin->senha_usuario; ?></td>
+                        </tr>
+                        <tr>
+                            <td><?php echo $this->formUsuariosLogin->submit; ?></td>                        
+                        </tr>
+                    </table>
+                </div>
             </form>            
             <div class="bar">
                 <ul>
@@ -46,6 +31,13 @@
                             'controller' => 'usuarios',
                             'action' => 'novo-usuario'
                         ), null, true); ?>">Cadastre-se</a><br />
+                    </li>
+                    <li>
+                        <a href="<?php echo $this->url(array(
+                                'module' => 'cliente',
+                                'controller' => 'usuarios',
+                                'action' => 'recuperar-senha'
+                        ), null, true); ?>">Esqueci a senha</a>
                     </li>
                 </ul>
             </div>

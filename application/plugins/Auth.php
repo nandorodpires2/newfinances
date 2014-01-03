@@ -31,9 +31,9 @@ class Plugin_Auth extends Zend_Controller_Plugin_Abstract {
         if ($funcionalidade) {                 
             if ($funcionalidade->auth) {
                 if (!$auth->hasIdentity()) {
-                    $request->setModuleName("cliente")
-                            ->setControllerName("usuarios")
-                            ->setActionName("login")                        
+                    $request->setModuleName("site")
+                            ->setControllerName("index")
+                            ->setActionName("index")                        
                             ->setDispatched();
                     /*
                     $request->setModuleName("site")

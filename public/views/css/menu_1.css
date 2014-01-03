@@ -2,6 +2,9 @@
     float: left; 
     width: 98%; 
     margin: 5px 2%; 
+    box-shadow: 5px 5px 2px #888888;    
+    -webkit-box-shadow: 5px 5px 2px #888888;    
+    -moz-box-shadow: 5px 5px 2px #888888;    
 }
 #cssmenu,
 #cssmenu ul,

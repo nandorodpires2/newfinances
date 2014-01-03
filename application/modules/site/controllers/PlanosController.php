@@ -6,17 +6,14 @@
  */
 
 /**
- * Description of IndexController
+ * Description of PlanosController
  *
  * @author Realter
  */
-class Site_IndexController extends Zend_Controller_Action {
+class Site_PlanosController extends Zend_Db_Table {
 
-    public function init() {        
+    public function init() {
         
-        parent::init();
-        
-        $this->_helper->layout()->setLayout('site');
     }
     
     public function indexAction() {

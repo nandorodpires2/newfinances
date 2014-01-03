@@ -22,12 +22,19 @@ root {
 }
 
 .login-area {    
-    float: right;
-    width: 28%;
+    float: left;
+    width: 40%;
+    margin: 5% 30%;
     padding: 10px;
     border: 1px solid #696969;
     background: rgb(255,255,231);
 }
+
+.icon-lock {
+    float: left;
+}
+
+.access { float: left; }
 
 .bar {
     float: left;
@@ -38,5 +45,7 @@ root {
     bottom: 0;
     border: 1px solid #5fbf00;
 }
+
+
 
 .bar li { float: left; padding: 5px 8px;}

@@ -1,0 +1,28 @@
+/* 
+    Document   : site.css
+    Created on : 03/01/2014, 15:09:59
+    Author     : Realter
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+body { margin: 0; text-align: center; background: #FFFFF9; }
+
+#social-area { float: left; width: 100%; padding: 4px 0; }
+#social-area .redes-sociais { float: right; text-align: right; margin-top: 20px; margin-right: 20px; }
+.redes-sociais img { width: 40px; margin: 5px 9px; border: none; }
+
+#content-all { position: relative; width: 94%; margin: auto; background: aqua; text-align: left; }
+
+#menus { float: left; left: 0; width: 100%; background: aqua; }
+
+#content { 
+    float: left; 
+    width: 99%;
+    padding: 7px 6px; 
+    border: 1px solid #2E8B57; 
+}
+
+#footer { position: absolute; bottom: 0; width: 100%; height: 70px; background: gray; }
+
+

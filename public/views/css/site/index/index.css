@@ -1,0 +1,27 @@
+/* 
+    Document   : index
+    Created on : 03/01/2014, 16:36:42
+    Author     : Realter
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+#site-index-index {
+    
+}
+
+.sobre-sistema { 
+    float: left;
+    width: 96%;
+    margin: 5px 2%;
+}
+
+.box-links { 
+    float: left;
+    width: 25%;
+    margin: 5px 4%;
+    background: #F5F5F5;
+    box-shadow: 5px 5px 2px #888888;    
+}
+
+

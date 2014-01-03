@@ -92,7 +92,7 @@ class UsuariosController extends Zend_Controller_Action {
         Zend_Auth::getInstance()->clearIdentity();
         Zend_Session::destroy();
         
-        $this->_redirect("usuarios/login");
+        $this->_redirect("site/index/index");
         
     }
     
