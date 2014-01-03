@@ -3,24 +3,36 @@
 <div id="pages">
     <div id="movimentacoes-index">                     
         <div class="lista-movimentacoes">           
-            <div id="sub-options-bar">
-                <div id="form-mes">
-                    <table>
-                        <tr>
-                            <td><?php echo $this->formMes; ?></td>
-                            <td><?php echo $this->formDias; ?></td>
-                        </tr>
-                    </table>
-                </div>
-                <div id="form-busca">
-                    <table>
-                        <tr>
-                            <td><?php echo $this->formBusca; ?></td>
-                            <td><img id="icon-busca" src="<?php echo $this->baseUrl('views/img/icon_find.png'); ?>" title="buscar" width="35" /></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>                
+            <fieldset>
+                <legend>Filtros</legend>
+                <div id="sub-options-bar">
+                    <div id="form-filto-mes">
+                        <table>
+                            <tr>
+                                <td><?php echo $this->formMes; ?></td>
+                                <td><?php echo $this->formDias; ?></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="form-filtro-conta">
+                        <table>
+                            <tr>
+                                <td><?php echo $this->formConta; ?></td>                                
+                            </tr>
+                        </table>
+                    </div>
+                    <!--
+                    <div id="form-filto-busca">
+                        <table>
+                            <tr>
+                                <td><?php echo $this->formBusca; ?></td>
+                                <td><img id="icon-busca" src="<?php echo $this->baseUrl('views/img/icon_find.png'); ?>" title="buscar" width="35" /></td>
+                            </tr>
+                        </table>
+                    </div>
+                    -->
+                </div>                
+            </fieldset>
             <div id="subtitulo-lista">
                 <div class="subtitulo-tipo">TIPO</div>
                 <div class="subtitulo-descricao">DESCRIÇÃO</div>

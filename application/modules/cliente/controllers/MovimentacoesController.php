@@ -1,40 +1,15 @@
 <?php
 
-class MovimentacoesController extends Zend_Controller_Action {
+class MovimentacoesController extends Application_Controller {
 
     const TIPO_MOVIMENTACAO_RECEITA = 1;
     const TIPO_MOVIMENTACAO_DESPESA = 2;
     const TIPO_MOVIMENTACAO_CARTAO = 3;
     const TIPO_MOVIMENTACAO_TRANSFERENCIA = 4;
 
-    protected $_session;
-    
-    protected $_modelMovimentacao;
-    protected $_modelVwMovimentacao;
-    protected $_modelMovimentacaoRepeticao;
-
-    protected $_formMovimentacoesDespesa;
-    protected $_formMovimentacoesReceitas;
-    protected $_formMovimentacoesTransferencia;
-    protected $_formMes;
-    protected $_formDias;
-    protected $_formBusca;
-
     public function init()
-    {                
-        
-        $this->_session = Zend_Auth::getInstance()->getIdentity();        
-        
-        $this->_formMovimentacoesDespesa = new Form_Movimentacoes_Despesa();
-        $this->_formMovimentacoesReceitas = new Form_Movimentacoes_Receita();
-        $this->_formMovimentacoesTransferencia = new Form_Movimentacoes_Transferencia();
-        $this->_formMes = new Form_Mes();
-        $this->_formDias = new Form_Dia();
-        $this->_formBusca = new Form_Busca();
-        
-        $this->_modelMovimentacao = new Model_Movimentacao();
-        $this->_modelVwMovimentacao = new Model_VwMovimentacao();
-        $this->_modelMovimentacaoRepeticao = new Model_MovimentacaoRepeticao();
+    {   
+        parent::init();
         
         // verifica se tem pelo menos uma conta cadastrada
         if (!Controller_Helper_Application::hasConta()) {        
@@ -54,16 +29,22 @@ class MovimentacoesController extends Zend_Controller_Action {
         $this->view->formMes = $this->_formMes;
         $this->view->formDias = $this->_formDias;
         $this->view->formBusca = $this->_formBusca;
+        $this->view->formConta = $this->_formConta;
         
         // buscar as movimentacoes por dia do mes atual        
         $ano = (int)$this->_getParam("ano", date('Y'));
         $mes = (int)$this->_getParam("mes", date('m'));
         
+        // caso tenha sido selecionado uuma conta
+        $conta = $this->_getParam("conta", null);
+        
         // popula o combo de mes
         $this->_formMes->populate(array("mes" => $mes, "ano" => $ano));
         
+        Zend_Debug::dump($conta);
+        
         // busca as datas onde possui lancamentos
-        $datasMes = $this->_modelVwMovimentacao->getDatasMes($ano, $mes, $this->_session->id_usuario);        
+        $datasMes = $this->_modelVwMovimentacao->getDatasMes($ano, $mes, $this->_session->id_usuario, $conta);        
                       
         if ($datasMes->count() > 0) {
         

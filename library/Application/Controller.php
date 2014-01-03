@@ -65,9 +65,12 @@ class Application_Controller extends Zend_Controller_Action {
     public $_modelChamado;
     // model de resposta de chamado
     public $_modelChamadoResposta;
-
+    // model de movimentacaoRepeticao    
+    public $_modelMovimentacaoRepeticao;
+    
     /* VIEWS */
     public $_modelVwRelatorioAnual;
+    public $_modelVwMovimentacao;
 
     /* FORMS */
     public $_formUsuariosPlanosUsuario;
@@ -86,14 +89,23 @@ class Application_Controller extends Zend_Controller_Action {
     public $_formAccessPermissao;
     // form de abertura de chamado
     public $_formChamadosChamado;
-<<<<<<< HEAD
     // form de resposta de chamado
     public $_formChamadosResponder;
-=======
     // form mes
     public $_formMes;
->>>>>>> dc6a476dc03e985defa1237ef57f28c462879e3d
-
+    // form dias
+    public $_formDias;
+    // form busca
+    public $_formBusca;
+    // form de filtro conta
+    public $_formConta;
+    // form de despesas    
+    public $_formMovimentacoesDespesa;
+    // form de receitas
+    public $_formMovimentacoesReceitas;
+    // form de transferencias
+    public $_formMovimentacoesTransferencia;    
+    
     /* PAGSEGURO CREDENTIALS */
     public $_credentials;
 
@@ -116,7 +128,10 @@ class Application_Controller extends Zend_Controller_Action {
         $this->_modelFuncionalidade = new Model_Funcionalidade();    
         $this->_modelPlanoFuncionalidade = new Model_PlanoFuncionalidade();
         $this->_modelChamado = new Model_Chamado();
-        $this->_modelChamadoResposta = new Model_ChamadoResposta();
+        $this->_modelChamadoResposta = new Model_ChamadoResposta();        
+        $this->_modelMovimentacao = new Model_Movimentacao();
+        $this->_modelVwMovimentacao = new Model_VwMovimentacao();
+        $this->_modelMovimentacaoRepeticao = new Model_MovimentacaoRepeticao();
         
         $this->_modelVwRelatorioAnual = new Model_VwRelatorioAnual();
         
@@ -131,12 +146,15 @@ class Application_Controller extends Zend_Controller_Action {
         $this->_formUsuariosRecuperarSenha = new Form_Usuarios_RecuperarSenha();
         $this->_formAccessPermissao = new Form_Access_Permissao();
         $this->_formChamadosChamado = new Form_Chamados_Chamado();
-<<<<<<< HEAD
-        $this->_formChamadosResponder = new Form_Chamados_Responder;
-=======
+        $this->_formDias = new Form_Dia();        
         $this->_formMes = new Form_Mes();
->>>>>>> dc6a476dc03e985defa1237ef57f28c462879e3d
-        
+        $this->_formBusca = new Form_Busca();
+        $this->_formConta = new Form_Conta();
+        $this->_formMovimentacoesDespesa = new Form_Movimentacoes_Despesa();
+        $this->_formMovimentacoesReceitas = new Form_Movimentacoes_Receita();
+        $this->_formMovimentacoesTransferencia = new Form_Movimentacoes_Transferencia();
+        $this->_formChamadosResponder = new Form_Chamados_Responder;
+                
         $credentials = new PagSeguroAccountCredentials(  
             'nandorodpires@gmail.com',   
             '1E3A21173CC2409EBB2DE17317045312' 

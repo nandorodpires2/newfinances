@@ -23,7 +23,7 @@ class Model_VwMovimentacao extends Zend_Db_Table {
      * @param type $mes
      * @return type
      */
-    public function getDatasMes($ano, $mes, $id_usuario) {
+    public function getDatasMes($ano, $mes, $id_usuario, $conta = null) {
         $select = $this->select()
                 ->from($this->_name, array(
                     'data_movimentacao',
@@ -33,12 +33,17 @@ class Model_VwMovimentacao extends Zend_Db_Table {
                 ->where("month(data_movimentacao) = ?", $mes)                
                 ->where("id_usuario = ?", $id_usuario)                
                 ->group("data_movimentacao");
+        
+        // caso seja filtrado por conta
+        if ($conta) {
+            $select->where("id_conta = ?", $conta);
+        }
                 
         return $this->fetchAll($select);
         
     }
     
-    public function getMovimentacoesData($data, $id_usuario) {
+    public function getMovimentacoesData($data, $id_usuario, $conta = null) {
         
         $select = $this->select()
                 ->from(array('mov' => $this->_name), array(
@@ -47,6 +52,10 @@ class Model_VwMovimentacao extends Zend_Db_Table {
                 ->where("mov.data_movimentacao = ?", $data)                
                 ->where("mov.id_usuario = ?", $id_usuario)
                 ->order("mov.data_inclusao asc");
+        
+        if ($conta) {
+            $select->where("mov.id_conta = ?", $conta);                
+        }
         
         return $this->fetchAll($select);
         

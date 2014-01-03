@@ -31,7 +31,7 @@ root {
 }
 
 /* subtitulos lista */
-#subtitulo-lista { font-weight: bold; }
+#subtitulo-lista { font-weight: bold; margin-top: 10px; }
 .subtitulo-tipo { float: left; width: 7%; text-align: center; }
 .subtitulo-descricao { float: left; width: 49%; text-align: left; }
 .subtitulo-categoria { float: left; width: 12%; text-align: left; }

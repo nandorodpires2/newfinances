@@ -23,8 +23,8 @@ class Controller_Helper_Date extends Zend_Controller_Action_Helper_Abstract {
     }
     
     public static function getDateDb($date) {
-        $zendDate = new Zend_Date($date);
-        return $zendDate->toString('Y-M-d');
+        $datePart = explode("/", $date);
+        return $datePart[2] . '-' . $datePart[1] . '-' . $datePart[0];
     }
     
     public static function getDateViewComplete($date) {

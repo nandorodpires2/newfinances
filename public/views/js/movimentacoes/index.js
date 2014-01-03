@@ -21,6 +21,10 @@ $(document).ready(function (){
         $("#formMes").submit();
     });
     
+    $("#conta").change(function (){
+        $("#formConta").submit();
+    });
+    
 });
 
 /*
