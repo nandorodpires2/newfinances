@@ -10,10 +10,10 @@
  *
  * @author Realter
  */
-class Site_PlanosController extends Zend_Db_Table {
+class Site_PlanosController extends Zend_Controller_Action {
 
     public function init() {
-        
+        $this->_helper->layout()->setLayout('site');
     }
     
     public function indexAction() {

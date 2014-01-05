@@ -41,8 +41,6 @@ class MovimentacoesController extends Application_Controller {
         // popula o combo de mes
         $this->_formMes->populate(array("mes" => $mes, "ano" => $ano));
         
-        Zend_Debug::dump($conta);
-        
         // busca as datas onde possui lancamentos
         $datasMes = $this->_modelVwMovimentacao->getDatasMes($ano, $mes, $this->_session->id_usuario, $conta);        
                       

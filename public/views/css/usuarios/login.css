@@ -43,9 +43,7 @@ root {
     padding: 7px 0;
     text-align: center;
     bottom: 0;
-    border: 1px solid #5fbf00;
+    border: 1px solid #5fbf00;    
 }
-
-
 
 .bar li { float: left; padding: 5px 8px;}

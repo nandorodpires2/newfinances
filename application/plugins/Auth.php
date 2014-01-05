@@ -27,28 +27,30 @@ class Plugin_Auth extends Zend_Controller_Plugin_Abstract {
         ");
             
         $auth = Zend_Auth::getInstance();        
-        
-        if ($funcionalidade) {                 
-            if ($funcionalidade->auth) {
-                if (!$auth->hasIdentity()) {
-                    $request->setModuleName("site")
-                            ->setControllerName("index")
-                            ->setActionName("index")                        
-                            ->setDispatched();
-                    /*
-                    $request->setModuleName("site")
-                            ->setControllerName("index")
-                            ->setActionName("index")                        
-                            ->setDispatched();
-                     * 
-                     */
+                
+        if ($moduleName !== 'site') {
+            if ($funcionalidade) {                 
+                if ($funcionalidade->auth) {
+                    if (!$auth->hasIdentity()) {
+                        $request->setModuleName("site")
+                                ->setControllerName("index")
+                                ->setActionName("index")                        
+                                ->setDispatched();
+                        /*
+                        $request->setModuleName("site")
+                                ->setControllerName("index")
+                                ->setActionName("index")                        
+                                ->setDispatched();
+                         * 
+                         */
+                    }
                 }
+            } else {
+                $request->setModuleName("cliente")
+                            ->setControllerName("error")
+                            ->setActionName("error")                        
+                            ->setDispatched();
             }
-        } else {
-            $request->setModuleName("cliente")
-                        ->setControllerName("error")
-                        ->setActionName("error")                        
-                        ->setDispatched();
         }
     }
     
