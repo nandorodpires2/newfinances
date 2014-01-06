@@ -32,6 +32,21 @@
                     </td>
                 </tr>
                 <?php endforeach; ?>
+                <tr>
+                    <td>TOTAIS</td>
+                    <td>
+                        <span><?php echo View_Helper_Currency::getCurrency($this->totalRelatorioAnual->total_receita); ?></span><br />
+                        <span class="descricao-mini">Previsto: <?php echo View_Helper_Currency::getCurrency($this->totalRelatorioAnual->total_receita_prev); ?></span>
+                    </td>
+                    <td>
+                        <span><?php echo View_Helper_Currency::getCurrency($this->totalRelatorioAnual->total_despesa); ?></span><br />
+                        <span class="descricao-mini">Previsto: <?php echo View_Helper_Currency::getCurrency($this->totalRelatorioAnual->total_despesa_prev); ?></span>
+                    </td>
+                    <td>
+                        <span><?php echo View_Helper_Currency::getCurrency($this->totalRelatorioAnual->total_saldo); ?></span><br />
+                        <span class="descricao-mini">Previsto: <?php echo View_Helper_Currency::getCurrency($this->totalRelatorioAnual->total_saldo_prev); ?></span>
+                    </td>
+                </tr>
                 <?php else : ?>
                 <tr>
                     <td colspan="4" class="align_center">Nenhum relatório disponível</td>

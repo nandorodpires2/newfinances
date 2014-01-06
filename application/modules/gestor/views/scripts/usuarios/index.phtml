@@ -25,7 +25,14 @@
                     <td><?php echo View_Helper_Date::getDataView($usuario->data_aderido); ?></td>
                     <td><?php echo $usuario->data_encerramento ? View_Helper_Date::getDataView($usuario->data_encerramento) : ' - '; ?></td>                    
                     <td><?php echo $usuario->ativo_plano == 1 ? 'Ativo' : 'Inativo'; ?></td>
-                    <td>&nbsp;</td>
+                    <td>
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'gestor',
+                            'controller' => 'usuarios',
+                            'action' => 'acessos',
+                            'id_usuario' => $usuario->id_usuario
+                        )); ?>">Acessos</a>
+                    </td>
                 </tr>
                 <?php endforeach; ?>                                   
             </table>

@@ -1,26 +1,11 @@
 <?php
 
-class IndexController extends Zend_Controller_Action
-{
-
-    protected $_session;
-
-    protected $_modelMovimentacao;
-    protected $_modelConta;
-    protected $_modelMeta;
-    protected $_modelCartao;
-    protected $_modelCategoria;
+class IndexController extends Application_Controller {
 
     public function init() {
         
-        $this->_session = Zend_Auth::getInstance()->getIdentity();        
+        parent::init();
                 
-        $this->_modelMovimentacao = new Model_Movimentacao();
-        $this->_modelConta = new Model_Conta();
-        $this->_modelMeta = new Model_Meta();        
-        $this->_modelCartao = new Model_Cartao();
-        $this->_modelCategoria = new Model_Categoria();
-        
         // verifica se tem pelo menos uma conta cadastrada
         if (!Controller_Helper_Application::hasConta()) {        
             Controller_Helper_Messeges::setMesseges(array('alert' => 'Cadastre uma conta'));

@@ -2,13 +2,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <?php header("Content-Type: text/html; charset=UTF-8",true); ?>
-        
+        <?php echo $this->headTitle("NewFinances"); ?> 
         <!-- css -->
-        <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/site.css')); ?> 
-        <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/menu-site.css')); ?> 
+        <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/site.css')); ?>
+        <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/default.css')); ?>
+        <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/menu-site.css')); ?>         
+        <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/jquery-ui-1.10.3.css')); ?> 
         
-        <!-- js -->
+        <!-- arquivos js -->
         <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery-2.0.3.js')); ?>
+        <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery-ui-1.10.3.js')); ?>    
+        <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery.ui.datepicker-pt-BR.js')); ?>    
+        <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery.maskedinput.js')); ?>
+        <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery.maskMoney.js')); ?>    
+        <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/application.js')); ?>   
         
     </head>
     <body>
@@ -30,33 +37,69 @@
                             'module' => 'site',
                             'controller' => 'index',
                             'action' => 'index'
-                        ), null, true); ?>" class="current"><span>Home</span></a>
+                        ), null, true); ?>" class="current"><span>Início</span></a>
                     </li>                    
                     <li>
                         <a href="<?php echo $this->url(array(
                             'module' => 'site',
                             'controller' => 'planos',
                             'action' => 'index'
-                        ), null, true); ?>"><span>Planos</span></a>
+                        ), null, true); ?>"><span>Nossos Planos</span></a>
                     </li>
-                    <li class="login">
+                    <?php if (!Zend_Auth::getInstance()->hasIdentity()) : ?>
+                    <li>
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'cliente',
+                            'controller' => 'usuarios',
+                            'action' => 'novo-usuario'
+                        ), null, true); ?>"><span>Cadastre-se</span></a>
+                    </li>
+                    <?php endif; ?>
+                    <?php if (Zend_Auth::getInstance()->hasIdentity()) : ?>
+                    <li style="float: right; ">
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'cliente',
+                            'controller' => 'index',
+                            'action' => 'index'
+                        ), null, true); ?>"><span>Voltar para minha conta</span></a>
+                    </li>
+                    <?php else : ?>
+                    <li style="float: right; ">
                         <a href="<?php echo $this->url(array(
                             'module' => 'cliente',
                             'controller' => 'usuarios',
                             'action' => 'login'
-                        ), null, true); ?>"><span>Login</span></a>
-                    </li>                    
+                        ), null, true); ?>"><span>Acesse sua conta</span></a>
+                    </li>          
+                    <?php endif; ?>
                 </ul>
             </div>
             <div id="content">
                 <?php echo $this->layout()->content; ?>
             </div>
-        </div>
-        <div class="box-paseguro">
-            
-        </div>
-        <div id="footer">
-            Rodapé
+            <div id="paseguro">
+                <span><h4><b>Formas de Pagamentos:<b></h4></span>
+                <p>
+                    <img src="<?php echo $this->baseUrl('views/img/icon_cards_payment.png'); ?>" />
+                </p>
+            </div>            
+            <div id="footer">
+                <p>
+                    <a href="<?php echo $this->url(array(
+                        'module' => 'cliente',
+                        'controller' => 'politica',
+                        'action' => 'termo'
+                    )); ?>">Termo de Uso</a>
+                    | 
+                    <a href="<?php echo $this->url(array(
+                        'module' => 'cliente',
+                        'controller' => 'politica',
+                        'action' => 'index'
+                    )); ?>">Política de Privacidade</a>
+                </p>
+                <p>Contato: contato@newfinances.w.pw</p>
+                <span>Todos os direitos reservados.</span>
+            </div>
         </div>
     </body>
 </html>

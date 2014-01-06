@@ -10,14 +10,10 @@
  *
  * @author Realter
  */
-class Gestor_UsuariosController extends Zend_Controller_Action {
-
-    protected $_modelUsuario;
+class Gestor_UsuariosController extends Application_Controller {
 
     public function init() {
-        
-        $this->_modelUsuario = new Model_Usuario();
-        
+        parent::init();
     }
     
     public function indexAction() {
@@ -34,6 +30,15 @@ class Gestor_UsuariosController extends Zend_Controller_Action {
     
     public function novoUsuarioAction() {
         
+    }
+    
+    public function acessosAction() {
+        
+        $id_usuario = $this->_getParam("id_usuario");
+        
+        $acessos = $this->_modelUsuarioLogin->getTotalAcessos($id_usuario);
+        $this->view->acessos = $acessos;
+                
     }
     
 }

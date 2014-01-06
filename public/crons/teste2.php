@@ -48,7 +48,7 @@
             // create mail object
             $mail = new Zend_Mail('utf-8');
             $mail->setBodyHtml($body);
-            $mail->setFrom('email@portal.redemorar.com.br', 'NewFinances - Controle Financeiro');
+            $mail->setFrom('contato@newfinances.w.pw', 'NewFinances - Controle Financeiro');
             $mail->addTo($notificacao['email_usuario']);            
             $mail->setSubject('Notificação');
             $mail->send(Zend_Registry::get('mail_transport'));

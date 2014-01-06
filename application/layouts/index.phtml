@@ -3,7 +3,7 @@
     <?php $auth = Zend_Auth::getInstance()->getIdentity(); ?>
     <link rel="icon" href="<?php echo $this->baseUrl('views/img/icon_logo.png'); ?>" />    
     <?php header("Content-Type: text/html; charset=UTF-8",true); ?>
-    <?php echo $this->headTitle(); ?>    
+    <?php echo $this->headTitle("NewFinances"); ?>    
     <!-- arquivos css -->        
     <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/styles.css')); ?> 
     <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/default.css')); ?> 
@@ -71,7 +71,7 @@
                 <div id="header">
                     <div class="logo">
                         <a href="<?php echo $this->url(array(
-                            'module' => 'cliente',
+                            'module' => 'site',
                             'controller' => 'index',
                             'action' => 'index'
                         ), null, true); ?>">

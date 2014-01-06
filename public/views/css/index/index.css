@@ -14,10 +14,13 @@
 .movimentacoes, .lancamentos, .faturas, .metas {  width: 97.8%; border: 1px solid #DCDCDC; margin-bottom: 10px; background: #FFF; }
 
 .movimentacoes { float: left; }
+
+#box-saldo .movimentacoes { margin-top: 5px; margin-left: 5px; }
 .saldo-conta { float: left; width: 100%; padding: 2px 0; border-bottom: 1px solid #DCDCDC; }
 .conta { float: left; width: 66%; padding: 3px 5px; }
 .saldo { float: left; width: 29%; text-align: right; padding: 3px 5px; }
-.saldo-total { float: right; width: 100%; text-align: right; font-size: 20px; padding: 5px 5px; font-weight: bold; color: green; }
+.saldo-total { float: right; width: 100%; text-align: right; padding: 5px 5px; font-weight: bold; color: green; }
+.saldo-total span { font-size: 20px; }
 
 .lancamentos { float: left; }
 .faturas { float: left; }

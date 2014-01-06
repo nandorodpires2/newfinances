@@ -1,0 +1,23 @@
+<div id="pages">
+    <div id="gestor-usuarios-acessos">
+        <a href="<?php echo $this->url(array(
+            'module' => 'gestor',
+            'controller' => 'usuarios',
+            'action' => 'index'
+        ), null, true); ?>">Voltar</a>
+        <table style="width: auto">
+            <tr>                
+                <th class="align_left">Usuário: </th>       
+                <td><?php echo $this->acessos->nome_completo; ?></td>
+            </tr>
+            <tr>                
+                <th class="align_left">Último acesso: </th>       
+                <td><?php echo $this->acessos->ultimo ? View_Helper_Date::getDateTimeView($this->acessos->ultimo) : ' Nunca '; ?></td>
+            </tr>
+            <tr>
+                <th class="align_left">Total de acesso: </th>                
+                <td><?php echo $this->acessos->total; ?></td>
+            </tr>
+        </table>
+    </div>
+</div>

@@ -13,12 +13,16 @@
 class PoliticaController extends Application_Controller {
 
     public function init() {        
-                
+        $this->setLayout("site");                
     }
     
     public function indexAction() {
-        $this->setLayout("login");                
+        
     }    
+    
+    public function termoAction() {
+        
+    }
     
 }
 

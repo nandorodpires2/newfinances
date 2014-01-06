@@ -1,0 +1,52 @@
+/* 
+    Document   : index
+    Created on : 06/01/2014, 10:16:31
+    Author     : Realter
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+
+#site-planos-index {
+    
+}
+
+.box-planos {
+    float: left;
+    width: 80%;
+    margin: 0 10%;
+    padding: 5px 5%;
+    
+}
+
+.box-plano-trimestral, .box-plano-semestral { 
+    float: left;
+    width: 25%;
+    height: 150px;
+    margin-top: 30px;
+    padding: 5px;
+    text-align: center;
+    border-left: 2px solid #DCDCDC;
+    border-bottom: 2px solid #DCDCDC;
+    border-top: 1px solid #DCDCDC;
+    border-right: 1px solid #DCDCDC;
+}
+.box-plano-trimestral {}
+.box-plano-anual {
+    float: left;
+    width: 30%;
+    height: 200px;
+    padding: 5px;
+    text-align: center;
+    border-left: 2px solid #DCDCDC;
+    border-bottom: 2px solid #DCDCDC;
+    border-top: 1px solid #DCDCDC;
+    border-right: 1px solid #DCDCDC;
+}
+.box-plano-semestral {}
+
+.titulo-plano { }
+.valor-plano { }
+.valor-mes-plano { }
+
+/* classes para as cores dos planos */

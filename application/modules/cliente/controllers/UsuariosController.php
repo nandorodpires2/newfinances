@@ -101,7 +101,7 @@ class UsuariosController extends Zend_Controller_Action {
      */
     public function novoUsuarioAction() {
         
-        $this->_helper->layout->setLayout("login");
+        $this->_helper->layout->setLayout("site");
         
         $this->_formNovoUsuario->politica->getDecorator('Label')->setOption('escape',false);
         

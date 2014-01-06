@@ -45,16 +45,19 @@ class Application_Controller extends Zend_Controller_Action {
     public $_session;
 
     /* MODELS */
-    public $_modelBanco;
-    public $_modelUsuarioPlano;
+    public $_modelBanco;    
     public $_modelPlanoValor;
     public $_modelUsuario;
+    public $_modelUsuarioPlano;
+    public $_modelUsuarioLogin;
     public $_modelPlano;
     public $_modelPagamento;
     public $_modelCartao;
     public $_modelConta;
     public $_modelMovimentacao;
     public $_modelCategoria;
+    // model meta
+    public $_modelMeta;
     // model de cupom de desconto
     public $_modelCupomDesconto;
     // model de funcionalidade
@@ -114,9 +117,10 @@ class Application_Controller extends Zend_Controller_Action {
         $this->_hasIdentity = Zend_Auth::getInstance()->hasIdentity(); 
         $this->_session = $this->_hasIdentity ? Zend_Auth::getInstance()->getIdentity() : null;
     
-        $this->_modelUsuarioPlano = new Model_UsuarioPlano();
         $this->_modelPlanoValor = new Model_PlanoValor();
         $this->_modelUsuario = new Model_Usuario();
+        $this->_modelUsuarioPlano = new Model_UsuarioPlano();
+        $this->_modelUsuarioLogin = new Model_UsuarioLogin();
         $this->_modelBanco = new Model_Banco();
         $this->_modelPlano = new Model_Plano();
         $this->_modelPagamento = new Model_Pagamento();        
@@ -132,6 +136,7 @@ class Application_Controller extends Zend_Controller_Action {
         $this->_modelMovimentacao = new Model_Movimentacao();
         $this->_modelVwMovimentacao = new Model_VwMovimentacao();
         $this->_modelMovimentacaoRepeticao = new Model_MovimentacaoRepeticao();
+        $this->_modelMeta = new Model_Meta();        
         
         $this->_modelVwRelatorioAnual = new Model_VwRelatorioAnual();
         
