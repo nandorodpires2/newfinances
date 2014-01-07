@@ -1,25 +1,45 @@
 <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/planos/alterar-plano.css')); ?>
+<?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/site/planos/index.css')); ?>
 <div id="pages">
     <div id="plano-usuario">
         <?php echo View_Helper_Messeges::getMessages($this->messages); ?>
         <div class="dados-usuario">
             <span>Olá <?php echo $this->dadosUsuario->nome_completo; ?></span>
-        </div>
-        <?php foreach ($this->formPlanosUsuario->id_plano->getMultiOptions() as $key => $form) : ?>
-            <form method="<?php echo $this->formPlanosUsuario->getMethod(); ?>" id="<?php echo $this->formPlanosUsuario->getAttrib('id'); ?>">                
-                <?php $class = View_Helper_Planos::getClassBannerPlano($key); ?>                
-                <div id="<?php echo $class; ?>">
-                    <input type="hidden" name="id_plano" id="id_plano" value="<?php echo $key; ?>" />
-                    <?php echo $this->formPlanosUsuario->id_usuario; ?>
-                    <div class="descricao-plano">
-                        <?php echo $form; ?>
-                    </div>  
-                    <?php echo $this->formPlanosUsuario->cupom; ?>
-                    <?php echo $this->formPlanosUsuario->submit; ?>
-                    
+        </div>        
+        <div class="box-planos">
+            <form method="post">
+                <div class="box-plano-trimestral">
+                    <div class="titulo-plano bg_blue">Plano Trimestral</div>
+                    <div class="valor-plano">R$19,90</div>
+                    <div class="valor-mes-plano">apenas R$6,63/mês</div>
+                    <input type="hidden" name="id_plano" id="id_plano" value="3" />
+                    <input type="hidden" name="id_usuario" id="id_usuario" value="<?php echo $this->id_usuario; ?>" />
+                    <input type="submit" name="submit" class="submit" value="Escolher" />
                 </div>
             </form>
-        <?php endforeach; ?>
+            <form method="post">
+                <div class="box-plano-anual">
+                    <div class="titulo-plano bg_orange">Plano Anual</div>
+                    <div class="valor-plano">R$39,90</div>
+                    <div class="valor-mes-plano">apenas R$3,33/mês</div>
+                    <div class="economia-plano">Economize <span class="valor-economia">50%</span></div>
+                    <input type="hidden" name="id_plano" id="id_plano" value="5" />
+                    <input type="hidden" name="id_usuario" id="id_usuario" value="<?php echo $this->id_usuario; ?>" />
+                    <input type="submit" name="submit" class="submit" value="Escolher" />
+                </div>
+            </form>
+            <form method="post">
+                <div class="box-plano-semestral">
+                    <div class="titulo-plano bg_green">Plano Semestral</div>
+                    <div class="valor-plano">R$27,90</div>
+                    <div class="valor-mes-plano">apenas R$4,65/mês</div>                
+                    <div class="economia-plano">Economize <span class="valor-economia">30%</span></div>
+                    <input type="hidden" name="id_plano" id="id_plano" value="4" />
+                    <input type="hidden" name="id_usuario" id="id_usuario" value="<?php echo $this->id_usuario; ?>" />
+                    <input type="submit" name="submit" class="submit" value="Escolher" />
+                </div>            
+            </form>    
+        </div>            
         <center>
             <?php if ($this->flagExperience) : ?>
             <!-- experimentar o plano por 30 dias -->
@@ -45,7 +65,6 @@
                     <span>Continuar no plano atual</span>
                 </a>
             </div>
-        </center>
-        <?php echo $this->partial('planos/info-pagamento.phtml'); ?>
+        </center>        
     </div>
 </div>

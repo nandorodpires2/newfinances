@@ -6,25 +6,28 @@
         Purpose of the stylesheet follows.
 */
 
-#planos-alterar-planos {
-    float: left;
-    width: 97%;
-    margin: 0 1%;
-    padding: 7px 5px;
-    background: #FFFFFF;
+/* altera plano */
+#planos-altera-plano {
+    
+
 }
 
-#planos-alterar-planos p {
-    margin: 10px 0;
+table th {
+    font-size: 18px;
+    color: #FFF;
+    background: #0068B4;     
 }
-
-.info-pagseguro {
-    float: left;
-    width: 96%;
-    margin: 0 2%;
-    padding: 5px;
+table td {
+    font-size: 16px;
+    font-weight: bold;
     background: #FFF;
 }
+table td, table th {
+    padding: 5px;
+    border: 1px solid #005fbf;
+}
+
+/* seleciona plano */
 
 #plano_trimestral, #plano_semestral, #plano_anual {
     float: left;
@@ -33,30 +36,14 @@
     margin: 5px 1%;      
 }
 
-#plano_trimestral {    
-    background: url('../../img/banners/plano_trimestral.png') no-repeat;
-    background-size: 100% 100%;
-}
-
-#plano_semestral {
-    background: url('../../img/banners/plano_semestral.png') no-repeat;
-    background-size: 100% 100%;
-}
-
-#plano_anual {
-    background: url('../../img/banners/plano_anual.png') no-repeat;
-    background-size: 100% 100%;
-}
-
 .plano-trial, .choise-basico { padding: 15px; }
 
 .plano-trial {
     margin-top: 10px;
 }
 
-.choise-basico {
-    
-}
+.choise-basico a { color: #005fbf; }
+.choise-basico a:hover { color: #eb8f00; }
 
 .trial {
     display: inline-block;
@@ -79,4 +66,15 @@
     background-color: #eb8f00;
     box-shadow: 1px 1px 1px #999;
     border-radius: 4px;
+}
+
+.info-pagseguro {
+    float: left;
+    width: 96%;
+    font-size: 14px;
+    font-style: italic;
+    margin: 0 2%;
+    padding: 5px;
+    background: #FFF;
+    border-bottom: 2px solid #DCDCDC;
 }

@@ -24,8 +24,8 @@ class Model_PlanoValor extends Zend_Db_Table {
         $select = $this->select()
                 ->from(array('pv' => $this->_name), array('*'))
                 ->setIntegrityCheck(false)
-                ->joinInner(array('p' => 'plano'), 'pv.id_plano = p.id_plano', array('*'))
-                ->where("pv.id_plano = ? ", $id_plano)
+                ->joinInner(array('p' => 'plano'), 'pv.id_plano = p.id_plano', array('*'))                
+                ->where("pv.id_plano = ? ", $id_plano)                
                 ->where("pv.usuario = ? ", 1);
         
         return $this->fetchRow($select);

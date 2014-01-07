@@ -96,7 +96,7 @@ function baseUrl() {
     var base_url = "";
 
     if (host === 'localhost') {
-        base_url = 'http://' + host + '/finances/public/';
+        base_url = 'http://' + host + '/newfinances/public/';
     } else {
         base_url = 'http://' + host + '/public/';
     }

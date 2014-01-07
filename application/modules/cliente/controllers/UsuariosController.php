@@ -112,123 +112,184 @@ class UsuariosController extends Zend_Controller_Action {
             if ($this->_formNovoUsuario->isValid($dadosNovoUsuario)) {
                 $dadosNovoUsuario = $this->_formNovoUsuario->getValues();
                 
-                // verifica se já existe este usuário 
-                $verificaUsuario = $this->_modelUsuario->fetchRow("
-                    cpf_usuario = '{$dadosNovoUsuario['cpf_usuario']}'
-                ");
-                                
-                if ($verificaUsuario == null) {                    
-                    // verifica se o usuario preencheu a politica de privacidade
-                    if ($dadosNovoUsuario['politica'] == 1) {                    
-                        // verifica se a senha de confirmacao confere
-                        if ($dadosNovoUsuario['senha_usuario'] == $dadosNovoUsuario['confirma_senha']) {
+                // valida cpf 
+                if ($this->validaCPF($dadosNovoUsuario['cpf_usuario'])) {                    
+                    // verifica se já existe este usuário 
+                    $verificaUsuario = $this->_modelUsuario->fetchRow("
+                        cpf_usuario = '{$dadosNovoUsuario['cpf_usuario']}'
+                    ");
 
-                            // para a autenticacao
-                            $email = $dadosNovoUsuario['email_usuario'];
-                            $senha = $dadosNovoUsuario['senha_usuario'];
-                            
-                            $dadosNovoUsuario['data_cadastro'] = Controller_Helper_Date::getDatetimeNowDb();
-                            $dadosNovoUsuario['data_alteracao'] = Controller_Helper_Date::getDatetimeNowDb();
-                            $dadosNovoUsuario['data_nascimento'] = Controller_Helper_Date::getDatetimeNowDb();
-                            $dadosNovoUsuario['ativo_usuario'] = 1;
-                            $dadosNovoUsuario['senha_usuario'] = md5($dadosNovoUsuario['senha_usuario']);
+                    if ($verificaUsuario == null) {                    
+                        // verifica se o usuario preencheu a politica de privacidade
+                        if ($dadosNovoUsuario['politica'] == 1) {                    
+                            // verifica se a senha de confirmacao confere
+                            if ($dadosNovoUsuario['senha_usuario'] == $dadosNovoUsuario['confirma_senha']) {
 
-                            unset($dadosNovoUsuario['confirma_senha']);
+                                // para a autenticacao
+                                $email = $dadosNovoUsuario['email_usuario'];
+                                $senha = $dadosNovoUsuario['senha_usuario'];
 
-                            try {
-                                $this->_modelUsuario->insert($dadosNovoUsuario);
-                                $last_id = $this->_modelUsuario->lastInsertId();         
-                                
-                                // insere o novo usuario no plano basico
-                                $planoBasico['id_usuario'] = $last_id;
-                                $planoBasico['id_plano'] = self::PLANO_BASICO;
-                                $planoBasico['data_aderido'] = Controller_Helper_Date::getDatetimeNowDb();
-                                $planoBasico['data_encerramento'] = Controller_Helper_Date::getDataEncerramentoPlano($planoBasico['data_aderido'], 8);
-                                $planoBasico['ativo_plano'] = 1;
-                                $planoBasico['id_plano_valor'] = self::VALOR_PLANO_BASICO;
-                                
-                                $this->_modelUsuarioPlano->insert($planoBasico);
-                                
+                                $dadosNovoUsuario['data_cadastro'] = Controller_Helper_Date::getDatetimeNowDb();
+                                $dadosNovoUsuario['data_alteracao'] = Controller_Helper_Date::getDatetimeNowDb();
+                                $dadosNovoUsuario['data_nascimento'] = Controller_Helper_Date::getDatetimeNowDb();
+                                $dadosNovoUsuario['ativo_usuario'] = 1;
+                                $dadosNovoUsuario['senha_usuario'] = md5($dadosNovoUsuario['senha_usuario']);
+
+                                unset($dadosNovoUsuario['confirma_senha']);
+
                                 try {
-                                    // envia o email para o novo usuario                                
-                                    $mail = new Zend_Mail('utf-8');
+                                    $this->_modelUsuario->insert($dadosNovoUsuario);
+                                    $last_id = $this->_modelUsuario->lastInsertId();         
 
-                                    $mail->setBodyHtml("Seu cadastro foi realizado com sucesso! Seja Bem vindo ao NewFinances");
-                                    $mail->setFrom('email@portal.redemorar.com.br', 'NewFinances - Controle Financeiro');
-                                    $mail->addTo("nandorodpires@gmail.com");
-                                    //$mail->addTo('tiago@realter.com.br');
-                                    //$mail->setReplyTo('email@portal.redemorar.com.br');
-                                    $mail->setSubject('Seja Bem Vindo');
+                                    // insere o novo usuario no plano basico
+                                    $planoBasico['id_usuario'] = $last_id;
+                                    $planoBasico['id_plano'] = self::PLANO_BASICO;
+                                    $planoBasico['data_aderido'] = Controller_Helper_Date::getDatetimeNowDb();
+                                    $planoBasico['data_encerramento'] = Controller_Helper_Date::getDataEncerramentoPlano($planoBasico['data_aderido'], 8);
+                                    $planoBasico['ativo_plano'] = 1;
+                                    $planoBasico['id_plano_valor'] = self::VALOR_PLANO_BASICO;
 
-                                    $mail->send(Zend_Registry::get('mail_transport'));
-                                
-                                } catch (Exception $error) {
-                                    $messeges = array(
-                                        array(                                         
-                                            "alert" => "Houve um problema ao mandar o e-mail"
-                                        )
-                                    );
-                                    
+                                    $this->_modelUsuarioPlano->insert($planoBasico);
+
+                                    try {
+                                        // envia o email para o novo usuario                                
+                                        $mail = new Zend_Mail('utf-8');
+
+                                        $mail->setBodyHtml("Seu cadastro foi realizado com sucesso! Seja Bem vindo ao NewFinances");
+                                        $mail->setFrom('email@portal.redemorar.com.br', 'NewFinances - Controle Financeiro');
+                                        $mail->addTo("nandorodpires@gmail.com");
+                                        //$mail->addTo('tiago@realter.com.br');
+                                        //$mail->setReplyTo('email@portal.redemorar.com.br');
+                                        $mail->setSubject('Seja Bem Vindo');
+
+                                        $mail->send(Zend_Registry::get('mail_transport'));
+
+                                    } catch (Exception $error) {
+                                        $messeges = array(
+                                            array(                                         
+                                                "alert" => "Houve um problema ao mandar o e-mail"
+                                            )
+                                        );
+
+                                        $this->view->messages = $messeges; 
+                                    }
+
+                                    // autenticando o novo usuario
+                                    $ZendAuth = Zend_Auth::getInstance();                
+                                    $adapter = $this->_modelUsuario->validaUsuario($email, md5($senha));
+                                    $usuarioRow = $this->_modelUsuario->getDadosUsuario($email);
+
+                                    if ($adapter) {
+                                        $ZendAuth->getStorage()->write($usuarioRow);                    
+                                        $this->_redirect("planos/plano-usuario/id/{$last_id}");
+                                    } else {
+                                        echo "erro ao autenticar novo usuario";
+                                    }
+
+                                } catch (Zend_Exception $error) {
+
+                                    if ($error->getCode() == 1062) {
+                                        $messeges = array(
+                                            array(                                         
+                                                "error" => "Este e-mail já está cadastrado!"
+                                            )
+                                        );
+                                    }
+
                                     $this->view->messages = $messeges; 
+
                                 }
 
-                                // autenticando o novo usuario
-                                $ZendAuth = Zend_Auth::getInstance();                
-                                $adapter = $this->_modelUsuario->validaUsuario($email, md5($senha));
-                                $usuarioRow = $this->_modelUsuario->getDadosUsuario($email);
-
-                                if ($adapter) {
-                                    $ZendAuth->getStorage()->write($usuarioRow);                    
-                                    $this->_redirect("planos/plano-usuario/id/{$last_id}");
-                                } else {
-                                    echo "erro ao autenticar novo usuario";
-                                }
-                                
-                            } catch (Zend_Exception $error) {
-                                
-                                if ($error->getCode() == 1062) {
-                                    $messeges = array(
-                                        array(                                         
-                                            "error" => "Este e-mail já está cadastrado!"
-                                        )
-                                    );
-                                }
-                                
-                                $this->view->messages = $messeges; 
-                                
+                            } else {
+                                $this->_formNovoUsuario->populate($dadosNovoUsuario);
+                                $messeges = array(
+                                    array( 
+                                        "error" => "A senha digitada não confere com a confirmação da mesma."                          
+                                    )
+                                );
+                                $this->view->messages = $messeges;                                       
                             }
-
                         } else {
                             $this->_formNovoUsuario->populate($dadosNovoUsuario);
                             $messeges = array(
                                 array( 
-                                    "error" => "A senha digitada não confere com a confirmação da mesma."                          
+                                    "error" => "Você deve ler e concordar com a política de privacidade para continuar o cadastro."                          
                                 )
                             );
                             $this->view->messages = $messeges;                                       
                         }
                     } else {
                         $this->_formNovoUsuario->populate($dadosNovoUsuario);
-                        $messeges = array(
-                            array( 
-                                "error" => "Você deve ler e concordar com a política de privacidade para continuar o cadastro."                          
+                        $messages = array(
+                            array(
+                                'error' => "Já exite um usuário com este CPF cadastrado"
                             )
                         );
-                        $this->view->messages = $messeges;                                       
+                        $this->view->messages = $messages;                    
                     }
                 } else {
                     $this->_formNovoUsuario->populate($dadosNovoUsuario);
                     $messages = array(
                         array(
-                            'error' => "Já exite um usuário com este CPF cadastrado"
+                            'error' => "CPF inválido"
                         )
                     );
-                    $this->view->messages = $messages;                    
+                    $this->view->messages = $messages;
                 }
             }
         }
     }
     
+    /**
+     * valida CPF usuario (Ajax)
+     */
+    public function validaCPF($cpf) {
+        
+        // Verifica se um número foi informado
+        if(empty($cpf)) {
+            return false;
+        }
+
+        // Elimina possivel mascara        
+        $cpf = preg_replace("/[^0-9]/", "", $cpf);
+                
+        // Verifica se o numero de digitos informados é igual a 11 
+        if (strlen($cpf) != 11) {
+            return false;
+        }        
+        // Verifica se nenhuma das sequências invalidas abaixo 
+        // foi digitada. Caso afirmativo, retorna falso
+        else if ($cpf == '00000000000' || 
+            $cpf == '11111111111' || 
+            $cpf == '22222222222' || 
+            $cpf == '33333333333' || 
+            $cpf == '44444444444' || 
+            $cpf == '55555555555' || 
+            $cpf == '66666666666' || 
+            $cpf == '77777777777' || 
+            $cpf == '88888888888' || 
+            $cpf == '99999999999') {
+            return false;
+         // Calcula os digitos verificadores para verificar se o
+         // CPF é válido
+         } else {   
+
+            for ($t = 9; $t < 11; $t++) {
+
+                for ($d = 0, $c = 0; $c < $t; $c++) {
+                    $d += $cpf{$c} * (($t + 1) - $c);
+                }
+                $d = ((10 * $d) % 11) % 10;
+                if ($cpf{$c} != $d) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        
+    }
+
     /**
      * mostra os dados do usuario caso ele queria alterar
      */

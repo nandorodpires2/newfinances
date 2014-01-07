@@ -58,16 +58,6 @@ class Form_Usuarios_NovoUsuario extends Zend_Form {
             'required' => true
         ));
         
-        // id_cidade
-        /*
-        $this->addElement("select", "id_cidade", array(
-            'label' => 'Cidade: ',
-            'disabled' => true,
-            'multioptions' => array("Aguarde..."),
-            'registerInArrayValidator' => false
-        ));
-        */
-        
         // senha_usuario
         $this->addElement("password", "senha_usuario", array(
             'label' => 'Senha: ',

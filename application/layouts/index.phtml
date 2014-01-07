@@ -25,10 +25,17 @@
     <body>      
         <?php if($this->planoBasico) : ?>
         <div id="plano-basico">
-            VOCÊ ESTÁ NO PLANO BÁSICO
-            <div class="fechar" id="fechar">
-                <a href="#">[X] Fechar</a>
-            </div>
+            Olá Sr(a) <?php echo Zend_Auth::getInstance()->getIdentity()->nome_completo; ?>,
+             você está cadastrado(a) no Plano Básico. Aproveite as vantagens de ser 
+             um usuário Top.
+             <p>
+                 Altere seu Plano
+             </p>
+             <!--
+             <p>
+                 <a href="">Conheça as vantagens</a>
+             </p>
+             -->
         </div>
         <?php endif; ?>
         <div id="content-all">

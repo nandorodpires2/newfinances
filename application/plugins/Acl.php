@@ -43,25 +43,27 @@ class Plugin_Acl extends Zend_Controller_Plugin_Abstract {
         $this->_action = $request->getActionName();
 
         $this->_request = $request;
-
-        /**
-         * caso nao tenha usuario logado ou o usuario logado seja gestor do
-         * sistema, nao "starta" o ACL
-         */        
-        
-        if (Zend_Auth::getInstance()->hasIdentity()) {
-            $id_usuario = Zend_Auth::getInstance()->getIdentity()->id_usuario;
-            // busca o plano do usuario logado
-            $planoUsuario = $modelUsuarioPlano->getPlanoAtual($id_usuario);
-            $this->_role = $planoUsuario->descricao_plano;
-            // verifica se o usuario e gestor
-            if ($planoUsuario->id_plano != self::ID_PLANO_GESTOR) {                
-                // busca os recursos do plano
-                $this->_resources = $modelFuncionalidade->getResourcesPlano($planoUsuario->id_plano);
-                // busca as funcionalidades que o plano pode acessar
-                $this->_funcionalidades = $modelPlanoFuncionalidade->getFuncionalidadesPlano($planoUsuario->id_plano);                
-                $this->startAcl();
-            }            
+       
+        // caso o modulo seja de site nao habilita o ACL
+        if ($this->_module !== 'site') {
+            /**
+            * caso nao tenha usuario logado ou o usuario logado seja gestor do
+            * sistema, nao "starta" o ACL
+            */ 
+            if (Zend_Auth::getInstance()->hasIdentity()) {
+                $id_usuario = Zend_Auth::getInstance()->getIdentity()->id_usuario;
+                // busca o plano do usuario logado
+                $planoUsuario = $modelUsuarioPlano->getPlanoAtual($id_usuario);
+                $this->_role = $planoUsuario->descricao_plano;
+                // verifica se o usuario e gestor
+                if ($planoUsuario->id_plano != self::ID_PLANO_GESTOR) {                
+                    // busca os recursos do plano
+                    $this->_resources = $modelFuncionalidade->getResourcesPlano($planoUsuario->id_plano);
+                    // busca as funcionalidades que o plano pode acessar
+                    $this->_funcionalidades = $modelPlanoFuncionalidade->getFuncionalidadesPlano($planoUsuario->id_plano);                
+                    $this->startAcl();
+                }            
+            }
         }
     }
 

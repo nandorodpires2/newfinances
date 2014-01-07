@@ -60,59 +60,7 @@ class PlanosController extends Application_Controller {
                 $cobranca = $this->_modelPlano->find($dadosPlanoUsuario['id_plano'])->current();
 
                 if ($cobranca->cobranca) {
-
-                    // dados do usuario
-                    $dadosUsuario = $this->_modelUsuario->find($this->_session->id_usuario)->current();
-                    $cpf_usuario = Controller_Helper_Application::formatCPF($dadosUsuario->cpf_usuario);
-
-                    // buscando os dados do plano escolhido
-                    $dadosPlano = $this->_modelPlanoValor->getPlanoValorUsuario($dadosPlanoUsuario['id_plano']);
-                    
-                    try {
-                        $paymentRequest = new PagSeguroPaymentRequest();
-                        $paymentRequest->addItem('0001', $dadosPlano->descricao_plano, 1, $dadosPlano->valor_plano);
-                        $paymentRequest->setCurrency("BRL");
-
-                        $paymentRequest->setSenderName($dadosUsuario->nome_completo);
-                        $paymentRequest->setSenderEmail($dadosUsuario->email_usuario);
-                        //$paymentRequest->setSender($dadosUsuario->nome_completo, $dadosUsuario->email_usuario);
-                        $paymentRequest->addParameter('senderCPF', $cpf_usuario);
-                        $paymentRequest->setReference($dadosUsuario->cpf_usuario);
-                        
-                        // verifica se tem copom de desconto
-                        if ($dadosPlanoUsuario['cupom'] !== '') {                            
-                            // valida o cupom
-                            $dadosCupomDesconto = $this->_modelCupomDesconto->getDescontoCupom($dadosPlanoUsuario['cupom'], $this->_session->id_usuario);                                                        
-                            if ($dadosCupomDesconto) {
-                                // calcula o desconto
-                                $desconto = ($dadosPlano->valor_plano * ($dadosCupomDesconto->porcentagem / 100)) * -1;
-                                $paymentRequest->setExtraAmount($desconto);                                
-                            }
-                        }
-                        
-                        // Informando as credenciais  
-                        $credentials = $this->_credentials;
-
-                        // fazendo a requisição a API do PagSeguro pra obter a URL de pagamento                  
-                        $url = $paymentRequest->register($credentials);
-                        
-                        // grava a solicitacao de pagamento na tabela pagamento
-                        $dadosPagamento['id_usuario'] = $this->_session->id_usuario;
-                        $dadosPagamento['id_plano'] = $dadosPlano->id_plano;
-                        $dadosPagamento['id_plano_valor'] = $dadosPlano->id_plano_valor;
-                        $dadosPagamento['data_solicitado'] = Controller_Helper_Date::getDatetimeNowDb();
-                        $dadosPagamento['status'] = 0;
-                        $dadosPagamento['processado'] = 0;
-
-                        $this->_modelPagamento->insert($dadosPagamento);
-                        
-                        // redirecionando para o site do pagseguro    
-                        $this->_redirect($url);
-                    } catch (PagSeguroServiceException $error) {
-                        Controller_Helper_Messeges::setMesseges(array(
-                            'error' => 'Houve um erro na comunicação com o PagSeguro'
-                        ));
-                    }
+                    $this->_redirect("planos/altera-plano/id_plano/{$dadosPlanoUsuario['id_plano']}");                    
                 } else {
                     
                     // busca os dados do plano atual
@@ -150,7 +98,118 @@ class PlanosController extends Application_Controller {
             }
         }
     }
+    
+    public function alteraPlanoAction() {
+        $id_plano = $this->_getParam("id_plano");
+        
+        // dados do usuario
+        $dadosUsuario = $this->_modelUsuario->find($this->_session->id_usuario)->current();
+        $cpf_usuario = Controller_Helper_Application::formatCPF($dadosUsuario->cpf_usuario);
+        
+        // buscando os dados do plano escolhido
+        $dadosPlano = $this->_modelPlanoValor->getPlanoValorUsuario($id_plano);
+        
+        // calculando a validade do plano
+        $usuarioPlano = $this->_modelUsuarioPlano->getPlanoAtual($this->_session->id_usuario);
+        if ($usuarioPlano->tempo_plano == 30) {
+            $validadePlano = Controller_Helper_Date::getDataEncerramentoPlano(null, $id_plano);
+        } else {
+            $validadePlano = Controller_Helper_Date::getDataEncerramentoPlano($usuarioPlano->data_encerramento, $id_plano);
+        }
+        
+        $this->view->validade_plano = $validadePlano;        
+        $this->view->dadosPlano = $dadosPlano;
+        
+        if ($this->_request->isPost()) {    
+            
+            $dadosAlteraPlano = $this->_request->getPost();            
+            
+            try {
+                $paymentRequest = new PagSeguroPaymentRequest();
+                $paymentRequest->addItem('0001', $dadosPlano->descricao_plano, 1, $dadosPlano->valor_plano);
+                $paymentRequest->setCurrency("BRL");
 
+                $paymentRequest->setSenderName($dadosUsuario->nome_completo);
+                $paymentRequest->setSenderEmail($dadosUsuario->email_usuario);
+                //$paymentRequest->setSender($dadosUsuario->nome_completo, $dadosUsuario->email_usuario);
+                $paymentRequest->addParameter('senderCPF', $cpf_usuario);
+                $paymentRequest->setReference($dadosUsuario->cpf_usuario);
+                                
+                // Informando as credenciais  
+                $credentials = $this->_credentials;
+
+                // fazendo a requisição a API do PagSeguro pra obter a URL de pagamento                  
+                $url = $paymentRequest->register($credentials);
+                
+                // grava a solicitacao de pagamento na tabela pagamento
+                $dadosPagamento['id_usuario'] = $this->_session->id_usuario;
+                $dadosPagamento['id_plano'] = $dadosPlano->id_plano;
+                $dadosPagamento['id_plano_valor'] = $dadosPlano->id_plano_valor;
+                $dadosPagamento['data_solicitado'] = Controller_Helper_Date::getDatetimeNowDb();
+                $dadosPagamento['status'] = 0;
+                $dadosPagamento['processado'] = 0;
+
+                $this->_modelPagamento->insert($dadosPagamento);
+                
+                // redirecionando para o site do pagseguro    
+                $this->_redirect($url);
+            } catch (PagSeguroServiceException $error) {
+                Controller_Helper_Messeges::setMesseges(array(
+                    'error' => 'Houve um erro na comunicação com o PagSeguro'
+                ));
+                Zend_Debug::dump($error->getMessage()); die();
+            }
+        }
+    }
+    
+     /**
+     * VALIDA O CUPOM DE DESCONTO (ajax)
+     */
+    public function validaCupomAction() {
+        $this->_disabledLayout();
+        $this->_disabledView();
+        
+        $cupom = $this->_getParam("cupom");
+        $id_plano = $this->_getParam("id_plano");
+        
+        $dadosPlano = $this->_modelPlanoValor->getPlanoValorUsuario($id_plano);        
+        $dadosCupomDesconto = $this->_modelCupomDesconto->getDescontoCupom($cupom, $dadosPlano->usuario);                                                        
+        
+        if ($dadosCupomDesconto) {
+            // calcula o desconto
+            $desconto = ($dadosPlano->valor_plano * ($dadosCupomDesconto->porcentagem / 100)) * -1;                                      
+        } else {
+            $desconto = 0;
+        }     
+        
+        echo View_Helper_Currency::getCurrency($desconto);
+    }
+
+    /**
+     * VALIDA O CUPOM DE DESCONTO (ajax)
+     */
+    public function recalculaValorAction() {
+        $this->_disabledLayout();
+        $this->_disabledView();
+        
+        $valor_plano = (float)$this->_getParam("valor_plano");
+        $cupom = $this->_getParam("cupom");
+        $id_plano = $this->_getParam("id_plano");
+        
+        $dadosPlano = $this->_modelPlanoValor->getPlanoValorUsuario($id_plano);        
+        $dadosCupomDesconto = $this->_modelCupomDesconto->getDescontoCupom($cupom, $dadosPlano->usuario);                                                        
+        
+        if ($dadosCupomDesconto) {
+            // calcula o desconto
+            $desconto = ($dadosPlano->valor_plano * ($dadosCupomDesconto->porcentagem / 100)) * -1;                                      
+            $novo_valor = $valor_plano - $desconto;
+        } else {
+            $novo_valor = $valor_plano;
+        }     
+        
+        echo View_Helper_Currency::getCurrency($novo_valor);
+    }
+    
     public function responsePlanoAction() {
 
         $credentials = $this->_credentials;
@@ -369,80 +428,6 @@ class PlanosController extends Application_Controller {
         }
         
     }
-
-    /*
-    public function alterarPlanoAction() {
-
-        $this->view->messages = Controller_Helper_Messeges::getMesseges();
-
-        // busca os dados do plano do usuario
-        $dadosPlano = $this->_modelUsuarioPlano->getPlanoAtual($this->_session->id_usuario);
-        $this->view->dadosPlano = $dadosPlano;
-        $this->view->usuario = $this->_session->nome_completo;
-               
-        $this->_formUsuariosPlanosUsuario->id_usuario->setValue($this->_session->id_usuario);
-        $this->view->formPlanosUsuario = $this->_formUsuariosPlanosUsuario;
-        
-        // envia o plano de experiencia de 30 dias para a view
-        $planoExperiencia = $this->_modelPlano->getPlanoExperiencia();
-        $this->view->id_usuario = $this->_session->id_usuario;
-        $this->view->planoExperiencia = $planoExperiencia;
-
-        if ($this->_request->isPost()) {
-            $dadosAtualizaPlano = $this->_request->getPost();
-            if ($this->_formUsuariosPlanosUsuario->isValid($dadosAtualizaPlano)) {
-                $dadosAtualizaPlano = $this->_formUsuariosPlanosUsuario->getValues();
-
-                Zend_Debug::dump($dadosAtualizaPlano); die();
-                
-                // dados do usuario
-                $dadosUsuario = $this->_modelUsuario->find($this->_session->id_usuario)->current();
-                $cpf_usuario = Controller_Helper_Application::formatCPF($dadosUsuario->cpf_usuario);
-
-                // buscando os dados do plano escolhido
-                $dadosPlano = $this->_modelPlanoValor->getPlanoValorUsuario($dadosAtualizaPlano['id_plano']);
-
-                try {
-                    $paymentRequest = new PagSeguroPaymentRequest();
-                    $paymentRequest->addItem('0001', $dadosPlano->descricao_plano, 1, $dadosPlano->valor_plano);
-                    $paymentRequest->setCurrency("BRL");
-
-                    $paymentRequest->setSenderName($dadosUsuario->nome_completo);
-                    $paymentRequest->setSenderEmail($dadosUsuario->email_usuario);
-                    //$paymentRequest->setSender($dadosUsuario->nome_completo, $dadosUsuario->email_usuario);
-                    $paymentRequest->addParameter('senderCPF', $cpf_usuario);
-                    $paymentRequest->setReference($dadosUsuario->cpf_usuario);
-
-                    // Informando as credenciais  
-                    $credentials = $this->_credentials;
-
-                    // fazendo a requisição a API do PagSeguro pra obter a URL de pagamento                  
-                    $url = $paymentRequest->register($credentials);
-                    
-                    // grava a solicitacao de pagamento na tabela pagamento
-                    $dadosPagamento['id_usuario'] = $this->_session->id_usuario;
-                    $dadosPagamento['id_plano'] = $dadosPlano->id_plano;
-                    $dadosPagamento['id_plano_valor'] = $dadosPlano->id_plano_valor;
-                    $dadosPagamento['data_solicitado'] = Controller_Helper_Date::getDatetimeNowDb();
-                    $dadosPagamento['status'] = 0;
-                    $dadosPagamento['processado'] = 0;
-                    
-                    $this->_modelPagamento->insert($dadosPagamento);
-                    
-                    // redirecionando para o site do pagseguro    
-                    $this->_redirect($url);
-                    
-                } catch (PagSeguroServiceException $error) {
-                    $this->view->messages = array(
-                        array(
-                            'error' => $error->getMessage()
-                        )
-                    );
-                }
-            }
-        }
-    }
-    */
 
 }
 

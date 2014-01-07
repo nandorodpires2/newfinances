@@ -8,14 +8,6 @@ $(document).ready(function (){
     $("#politica-privacidade").hide();
     $("#fechar").hide();
 
-    // caso o estado seja selecionado
-    // busca as cidades do estado correspondente
-    /*
-    $("#id_estado").change(function(){        
-        var id_estado = $(this).val();
-        buscaCidades(id_estado);
-    });
-    */
     // mostrando a politica de privacidade
     $("#info_politica").click(function (){
         $("#politica-privacidade").show();
@@ -26,6 +18,12 @@ $(document).ready(function (){
     $("#fechar").click(function (){
         $("#politica-privacidade").hide();
         $("#fechar").hide();
+    });
+    
+    // valida o cpf do usuario
+    $("#cpf_usuario").blur(function (){
+        var cpf = $(this).val();
+        alert(cpf);
     });
     
 });

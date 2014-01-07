@@ -22,31 +22,92 @@
 .box-plano-trimestral, .box-plano-semestral { 
     float: left;
     width: 25%;
-    height: 150px;
-    margin-top: 30px;
+    height: 300px;
+    margin-top: 25px;
     padding: 5px;
     text-align: center;
     border-left: 2px solid #DCDCDC;
     border-bottom: 2px solid #DCDCDC;
     border-top: 1px solid #DCDCDC;
     border-right: 1px solid #DCDCDC;
+    background: #EBEBEB;
 }
-.box-plano-trimestral {}
+.box-plano-trimestral {
+    
+}
 .box-plano-anual {
     float: left;
     width: 30%;
-    height: 200px;
+    height: 350px;
     padding: 5px;
     text-align: center;
     border-left: 2px solid #DCDCDC;
     border-bottom: 2px solid #DCDCDC;
     border-top: 1px solid #DCDCDC;
     border-right: 1px solid #DCDCDC;
+    background: #84bbf3;
 }
-.box-plano-semestral {}
+.box-plano-semestral {
+}
 
-.titulo-plano { }
-.valor-plano { }
-.valor-mes-plano { }
+.titulo-plano { 
+    width: 100%;
+    font-size: 27px;
+    font-weight: bold;
+    text-align: center;            
+}
+
+.bg_blue {    
+    color: #FFF;
+    background: #1d5fa1;
+}
+.bg_orange {
+    background: #F28E00;
+}
+.bg_green {
+    color: #FFF;
+    background: #009835;
+}
+
+.valor-plano { 
+    font-size: 50px;
+    font-weight: bold;
+    padding: 20px 10px;
+}
+.valor-mes-plano {
+    font-weight: bold;
+    padding: 15px;
+}
+
+.economia-plano {
+    padding: 10px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.valor-economia {
+    padding: 10px;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+#experimente {
+    float: left;
+    width: 100%;
+    height: 30px;
+    font-size: 19px;
+    padding: 10px 0;
+    margin: 15px 0;
+    background: #0068B4;
+    color: #FFF;
+    font-weight: bold;
+    text-align: center;
+}
+
+#box-info {
+    font-size: 12px;
+    text-align: center;
+    font-style: italic;
+}
 
 /* classes para as cores dos planos */

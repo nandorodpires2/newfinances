@@ -2,10 +2,77 @@
 <div id="pages">
     <div id="site-index-index">
         <div class="sobre-sistema">
-            texto
+            <p><h3>Sobre o Sistema</h3></p>
+            <p>
+                <span class="paragrafo">
+                    O NewFinances é um sistema de controle financeiro no qual você
+                </span>
+                <span>
+                poderá otimizar suas contas e gerenciar suas finanças de maneira
+                fácil e objetiva, controlando assim com total segurança suas 
+                receitas e despesas diárias.
+                </span>
+            </p>
+            <p>
+                <span class="paragrafo">
+                Hoje em dia é fundamental a necessidade de termos cada vez mais 
+                </span>
+                <span>
+                uma saúde financeira estável, no qual poderemos assim fazer 
+                aqueles investimentos tão sonhados: Aquela viagem internacional 
+                ou comprar o carro novo.
+                </span>
+            </p>
+            <p>
+                <span class="paragrafo">
+                O sistema é totalmente voltado para as famílias brasileiras, 
+                </span>
+                <span>
+                por isso a necessidade de desenvolvermos algo simples e prático,
+                simples na forma de usar o sistema e prático no qual os 
+                resultados são facilmente visíveis.
+                </span>
+            </p>
+            <p>
+                <span class="paragrafo">
+                Não perca tempo e cadastre-se agora mesmo e desfrute de todas 
+                </span>
+                <span>
+                as vantagens de ser um(a) usuário(a) do NewFinances. 
+                </span>
+            </p>
+            <p>
+                <span class="paragrafo">
+                    São três <a href="<?php echo $this->url(array(
+                            'module' => 'site',
+                            'controller' => 'planos',
+                            'action' => 'index'
+                        ), null, true); ?>">planos</a> para você escolher. 
+                    Você poderá também 
+                </span>
+                <span>
+                experimentar por 30 dias o NewFinances antes de aderir a 
+                algum plano.
+                </span>
+            </p>
         </div>
+        <div class="news">
+            <h4>Notícias Econômicas</h4>
+            <?php foreach ($this->dadosFeed as $feed) : ?>
+            <div class="data-news">
+                <?php echo $feed['data']; ?> 
+            </div>
+            <div class="titulo-news">
+                <a href="<?php echo $feed['link']; ?>" target="_blank"><?php echo $feed['titulo']; ?></a>
+            </div>
+            <?php endforeach; ?>
+            <div style="float: right;">
+                Fonte: Valor Econômico
+            </div>
+        </div>
+        <!--
         <div class="box-links">
-            link 1
+            Porque usar o NewFinances
         </div>
         <div class="box-links">
             link 2
@@ -13,5 +80,6 @@
         <div class="box-links">
             link 3
         </div>
+        -->
     </div>
 </div>

@@ -1,0 +1,52 @@
+<?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/planos/alterar-plano.css')); ?>
+<?php echo $this->headScript()->appendFile($this->baseUrl('views/js/planos/index.js')); ?>
+<div id="pages">
+    <div id="planos-altera-plano">
+        <div class="dados-carrinho">
+            <form method="post">
+                <table>
+                    <tr>
+                        <th>Descrição</th>
+                        <th>Período</th>
+                        <th>Vencimento</th>
+                        <th>Valor</th>
+                    </tr>
+                    <tr>
+                        <td><?php echo $this->dadosPlano->descricao_plano; ?></td>
+                        <td class="align_center"><?php echo $this->dadosPlano->tempo_plano . ' ' . $this->dadosPlano->unidade_tempo_plano; ?></td>
+                        <td class="align_center"><?php echo View_Helper_Date::getDataView($this->validade_plano); ?></td>
+                        <td class="align_right"><?php echo View_Helper_Currency::getCurrency($this->dadosPlano->valor_plano); ?></td>
+                    </tr>          
+                    <!--
+                    <tr>
+                        <td class="align_center">Tenho um Cupom: </td>
+                        <td colspan="2">
+                            <input type="hidden" name="id_plano" id="id_plano" value="<?php echo $this->dadosPlano->id_plano; ?>"/>
+                            <input type="hidden" name="valor_plano" id="valor_plano" value="<?php echo $this->dadosPlano->valor_plano; ?>"/>
+                            <input type="hidden" name="valor_total" id="valor_total" />
+                            <input type="text" name="cupom" id="cupom" />
+                            <a href="#" id="validar">Validar</a>
+                        </td>
+                        <td id="valor-desconto" class="align_right"></td>
+                    </tr>
+                    -->
+                    <tr>
+                        <th colspan="3">TOTAL</th>
+                        <th id="valor-total-pagar"><?php echo View_Helper_Currency::getCurrency($this->dadosPlano->valor_plano); ?></th>
+                    </tr> 
+                    <tr>
+                        <td colspan="4" class="align_right">&nbsp;
+                            <input type="hidden" name="id_plano" id="id_plano" value="<?php echo $this->dadosPlano->id_plano; ?>"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="align_right">
+                            <input type="image" src="https://p.simg.uol.com.br/out/pagseguro/i/botoes/pagamentos/209x48-pagar-assina.gif" name="submit" alt="Pague com PagSeguro - é rápido, grátis e seguro!" />
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <?php echo $this->partial('planos/info-pagamento.phtml'); ?>
+        </div>
+    </div>
+</div>

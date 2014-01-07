@@ -14,22 +14,24 @@
         <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery-ui-1.10.3.js')); ?>    
         <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery.ui.datepicker-pt-BR.js')); ?>    
         <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery.maskedinput.js')); ?>
-        <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery.maskMoney.js')); ?>    
-        <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/application.js')); ?>   
+        <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery.maskMoney.js')); ?>          
+        <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/application.js')); ?>
+        <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/facebook.js')); ?>
+        <?php //echo $this->headScript()->appendFile($this->baseUrl('views/js/jsapi.js')); ?>  
         
     </head>
-    <body>
-        <div id="social-area">
-            <div style="float: left; margin: 10px 30px; ">
-                <img src="<?php echo $this->baseUrl('views/img/logo_newfinances.png'); ?>" width="280" />
+    <body>        
+        <div id="content-all">   
+            <div id="social-area">
+                <div style="float: left; margin: 10px 0; ">
+                    <img src="<?php echo $this->baseUrl('views/img/logo_newfinances.png'); ?>" width="280" />
+                </div>
+                <div class="redes-sociais">
+                    <img src="<?php echo $this->baseUrl('views/img/icon_face_social.png'); ?>" />
+                    <img src="<?php echo $this->baseUrl('views/img/icon_twitter_social.png'); ?>" />
+                    <img src="<?php echo $this->baseUrl('views/img/icon_google_plus_social.png'); ?>" />
+                </div>
             </div>
-            <div class="redes-sociais">
-                <img src="<?php echo $this->baseUrl('views/img/icon_face_social.png'); ?>" />
-                <img src="<?php echo $this->baseUrl('views/img/icon_twitter_social.png'); ?>" />
-                <img src="<?php echo $this->baseUrl('views/img/icon_google_plus_social.png'); ?>" />
-            </div>
-        </div>
-        <div id="content-all">            
             <div id="menus">
                 <ul id="saturday">
                     <li>

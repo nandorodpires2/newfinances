@@ -42,7 +42,11 @@ class Controller_Helper_Date extends Zend_Controller_Action_Helper_Abstract {
             return null;
         }
         
-        $zendDate = new Zend_Date($data_aderido);        
+        if ($data_aderido == null) {
+            $zendDate = new Zend_Date();        
+        } else {        
+            $zendDate = new Zend_Date($data_aderido);        
+        }
         
         if ($plano->unidade_tempo_plano == 'ano') {
             $zendDate->addYear($plano->tempo_plano);

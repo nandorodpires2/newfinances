@@ -8,11 +8,29 @@
 
 body { margin: 0; text-align: center; background: #FFFFF9; }
 
-#social-area { float: left; width: 100%; padding: 4px 0; }
-#social-area .redes-sociais { float: right; text-align: right; margin-top: 20px; margin-right: 20px; }
-.redes-sociais img { width: 40px; margin: 5px 9px; border: none; }
+#social-area { 
+    float: left; 
+    width: 100%; 
+    margin: 0 auto; 
+    padding: 4px 0; 
+}
+#social-area .redes-sociais { 
+    float: right; 
+    text-align: right; 
+    margin-top: 20px; 
+    margin-right: 0; 
+}
+.redes-sociais img { 
+    width: 40px; 
+    margin: 5px 9px; 
+    border: none; 
+}
 
-#content-all { position: relative; width: 94%; margin: auto; text-align: left; }
+#content-all { 
+    position: relative; 
+    width: 1266px; 
+    margin: auto; 
+    text-align: left; }
 
 #menus { float: left; left: 0; width: 100%; }
 
