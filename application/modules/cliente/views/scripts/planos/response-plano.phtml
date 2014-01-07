@@ -1,12 +1,47 @@
 <div id="pages">
     <div id="planos-response-plano">
         <?php echo View_Helper_Messeges::getMessages($this->messages); ?>          
-        <?php if ($this->status == Application_Controller::PAID) : ?>
-        PAGO
+        <?php if ($this->status == Application_Controller::PAID || $this->status == Application_Controller::AVAILABLE) : ?>
+        <div class="pagamento-confirmado">
+            <h3>PAGAMENTO CONFIRMADO</h3>
+            <p>Sr(a) <?php echo $this->dadosUsuario->nome_completo; ?>,</p>
+            <p>
+                O pagamento de sua soliciatação de novo plano foi efetuada com
+                sucesso, você já está cadastrado(a) no novo plano.
+            </p>
+            <p>
+            <p>
+                Muito obrigado por fazer parte de nossa equipe.
+            </p>
+            </p>
+        </div>
         <?php elseif ($this->status == Application_Controller::WAITING_PAYMENT) : ?>
-        AGUARDANDO
+        <div class="aguardando-pagamento">
+            <h3>AGUARDANDO PAGAMENTO</h3>
+            <p>Sr(a) <?php echo $this->dadosUsuario->nome_completo; ?>,</p>
+            <p>sua solicitação de alteração de plano foi realizada com sucesso.</p>
+            <p>
+                Assim que a confirmação do pagamento for realizada em nosso
+                sistema, você será notificado(a) e o seu plano automaticamente
+                atualizado.
+            </p>
+            <p>
+                Muito obrigado por fazer parte de nossa equipe.
+            </p>
+        </div>
         <?php else : ?>
-        OUTRO MOTIVO
+        <div class="solicitacao-andamento">
+            <h3>SOLICITAÇÃO EM ANDAMENTO</h3>
+            <p>Sr(a) <?php echo $this->dadosUsuario->nome_completo; ?>,</p>
+            <p>
+                A solictação de alteração de plano está em andamento, peço que
+                aguarde. O Sr(a) será notificado(a) pelo e-mail caso haja 
+                alguma alteração no status da solicitação.
+            </p>
+            <p>
+                Muito obrigado por fazer parte de nossa equipe.
+            </p>
+        </div>
         <?php endif; ?>        
     </div>
 </div>

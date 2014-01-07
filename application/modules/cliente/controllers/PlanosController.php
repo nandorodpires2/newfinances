@@ -216,7 +216,7 @@ class PlanosController extends Application_Controller {
         $transaction_id = $this->_getParam("transaction_id", null);
 
         //$transaction_id = '27464905-0E86-4F89-8476-93EA185C382E'; // paga
-        //$transaction_id = "5C8A55D0-9D22-446E-BDC9-44CB04A6535B"; // aguardando pagamento
+        //$transaction_id = "24455A68-8DF4-49BB-9CBF-DE3149B09774"; // aguardando pagamento
 
         define('TOKEN', '1E3A21173CC2409EBB2DE17317045312');
 
@@ -313,22 +313,21 @@ class PlanosController extends Application_Controller {
 
             $mail->send(Zend_Registry::get('mail_transport'));
             
-        } else {            
-            if ($transaction_id) {
-                
+        } else {                        
+            if ($transaction_id) {                
                 // busca os dados da transacao
                 $transaction = $this->getTransaction($transaction_id);
+                
                 $value_transaction = $transaction->getStatus()->getValue();
                 $name = $transaction->getSender()->getName();
                 $email = $transaction->getSender()->getEmail();
-                $code = $transaction->getCode();
-                
+                $code = $transaction->getCode();                
                 // buscando a referencia do usuario que e o cpf
-                $cpf_reference = $transaction->getReference();
+                $cpf_reference = $transaction->getReference();               
                 
                 // busca os dados do usuario
                 $dadosUsuario = $this->_modelUsuario->getDadosUsuarioCpf($cpf_reference);
-
+                
                 // busca o plano requisitado pelo usuario
                 $dadosPlanoRequisitado = $this->_modelPagamento->fetchRow(
                     "id_usuario = {$dadosUsuario->id_usuario} and processado = 0"
@@ -338,7 +337,7 @@ class PlanosController extends Application_Controller {
                 $status = (int)$transaction->getStatus()->getValue();
                 
                 // verifica se o status esta como pago para liberacao automática do
-                // sistema
+                // sistema                
                 if ($status === parent::PAID) {               
 
                     // dasativar o plano atual do usuario                    
@@ -384,15 +383,16 @@ class PlanosController extends Application_Controller {
                     $this->desativaCupom($dadosPlanoRequisitado->id_usuario);
 
                 } else {
-                    // atualizar o processo              
+                    // atualizar o processo                        
                     $dadosAtualizaProcessoPagamento['cod_transacao'] = $transaction_id;                    
                     $dadosAtualizaProcessoPagamento['status'] = $status;                    
                     $whereAtualizaProcessoPagamento = "id_pagamento = {$dadosPlanoRequisitado->id_pagamento}";
                     
                     $this->_modelPagamento->update($dadosAtualizaProcessoPagamento, $whereAtualizaProcessoPagamento);
                 }
-
+                
                 $this->view->status = $status;
+                $this->view->dadosUsuario = $dadosUsuario;                
                 
             }            
             
