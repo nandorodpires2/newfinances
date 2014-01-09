@@ -1,0 +1,41 @@
+/* 
+    Document   : index
+    Created on : 08/01/2014, 14:19:09
+    Author     : Realter
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.lista-relatorio-anual table {
+    border: 1px solid #696969;
+}
+
+
+.lista-relatorio-anual table tr:nth-child(odd) { background-color:#aad4ff; }
+.lista-relatorio-anual table tr:nth-child(even) { background-color:#ffffff; }
+
+.lista-relatorio-anual table th {
+    font-size: 16px;
+    color: #FFF;
+    padding: 7px;
+    background: #1d5fa1;
+}
+
+.lista-relatorio-anual table td {
+    padding: 5px;
+    border-right: 1px solid #dcdcdc;
+    border-bottom: 1px solid #dcdcdc;
+}
+
+.mes { font-size: 14px; font-weight: bold; }
+
+.receita { color: #006400; }
+.despesa { color: #CC0000; }
+
+.totais { font-size: 18px; font-weight: bold; }
+.totais-bg {  background: #FFFACD; }
+
+.realizado { font-size: 14px; font-weight: bold }
+.previsto { }
+.total-realizado { font-size: 18px; font-weight: bold }
+.total-previsto { font-size: 14px; }

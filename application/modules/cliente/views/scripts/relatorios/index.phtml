@@ -1,3 +1,4 @@
+<?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/relatorios/index.css')); ?>
 <div id="pages">
     <div id="relatorios">
         <div class="filters">
@@ -6,50 +7,51 @@
                 <?php echo $this->formFilter; ?>
             </fieldset>            
         </div>
+        <h2 class="titulo-laranja">Relatório Anual</h2>
         <div class="lista-relatorio-anual">
-            <table class="tabless-green">
+            <table>
                 <tr>
-                    <td>Mês</td>
-                    <td>Receita</td>
-                    <td>Despesa</td>
-                    <td>Saldo</td>
+                    <th>Mês</th>
+                    <th>Receita</th>
+                    <th>Despesa</th>
+                    <th>Saldo</th>
                 </tr>
-                <?php if ($this->relatorioAnual->count() > 0) : ?>
-                <?php foreach ($this->relatorioAnual as $relatorio) : ?>
-                <tr class="align_right">
-                    <td class="align_left"><?php echo ucfirst(View_Helper_Date::getMonthName($relatorio->mes)); ?></td>
-                    <td>
-                        <span><?php echo View_Helper_Currency::getCurrency($relatorio->receita); ?></span><br />
-                        <span class="descricao-mini">Previsto: <?php echo View_Helper_Currency::getCurrency($relatorio->receita_prev); ?></span>
-                    </td>
-                    <td>
-                        <span><?php echo View_Helper_Currency::getCurrency($relatorio->despesa); ?></span><br />
-                        <span class="descricao-mini">Previsto: <?php echo View_Helper_Currency::getCurrency($relatorio->despesa_prev); ?></span>
-                    </td>
-                    <td>
-                        <span><?php echo View_Helper_Currency::getCurrency($relatorio->saldo); ?></span><br />
-                        <span class="descricao-mini">Previsto: <?php echo View_Helper_Currency::getCurrency($relatorio->saldo_prev); ?></span>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-                <tr>
-                    <td>TOTAIS</td>
-                    <td>
-                        <span><?php echo View_Helper_Currency::getCurrency($this->totalRelatorioAnual->total_receita); ?></span><br />
-                        <span class="descricao-mini">Previsto: <?php echo View_Helper_Currency::getCurrency($this->totalRelatorioAnual->total_receita_prev); ?></span>
-                    </td>
-                    <td>
-                        <span><?php echo View_Helper_Currency::getCurrency($this->totalRelatorioAnual->total_despesa); ?></span><br />
-                        <span class="descricao-mini">Previsto: <?php echo View_Helper_Currency::getCurrency($this->totalRelatorioAnual->total_despesa_prev); ?></span>
-                    </td>
-                    <td>
-                        <span><?php echo View_Helper_Currency::getCurrency($this->totalRelatorioAnual->total_saldo); ?></span><br />
-                        <span class="descricao-mini">Previsto: <?php echo View_Helper_Currency::getCurrency($this->totalRelatorioAnual->total_saldo_prev); ?></span>
-                    </td>
-                </tr>
+                <?php if (isset ($this->dadosRelatorio['dados']) && count($this->dadosRelatorio['dados']) > 0) : ?>
+                    <?php foreach ($this->dadosRelatorio['dados'] as $relatorio) : ?>
+                    <tr class="align_right">
+                        <td class="align_left mes"><?php echo View_Helper_Date::getMonthName($relatorio['mes']); ?></td>
+                        <td class="receita">
+                            <span class="realizado"><?php echo View_Helper_Currency::getCurrency($relatorio['receita']); ?><br /></span>
+                            <span class="descricao-mini">Previsto: <?php echo View_Helper_Currency::getCurrency($relatorio['receita_prev']); ?></span>
+                        </td>
+                        <td class="despesa">
+                            <span class="realizado"><?php echo View_Helper_Currency::getCurrency($relatorio['despesa']); ?><br /></span>
+                            <span class="descricao-mini">Previsto: <?php echo View_Helper_Currency::getCurrency($relatorio['despesa_prev']); ?></span>
+                        </td>
+                        <td>
+                            <span class="bold <?php echo $this->dadosRelatorio['total_saldo'] < 0 ? 'despesa' : 'receita'?>"><?php echo View_Helper_Currency::getCurrency($relatorio['saldo']); ?><br /></span>
+                            <span class="descricao-mini">Previsto: <?php echo View_Helper_Currency::getCurrency($relatorio['saldo_prev']); ?></span>
+                        </td>
+                    </tr>                
+                    <?php endforeach; ?>                
+                    <tr class="align_center">
+                        <td class="totais-bg"><span class="totais">TOTAIS</span></td>
+                        <td class="totais-bg">
+                            <span class="totais receita"><?php echo View_Helper_Currency::getCurrency($this->dadosRelatorio['total_receita']); ?><br /></span>
+                            <span class="descricao-mini">Previsto: <?php echo View_Helper_Currency::getCurrency($this->dadosRelatorio['total_receita_prev']); ?></span>
+                        </td>
+                        <td class="totais-bg">
+                            <span class="totais despesa"><?php echo View_Helper_Currency::getCurrency($this->dadosRelatorio['total_despesa']); ?><br /></span>
+                            <span class="descricao-mini"><?php echo View_Helper_Currency::getCurrency($this->dadosRelatorio['total_despesa_prev']); ?></span>
+                        </td>
+                        <td class="totais-bg">
+                            <span class="totais <?php echo $this->dadosRelatorio['total_saldo'] < 0 ? 'despesa' : 'receita'?>"><?php echo View_Helper_Currency::getCurrency($this->dadosRelatorio['total_saldo']); ?><br /></span>
+                            <span class="descricao-mini"><?php echo View_Helper_Currency::getCurrency($this->dadosRelatorio['total_saldo_prev']); ?></span>
+                        </td>
+                    </tr>
                 <?php else : ?>
                 <tr>
-                    <td colspan="4" class="align_center">Nenhum relatório disponível</td>
+                    <td colspan="4" class="align_center">Nenhum relatório disponível.</td>
                 </tr>
                 <?php endif; ?>
             </table>

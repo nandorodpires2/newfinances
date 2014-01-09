@@ -6,6 +6,7 @@
 $(document).ready(function (){
 
     $("#politica-privacidade").hide();
+    $("#termo-uso").hide();
     $("#fechar").hide();
 
     // mostrando a politica de privacidade
@@ -14,18 +15,19 @@ $(document).ready(function (){
         $("#fechar").show();
     });
     
+    // mostrando o termo de uso
+    $("#info_termo").click(function (){
+        $("#termo-uso").show();
+        $("#fechar").show();
+    });
+    
     // fechando a política de privacidade
     $("#fechar").click(function (){
         $("#politica-privacidade").hide();
+        $("#termo-uso").hide();
         $("#fechar").hide();
     });
-    
-    // valida o cpf do usuario
-    $("#cpf_usuario").blur(function (){
-        var cpf = $(this).val();
-        alert(cpf);
-    });
-    
+        
 });
 
 // busca as cidades de acordo com o estado selecionado

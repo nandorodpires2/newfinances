@@ -131,7 +131,7 @@ class UsuariosController extends Zend_Controller_Action {
 
                                 $dadosNovoUsuario['data_cadastro'] = Controller_Helper_Date::getDatetimeNowDb();
                                 $dadosNovoUsuario['data_alteracao'] = Controller_Helper_Date::getDatetimeNowDb();
-                                $dadosNovoUsuario['data_nascimento'] = Controller_Helper_Date::getDatetimeNowDb();
+                                $dadosNovoUsuario['data_nascimento'] = Controller_Helper_Date::getDateDb($dadosNovoUsuario['data_nascimento']);
                                 $dadosNovoUsuario['ativo_usuario'] = 1;
                                 $dadosNovoUsuario['senha_usuario'] = md5($dadosNovoUsuario['senha_usuario']);
 

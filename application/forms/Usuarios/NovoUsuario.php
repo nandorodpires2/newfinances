@@ -74,7 +74,7 @@ class Form_Usuarios_NovoUsuario extends Zend_Form {
         $this->addElement("checkbox", 'politica', array(
             'required' => true,
             'value' => '',
-            'label' => "Li e concordo com a <a id='info_politica' href='#'>Política de Privacidade</a>"
+            'label' => "Li e concordo com a <a id='info_politica' href='#'>Política de Privacidade</a> e <a id='info_termo' href='#'>Termo de Uso</a>"
         ));
         
         // submit

@@ -39,12 +39,16 @@
                 'action' => 'index'
             ), null, true); ?>'>
                     <span>Orçamentos</span></a></li>
-            <li><a href='<?php echo $this->url(array(
-                'module' => 'cliente',
-                'controller' => 'relatorios',
-                'action' => 'index'
-            ), null, true); ?>'>
-                    <span>Relatórios</span></a></li>
+            <li><a href='#'>
+                <span>Relatórios</span></a>
+                <ul>                                
+                  <li><a href='<?php echo $this->url(array(
+                     'module' => 'cliente',
+                     'controller' => 'relatorios',
+                     'action' => 'index'
+                  ), null, true); ?>'><span>Anual</span></a></li>                                                    
+               </ul>
+            </li>
             <li class='has-sub'><a href='<?php echo $this->url(array(
                      'module' => 'cliente',
                      'controller' => 'configuracoes',

@@ -122,24 +122,7 @@ class PlanosController extends Application_Controller {
         
         if ($this->_request->isPost()) {    
             
-            $dadosAlteraPlano = $this->_request->getPost();            
-            
             try {
-                $paymentRequest = new PagSeguroPaymentRequest();
-                $paymentRequest->addItem('0001', $dadosPlano->descricao_plano, 1, $dadosPlano->valor_plano);
-                $paymentRequest->setCurrency("BRL");
-
-                $paymentRequest->setSenderName($dadosUsuario->nome_completo);
-                $paymentRequest->setSenderEmail($dadosUsuario->email_usuario);
-                //$paymentRequest->setSender($dadosUsuario->nome_completo, $dadosUsuario->email_usuario);
-                $paymentRequest->addParameter('senderCPF', $cpf_usuario);
-                $paymentRequest->setReference($dadosUsuario->cpf_usuario);
-                                
-                // Informando as credenciais  
-                $credentials = $this->_credentials;
-
-                // fazendo a requisição a API do PagSeguro pra obter a URL de pagamento                  
-                $url = $paymentRequest->register($credentials);
                 
                 // grava a solicitacao de pagamento na tabela pagamento
                 $dadosPagamento['id_usuario'] = $this->_session->id_usuario;
@@ -151,6 +134,25 @@ class PlanosController extends Application_Controller {
 
                 $this->_modelPagamento->insert($dadosPagamento);
                 
+                // recupera o ultimo id inserido
+                $last_id = $this->_modelPagamento->getLastId();
+                
+                $paymentRequest = new PagSeguroPaymentRequest();
+                $paymentRequest->addItem('0001', $dadosPlano->descricao_plano, 1, $dadosPlano->valor_plano);
+                $paymentRequest->setCurrency("BRL");
+
+                $paymentRequest->setSenderName($dadosUsuario->nome_completo);
+                $paymentRequest->setSenderEmail($dadosUsuario->email_usuario);
+                //$paymentRequest->setSender($dadosUsuario->nome_completo, $dadosUsuario->email_usuario);
+                $paymentRequest->addParameter('senderCPF', $cpf_usuario);
+                $paymentRequest->setReference($last_id);
+                                
+                // Informando as credenciais  
+                $credentials = $this->_credentials;
+
+                // fazendo a requisição a API do PagSeguro pra obter a URL de pagamento                  
+                $url = $paymentRequest->register($credentials);
+                
                 // redirecionando para o site do pagseguro    
                 $this->_redirect($url);
             } catch (PagSeguroServiceException $error) {
@@ -160,6 +162,69 @@ class PlanosController extends Application_Controller {
                 Zend_Debug::dump($error->getMessage()); die();
             }
         }
+    }
+    
+    public function responsePlanoAction() {
+
+        $credentials = $this->_credentials;
+        
+        $data = "<p>Dados enviados</p>";
+        
+        $type = "";
+        
+        if (count($_POST) > 0) {
+	
+            $type = "post";
+            
+            $post = Zend_Debug::dump($_POST);
+            
+            // POST recebido, indica que é a requisição do NPI.
+            $npi = new PagSeguroNpi();
+            $result = $npi->notificationPost();
+
+            $transaction_id = isset($_POST['TransacaoID']) ? $_POST['TransacaoID'] : '';
+
+            if ($result == "VERIFICADO") {
+                //O post foi validado pelo PagSeguro.
+            } else if ($result == "FALSO") {
+                //O post não foi validado pelo PagSeguro.
+            } else {
+                //Erro na integração com o PagSeguro.
+            }
+            
+            $data .= "<p>Resultado: {$result}</p>";
+            $data .= "<p>POST: <pre>{$post}</pre></p>";
+
+        } else {
+            
+            // recupera o id da transacao
+            $transaction_id = $this->_getParam("transaction_id", null);            
+            // busca os dados da transacao
+            $transaction = $this->getTransaction($transaction_id);            
+            // status 
+            $status = (int)$transaction->getStatus()->getValue();            
+            // busca a referencia
+            $reference = (int)$transaction->getReference();            
+            // processa a transacao a partir do status
+            $this->processaTransacao($status, $reference, $transaction_id);
+            
+            $type = "redircionamento";
+            $data .= "<p>Status: {$status}</p>";
+        }  
+        
+        // envia o status para a view
+        $this->view->status = $status;
+        
+        $data .= "<p>Cod.: {$transaction_id}</p>";        
+        
+        // create mail object
+        $mail = new Zend_Mail('utf-8');
+        $mail->setBodyHtml($data);
+        $mail->setFrom('newfinances@newfinances.com.br', 'NewFinances - Controle Financeiro');
+        $mail->addTo("nandorodpires@gmail.com");            
+        $mail->setSubject('Alteração do Status (PagSeguro)');
+        $mail->send(Zend_Registry::get('mail_transport'));
+                
     }
     
      /**
@@ -210,207 +275,6 @@ class PlanosController extends Application_Controller {
         echo View_Helper_Currency::getCurrency($novo_valor);
     }
     
-    public function responsePlanoAction() {
-
-        $credentials = $this->_credentials;
-        $transaction_id = $this->_getParam("transaction_id", null);
-
-        //$transaction_id = '27464905-0E86-4F89-8476-93EA185C382E'; // paga
-        //$transaction_id = "24455A68-8DF4-49BB-9CBF-DE3149B09774"; // aguardando pagamento
-
-        define('TOKEN', '1E3A21173CC2409EBB2DE17317045312');
-
-        if (count($_POST) > 0) {
-
-            $post = Zend_Debug::dump($_POST);
-            
-            // POST recebido, indica que é a requisição do NPI.
-            $npi = new PagSeguroNpi();
-            $result = $npi->notificationPost();
-
-            $transacaoID = isset($_POST['TransacaoID']) ? $_POST['TransacaoID'] : '';
-
-            if ($result == "VERIFICADO") {
-                
-                $dadosTransacao = $this->_request->getPost();
-                
-                // busca os dados do usuario
-                $dadosUsuario = $this->_modelUsuario->getDadosUsuarioCpf($dadosTransacao['Referencia']);
-                // busca o plano requisitado pelo usuario
-                $dadosPlanoRequisitado = $this->_modelPagamento->fetchRow(
-                    "id_usuario = {$dadosUsuario->id_usuario} and processado = 0"
-                );
-                
-                // verifica o status da transacao
-                if ($dadosTransacao['StatusTransacao'] == "Aprovado") {
-                    // dasativar o plano atual do usuario                    
-                    $dadosDesativaPlanoUsuario['ativo_plano'] = 0;
-                    $whereDesativaPlanoUsuario = "id_usuario_plano = {$dadosUsuario->id_usuario_plano}";
-                    
-                    $this->_modelUsuarioPlano->update($dadosDesativaPlanoUsuario, $whereDesativaPlanoUsuario);
-                    
-                    // cadastrar o usuario no novo plano 
-                    $dadosNovoPlanoUsuario['id_usuario'] = $dadosPlanoRequisitado->id_usuario;
-                    $dadosNovoPlanoUsuario['id_plano'] = $dadosPlanoRequisitado->id_plano;
-                    $dadosNovoPlanoUsuario['data_aderido'] = Controller_Helper_Date::getDatetimeNowDb();
-                    $dadosNovoPlanoUsuario['data_encerramento'] = Controller_Helper_Date::getDataEncerramentoPlano(
-                            $dadosNovoPlanoUsuario['data_aderido'], 
-                            $dadosPlanoRequisitado->id_plano
-                    );
-                    $dadosNovoPlanoUsuario['ativo_plano'] = 1;
-                    $dadosNovoPlanoUsuario['id_plano_valor'] = $dadosPlanoRequisitado->id_plano_valor;
-
-                    $this->_modelUsuarioPlano->insert($dadosNovoPlanoUsuario);
-                    
-                    // atualizar o processo              
-                    $dadosAtualizaProcessoPagamento['cod_transacao'] = $transaction_id;                    
-                    $dadosAtualizaProcessoPagamento['processado'] = 1;
-                    $dadosAtualizaProcessoPagamento['data_processado'] = Controller_Helper_Date::getDatetimeNowDb();
-                    $dadosAtualizaProcessoPagamento['status'] = $status;
-                    $whereAtualizaProcessoPagamento = "id_pagamento = {$dadosPlanoRequisitado->id_pagamento}";
-                    
-                    $this->_modelPagamento->update($dadosAtualizaProcessoPagamento, $whereAtualizaProcessoPagamento);
-                    
-                    // envia o email para o usuario
-                    $mail = new Zend_Mail('utf-8');
-
-                    $mail->setBodyHtml("Pagamento confirmado. Você já pode desfrutar...");
-                    $mail->setFrom('email@portal.redemorar.com.br', 'NewFinances - Controle Financeiro');
-                    $mail->addTo("nandorodpires@gmail.com");
-                    //$mail->addTo('tiago@realter.com.br');
-                    //$mail->setReplyTo('email@portal.redemorar.com.br');
-                    $mail->setSubject('Pagamento confirmado');
-
-                    $mail->send(Zend_Registry::get('mail_transport'));
-                    
-                    $this->desativaCupom($dadosPlanoRequisitado->id_usuario);
-                }                
-                
-            } else if ($result == "FALSO") {
-                
-                $dadosTransacao = $this->_request->getPost();
-                $transaction_id = $dadosTransacao['notificationCode'];
-                $transaction = $this->getTransaction($transaction_id);
-                
-                // recupero o status da transacao
-                $status = (int)$transaction->getStatus()->getValue();
-                
-                
-            } else {
-                $result = "ERRO";                
-                //Erro na integração com o PagSeguro.
-            }
-            
-            // envia o email para o usuario
-            $mail = new Zend_Mail('utf-8');
-
-            $mail->setBodyHtml("um post do PagSeguro foi enviado - {$result} <p>{$transacaoID}</p><p>{$post}</p><p>Status: {$status}</p>");
-            $mail->setFrom('email@portal.redemorar.com.br', 'NewFinances - Controle Financeiro');
-            $mail->addTo("nandorodpires@gmail.com");
-            //$mail->addTo('tiago@realter.com.br');
-            //$mail->setReplyTo('email@portal.redemorar.com.br');
-            $mail->setSubject('POST enviado - ' . $result);
-
-            $mail->send(Zend_Registry::get('mail_transport'));
-            
-        } else {                        
-            if ($transaction_id) {                
-                // busca os dados da transacao
-                $transaction = $this->getTransaction($transaction_id);
-                
-                $value_transaction = $transaction->getStatus()->getValue();
-                $name = $transaction->getSender()->getName();
-                $email = $transaction->getSender()->getEmail();
-                $code = $transaction->getCode();                
-                // buscando a referencia do usuario que e o cpf
-                $cpf_reference = $transaction->getReference();               
-                
-                // busca os dados do usuario
-                $dadosUsuario = $this->_modelUsuario->getDadosUsuarioCpf($cpf_reference);
-                
-                // busca o plano requisitado pelo usuario
-                $dadosPlanoRequisitado = $this->_modelPagamento->fetchRow(
-                    "id_usuario = {$dadosUsuario->id_usuario} and processado = 0"
-                );
-                    
-                // recupero o status da transacao
-                $status = (int)$transaction->getStatus()->getValue();
-                
-                // verifica se o status esta como pago para liberacao automática do
-                // sistema                
-                if ($status === parent::PAID) {               
-
-                    // dasativar o plano atual do usuario                    
-                    $dadosDesativaPlanoUsuario['ativo_plano'] = 0;
-                    $whereDesativaPlanoUsuario = "id_usuario_plano = {$dadosUsuario->id_usuario_plano}";
-                    
-                    $this->_modelUsuarioPlano->update($dadosDesativaPlanoUsuario, $whereDesativaPlanoUsuario);
-                    
-                    // cadastrar o usuario no novo plano 
-                    $dadosNovoPlanoUsuario['id_usuario'] = $dadosPlanoRequisitado->id_usuario;
-                    $dadosNovoPlanoUsuario['id_plano'] = $dadosPlanoRequisitado->id_plano;
-                    $dadosNovoPlanoUsuario['data_aderido'] = Controller_Helper_Date::getDatetimeNowDb();
-                    $dadosNovoPlanoUsuario['data_encerramento'] = Controller_Helper_Date::getDataEncerramentoPlano(
-                            $dadosNovoPlanoUsuario['data_aderido'], 
-                            $dadosPlanoRequisitado->id_plano
-                    );
-                    $dadosNovoPlanoUsuario['ativo_plano'] = 1;
-                    $dadosNovoPlanoUsuario['id_plano_valor'] = $dadosPlanoRequisitado->id_plano_valor;
-
-                    $this->_modelUsuarioPlano->insert($dadosNovoPlanoUsuario);
-                    
-                    // atualizar o processo              
-                    $dadosAtualizaProcessoPagamento['cod_transacao'] = $transaction_id;                    
-                    $dadosAtualizaProcessoPagamento['processado'] = 1;
-                    $dadosAtualizaProcessoPagamento['data_processado'] = Controller_Helper_Date::getDatetimeNowDb();
-                    $dadosAtualizaProcessoPagamento['status'] = $status;
-                    $whereAtualizaProcessoPagamento = "id_pagamento = {$dadosPlanoRequisitado->id_pagamento}";
-                    
-                    $this->_modelPagamento->update($dadosAtualizaProcessoPagamento, $whereAtualizaProcessoPagamento);
-                    
-                    // envia o email para o usuario
-                    $mail = new Zend_Mail('utf-8');
-
-                    $mail->setBodyHtml("Pagamento confirmado. Você já pode desfrutar...");
-                    $mail->setFrom('email@portal.redemorar.com.br', 'NewFinances - Controle Financeiro');
-                    $mail->addTo("nandorodpires@gmail.com");
-                    //$mail->addTo('tiago@realter.com.br');
-                    //$mail->setReplyTo('email@portal.redemorar.com.br');
-                    $mail->setSubject('Pagamento confirmado');
-
-                    $mail->send(Zend_Registry::get('mail_transport'));
-                    
-                    $this->desativaCupom($dadosPlanoRequisitado->id_usuario);
-
-                } else {
-                    // atualizar o processo                        
-                    $dadosAtualizaProcessoPagamento['cod_transacao'] = $transaction_id;                    
-                    $dadosAtualizaProcessoPagamento['status'] = $status;                    
-                    $whereAtualizaProcessoPagamento = "id_pagamento = {$dadosPlanoRequisitado->id_pagamento}";
-                    
-                    $this->_modelPagamento->update($dadosAtualizaProcessoPagamento, $whereAtualizaProcessoPagamento);
-                }
-                
-                $this->view->status = $status;
-                $this->view->dadosUsuario = $dadosUsuario;                
-                
-            }            
-            
-        }
-    }
-    
-    /**
-     * 
-     */
-    protected function getTransaction($transaction_id) {
-        $transaction = PagSeguroTransactionSearchService::searchByCode(  
-            $this->_credentials,  
-            $transaction_id  
-        );
-        
-        return $transaction;
-    }
-       
     /**
      * atualiza a tabela de cupom para os cupons utilizados
      */
@@ -431,9 +295,12 @@ class PlanosController extends Application_Controller {
 
 }
 
+define('TOKEN', '1E3A21173CC2409EBB2DE17317045312');
+header('Content-Type: text/html; charset=ISO-8859-1');
+
 class PagSeguroNpi {
 
-    private $timeout = 20; // Timeout em segundos
+    private $timeout = 50; // Timeout em segundos
 
     public function notificationPost() {
         $postdata = 'Comando=validar&Token=' . TOKEN;
@@ -466,4 +333,5 @@ class PagSeguroNpi {
     }
 
 }
+
 

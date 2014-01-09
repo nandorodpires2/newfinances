@@ -48,13 +48,13 @@
 	
 }
 .tabless-green tr:nth-child(odd){ background-color:#aad4ff; }
-.tabless-green tr:nth-child(even)    { background-color:#ffffff; }.tabless-green td{
+.tabless-green tr:nth-child(even)    { background-color:#ffffff; }
+.tabless-green td{
 	vertical-align:middle;
 	
 	
 	border:1px solid #000000;
 	border-width:0px 1px 1px 0px;
-	text-align:left;
 	padding:7px;
 	font-size:12px;
 	font-family:Arial;

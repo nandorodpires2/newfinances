@@ -39,7 +39,7 @@ function status(id_movimentacao, status) {
     if (host == "localhost") {
         base_url = "http://" + host + "/newfinances/public/movimentacoes/status";        
     } else {
-        base_url = "http://" + host + "/public/movimentacoes/status";        
+        base_url = "http://" + host + "/movimentacoes/status";        
     }
         
     $.ajax({
