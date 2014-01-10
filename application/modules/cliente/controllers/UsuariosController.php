@@ -247,27 +247,23 @@ class UsuariosController extends Zend_Controller_Action {
         // desabilita layout e view
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
-        
+    
         // recupera o id do usuario
         $id_usuario = $this->_getParam("id_usuario");
-        
-        // busca dados do usuario
-        $dadosUsuario = $this->_modelUsuario->getUsuario($id_usuario);
-        $usuarioRow = $this->_modelUsuario->getDadosUsuario($dadosUsuario->email_usuario);                
-        
-        
-        //Zend_Debug::dump($id_usuario); die();
-        //Zend_Debug::dump(Zend_Auth::getInstance()->hasIdentity()); die();
-        
+    
         // ativa o usuario
         $dadosAtivaUsuario['ativo_usuario'] = 1;
         $whereAtivaUsuario = "id_usuario = " . $id_usuario;
         $this->_modelUsuario->update($dadosAtivaUsuario, $whereAtivaUsuario);
-                
+        
+        // busca dados do usuario
+        $dadosUsuario = $this->_modelUsuario->getUsuario($id_usuario);
+        $usuarioRow = $this->_modelUsuario->getDadosUsuario($dadosUsuario->email_usuario);                
+                        
         // autentica usuario
         $ZendAuth = Zend_Auth::getInstance();                
         $ZendAuth->getStorage()->write($usuarioRow);   
-                
+        
         // envia o email        
         $mail = new Zend_Mail('utf-8');
 

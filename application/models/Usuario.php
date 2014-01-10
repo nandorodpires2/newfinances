@@ -124,7 +124,7 @@ class Model_Usuario extends Zend_Db_Table {
                 ->where("u.id_usuario = ?", $id_usuario)
                 ->where("u.ativo_usuario = ?", 1)
                 ->where("up.ativo_plano = ?", 1);                
-        
+                
         return $this->fetchRow($select);
         
     }
