@@ -6,7 +6,7 @@
         Purpose of the stylesheet follows.
 */
 
-#cliente-politica-termo {
+#cliente-politica-termo, #cliente-politica-index {
     float: left;
     width: 80%;
     margin: 10px 8%;

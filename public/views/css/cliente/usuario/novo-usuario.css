@@ -1,0 +1,28 @@
+/* 
+    Document   : novo-usuario
+    Created on : 10/01/2014, 14:01:13
+    Author     : Realter
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+.form-nov-usuario {
+    float: left;
+    width: 50%;
+}
+
+.termos {
+    float: left;
+    width: 50%;
+    height: 469px;
+    overflow: auto;
+}
+
+.fechar {
+    float: right;    
+    margin-right: 30px;
+}

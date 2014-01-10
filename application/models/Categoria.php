@@ -57,7 +57,7 @@ class Model_Categoria extends Zend_Db_Table {
                 ->where("month(mov.data_movimentacao) = month(now())")
                 ->where("year(mov.data_movimentacao) = year(now())")
                 ->group("cat.id_categoria")
-                ->order("sum(mov.valor_movimentacao) desc");
+                ->order("sum(mov.valor_movimentacao) asc");
         
         return $this->fetchAll($select); 
     }

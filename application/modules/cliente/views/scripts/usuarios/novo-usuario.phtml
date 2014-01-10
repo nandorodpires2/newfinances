@@ -1,14 +1,19 @@
 <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/usuario/novo-usuario.js')); ?>
+<?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/cliente/usuario/novo-usuario.css')); ?> 
 <div id="pages">
-    <div id="novo-usuario">
+    <div id="novo-usuario">        
         <?php echo View_Helper_Messeges::getMessages($this->messages); ?>              
-        <?php echo $this->formNovoUsuario; ?>
-        <div id="fechar"><a href="#" id="fechar_box">Fechar [X]</a></div>
-        <div id="politica-privacidade">
-            <?php echo $this->partial("politica/index.phtml"); ?>
+        <div class="form-nov-usuario">
+            <?php echo $this->formNovoUsuario; ?>
         </div>
-        <div id="termo-uso">
-            <?php echo $this->partial("politica/termo.phtml"); ?>
+        <div class="termos">
+            <div id="fechar" class="fechar"><a href="#" id="fechar_box">Fechar [X]</a></div>
+            <div id="politica-privacidade">
+                <?php echo $this->partial("politica/index.phtml"); ?>
+            </div>
+            <div id="termo-uso">
+                <?php echo $this->partial("politica/termo.phtml"); ?>
+            </div>
         </div>
     </div>
 </div>

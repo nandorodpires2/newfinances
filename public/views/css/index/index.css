@@ -8,10 +8,27 @@
 
 #index-index {}
 
-.box_1 { float: left; width: 50%; margin: 0; }
-.box_2 { float: left; width: 50%; margin: 0; }
+#index-index table {
+    border: 1px solid #696969;
+}
 
-.movimentacoes, .lancamentos, .faturas, .metas {  width: 97.8%; border: 1px solid #DCDCDC; margin-bottom: 10px; background: #FFF; }
+#index-index table th {
+    color: #FFF;
+    padding: 5px; 
+    font-size: 14px;
+    background: #1d5fa1;
+}
+
+#index-index table td {
+    padding: 3px;
+    border-left: 1px solid #DCDCDC;
+    border-bottom: 1px solid #DCDCDC;
+}
+
+.box_1 { float: left; width: 48%; margin: 0 1%; }
+.box_2 { float: left; width: 48%; margin: 0 1%; }
+
+.movimentacoes, .lancamentos, .faturas, .metas {  width: 97.8%; margin-bottom: 10px; background: #FFF; }
 
 .movimentacoes { float: left; }
 

@@ -40,6 +40,24 @@ class Model_Movimentacao extends Zend_Db_Table {
     }
     
     /**
+     * retorna o total de despesa do mes
+     */
+    public function getTotalDespesaMesAtual($id_usuario) {
+        $select = $this->select()
+                ->from(array('mov' => $this->_name), array(
+                    'total_despesa' => 'sum(mov.valor_movimentacao)'
+                ))
+                ->setIntegrityCheck(false)
+                ->where("mov.id_usuario = ?", $id_usuario)
+                ->where("mov.id_tipo_movimentacao in (2,3)")
+                ->where("mov.realizado = 1")
+                ->where("month(mov.data_movimentacao) = month(now())")
+                ->where("year(mov.data_movimentacao) = year(now())");
+        
+        return $this->fetchRow($select);
+    }
+
+    /**
      * retorna o ultimo id
      */
     public function lastInsertId() {

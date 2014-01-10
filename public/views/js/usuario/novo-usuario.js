@@ -12,12 +12,14 @@ $(document).ready(function (){
     // mostrando a politica de privacidade
     $("#info_politica").click(function (){
         $("#politica-privacidade").show();
+        $("#termo-uso").hide();
         $("#fechar").show();
     });
     
     // mostrando o termo de uso
     $("#info_termo").click(function (){
         $("#termo-uso").show();
+        $("#politica-privacidade").hide();
         $("#fechar").show();
     });
     

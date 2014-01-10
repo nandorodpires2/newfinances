@@ -17,7 +17,13 @@ class IndexController extends Application_Controller {
     public function indexAction() {
      
         /**
-         * saldo das metas
+         * top categorias
+         */
+        $gastosCategorias = $this->_modelCategoria->getGastosCategoriasMes($this->_session->id_usuario);
+        $this->view->gastosCategorias = $gastosCategorias;
+        
+        /**
+         * saldo das metas          
          */
         $metas = $this->_modelMeta->getGastosMetasUsuario($this->_session->id_usuario);
         $this->view->metas = $metas;
@@ -30,8 +36,8 @@ class IndexController extends Application_Controller {
             $this->_session->id_usuario,
             (int)date('m'),
             (int)date('Y')
-        );
-        
+        );        
+         
         /**
          * fatura cartao
          */     

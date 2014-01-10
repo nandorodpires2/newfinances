@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
+    <head>        
         <?php header("Content-Type: text/html; charset=UTF-8",true); ?>
         <?php echo $this->headTitle("NewFinances"); ?> 
         <!-- css -->
@@ -17,8 +17,7 @@
         <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery.maskMoney.js')); ?>          
         <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/application.js')); ?>
         <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/facebook.js')); ?>
-        <?php //echo $this->headScript()->appendFile($this->baseUrl('views/js/jsapi.js')); ?>  
-        
+        <?php //echo $this->headScript()->appendFile($this->baseUrl('views/js/jsapi.js')); ?>          
     </head>
     <body>        
         <div id="content-all">   

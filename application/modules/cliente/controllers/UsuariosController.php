@@ -4,6 +4,8 @@ require_once APPLICATION_PATH . '/../library/PagSeguroLibrary/PagSeguroLibrary.p
 
 class UsuariosController extends Zend_Controller_Action {
 
+    const URL_ATIVAR = "http://localhost/newfinances/public/usuarios/ativar-usuario/id_usuario/";
+    
     protected $_session;
     
     protected $_modelUsuario;
@@ -132,7 +134,7 @@ class UsuariosController extends Zend_Controller_Action {
                                 $dadosNovoUsuario['data_cadastro'] = Controller_Helper_Date::getDatetimeNowDb();
                                 $dadosNovoUsuario['data_alteracao'] = Controller_Helper_Date::getDatetimeNowDb();
                                 $dadosNovoUsuario['data_nascimento'] = Controller_Helper_Date::getDateDb($dadosNovoUsuario['data_nascimento']);
-                                $dadosNovoUsuario['ativo_usuario'] = 1;
+                                $dadosNovoUsuario['ativo_usuario'] = 0;
                                 $dadosNovoUsuario['senha_usuario'] = md5($dadosNovoUsuario['senha_usuario']);
 
                                 unset($dadosNovoUsuario['confirma_senha']);
@@ -155,15 +157,23 @@ class UsuariosController extends Zend_Controller_Action {
                                         // envia o email para o novo usuario                                
                                         $mail = new Zend_Mail('utf-8');
 
-                                        $mail->setBodyHtml("Seu cadastro foi realizado com sucesso! Seja Bem vindo ao NewFinances");
-                                        $mail->setFrom('email@portal.redemorar.com.br', 'NewFinances - Controle Financeiro');
-                                        $mail->addTo("nandorodpires@gmail.com");
+                                        $message = "
+                                            <p>Seu cadastro foi realizado com sucesso! Seja Bem vindo ao NewFinances</p>
+                                            <p>Acesse o link abaixo para ativar sua conta: </p>
+                                            <p><a href='" . self::URL_ATIVAR . "{$last_id}'>Ativar Minha Conta</a></p>
+                                        ";
+                                        
+                                        $mail->setBodyHtml($message);
+                                        $mail->setFrom('newfinances@newfinances.com.br', 'NewFinances - Controle Financeiro');
+                                        $mail->addTo($dadosNovoUsuario['email_usuario']);
                                         //$mail->addTo('tiago@realter.com.br');
                                         //$mail->setReplyTo('email@portal.redemorar.com.br');
                                         $mail->setSubject('Seja Bem Vindo');
 
                                         $mail->send(Zend_Registry::get('mail_transport'));
 
+                                        $this->_redirect("usuarios/ativar");
+                                        
                                     } catch (Exception $error) {
                                         $messeges = array(
                                             array(                                         
@@ -173,19 +183,7 @@ class UsuariosController extends Zend_Controller_Action {
 
                                         $this->view->messages = $messeges; 
                                     }
-
-                                    // autenticando o novo usuario
-                                    $ZendAuth = Zend_Auth::getInstance();                
-                                    $adapter = $this->_modelUsuario->validaUsuario($email, md5($senha));
-                                    $usuarioRow = $this->_modelUsuario->getDadosUsuario($email);
-
-                                    if ($adapter) {
-                                        $ZendAuth->getStorage()->write($usuarioRow);                    
-                                        $this->_redirect("planos/plano-usuario/id/{$last_id}");
-                                    } else {
-                                        echo "erro ao autenticar novo usuario";
-                                    }
-
+                                    
                                 } catch (Zend_Exception $error) {
 
                                     if ($error->getCode() == 1062) {
@@ -238,6 +236,62 @@ class UsuariosController extends Zend_Controller_Action {
                 }
             }
         }
+    }
+    
+    public function ativarAction() {
+        
+    }
+
+    public function ativarUsuarioAction() {
+    
+        // desabilita layout e view
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        // recupera o id do usuario
+        $id_usuario = $this->_getParam("id_usuario");
+        
+        // busca dados do usuario
+        $dadosUsuario = $this->_modelUsuario->getUsuario($id_usuario);
+        $usuarioRow = $this->_modelUsuario->getDadosUsuario($dadosUsuario->email_usuario);                
+        
+        
+        //Zend_Debug::dump($id_usuario); die();
+        //Zend_Debug::dump(Zend_Auth::getInstance()->hasIdentity()); die();
+        
+        // ativa o usuario
+        $dadosAtivaUsuario['ativo_usuario'] = 1;
+        $whereAtivaUsuario = "id_usuario = " . $id_usuario;
+        $this->_modelUsuario->update($dadosAtivaUsuario, $whereAtivaUsuario);
+                
+        // autentica usuario
+        $ZendAuth = Zend_Auth::getInstance();                
+        $ZendAuth->getStorage()->write($usuarioRow);   
+                
+        // envia o email        
+        $mail = new Zend_Mail('utf-8');
+
+        $message = "
+            <p>Seu cadastro foi ativado com sucesso!</p>
+            <p>Obrigado por fazer parte da equipe NewFinances</p>            
+        ";
+
+        $mail->setBodyHtml($message);
+        $mail->setFrom('newfinances@newfinances.com.br', 'NewFinances - Controle Financeiro');
+        $mail->addTo($dadosUsuario->email_usuario);
+        //$mail->addTo('tiago@realter.com.br');
+        //$mail->setReplyTo('email@portal.redemorar.com.br');
+        $mail->setSubject('Cadastro ativado');
+
+        $mail->send(Zend_Registry::get('mail_transport'));
+        
+        // gravando o log
+        $dadosInsertLog['id_usuario'] = $dadosUsuario->id_usuario;
+        $modelUsuarioLogin = new Model_UsuarioLogin();
+        $modelUsuarioLogin->insert($dadosInsertLog);
+
+        $this->_redirect("/planos/plano-usuario");
+        
     }
     
     /**
