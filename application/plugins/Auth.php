@@ -12,6 +12,8 @@
  */
 class Plugin_Auth extends Zend_Controller_Plugin_Abstract {
     
+    const FLAG = true;
+    
     public function preDispatch(Zend_Controller_Request_Abstract $request) {
         
         $moduleName = $request->getModuleName();
@@ -27,29 +29,32 @@ class Plugin_Auth extends Zend_Controller_Plugin_Abstract {
         ");
             
         $auth = Zend_Auth::getInstance();        
-                
-        if ($moduleName !== 'site') {
-            if ($funcionalidade) {                 
-                if ($funcionalidade->auth) {
-                    if (!$auth->hasIdentity()) {
-                        $request->setModuleName("site")
-                                ->setControllerName("index")
-                                ->setActionName("index")                        
-                                ->setDispatched();
-                        /*
-                        $request->setModuleName("site")
-                                ->setControllerName("index")
-                                ->setActionName("index")                        
-                                ->setDispatched();
-                         * 
-                         */
+        
+        
+        if (self::FLAG) {        
+            if ($moduleName !== 'site') {
+                if ($funcionalidade) {                 
+                    if ($funcionalidade->auth) {
+                        if (!$auth->hasIdentity()) {
+                            $request->setModuleName("site")
+                                    ->setControllerName("index")
+                                    ->setActionName("index")                        
+                                    ->setDispatched();
+                            /*
+                            $request->setModuleName("site")
+                                    ->setControllerName("index")
+                                    ->setActionName("index")                        
+                                    ->setDispatched();
+                             * 
+                             */
+                        }
                     }
+                } else {
+                    $request->setModuleName("cliente")
+                                ->setControllerName("error")
+                                ->setActionName("error")                        
+                                ->setDispatched();
                 }
-            } else {
-                $request->setModuleName("cliente")
-                            ->setControllerName("error")
-                            ->setActionName("error")                        
-                            ->setDispatched();
             }
         }
     }

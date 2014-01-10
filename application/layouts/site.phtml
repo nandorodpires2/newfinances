@@ -23,11 +23,19 @@
     <body>        
         <div id="content-all">   
             <div id="social-area">
-                <div style="float: left; margin: 10px 0; ">
-                    <img src="<?php echo $this->baseUrl('views/img/logo_newfinances.png'); ?>" width="280" />
+                <div style="float: left; margin: 10px 0; ">   
+                    <a href="<?php echo $this->url(array(
+                        'module' => 'site',
+                        'controller' => 'index',
+                        'action' => 'index'
+                    )); ?>">
+                        <img src="<?php echo $this->baseUrl('views/img/logo_newfinances.png'); ?>" width="280" />                    
+                    </a>
                 </div>
                 <div class="redes-sociais">
-                    <img src="<?php echo $this->baseUrl('views/img/icon_face_social.png'); ?>" />
+                    <a href="https://www.facebook.com/sisnewfinances" target="_blank" title="Acesse nossa página no Facebook">
+                        <img src="<?php echo $this->baseUrl('views/img/icon_face_social.png'); ?>" />
+                    </a>
                     <img src="<?php echo $this->baseUrl('views/img/icon_twitter_social.png'); ?>" />
                     <img src="<?php echo $this->baseUrl('views/img/icon_google_plus_social.png'); ?>" />
                 </div>

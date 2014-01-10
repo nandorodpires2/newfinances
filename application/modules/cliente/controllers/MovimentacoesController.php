@@ -22,8 +22,7 @@ class MovimentacoesController extends Application_Controller {
         
     }
 
-    public function indexAction()
-    {
+    public function indexAction() {        
         
         // enviando os forms de filtros para a view
         $this->view->formMes = $this->_formMes;

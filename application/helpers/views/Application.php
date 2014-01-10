@@ -17,7 +17,7 @@ class View_Helper_Application extends Zend_View_Helper_Abstract {
         $plano = $modelUsuarioPlano->getPlanoAtual($id_usuario);
         
         return $plano->id_plano == Application_Controller::PLANO_GESTOR ? true : false;
-    }
+    }    
     
 }
 

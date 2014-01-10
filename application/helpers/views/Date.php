@@ -23,6 +23,12 @@ class View_Helper_Date extends Zend_View_Helper_Abstract {
         return $zendDate->get(Zend_Date::DATE_MEDIUM);
     }
     
+    public static function getDateCompleteView($date) {
+        $zendDate = new Zend_Date($date);
+        
+        return $zendDate->get(Zend_Date::DATE_FULL);
+    }
+
     /**
 <<<<<<< .mine
      * 
