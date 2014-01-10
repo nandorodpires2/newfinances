@@ -264,14 +264,19 @@ class Application_Controller extends Zend_Controller_Action {
         
         foreach ($pagamentos as $pagamento) {
             if (!$pagamento->processado && $pagamento->cod_transacao !== "") {                
+                
                 $transation = $this->getTransaction($pagamento->cod_transacao);                
-                //$this->processaTransacao($status, $reference, $transaction_id);
+                
+                $status = (int)$transation->getStatus()->getValue();
+                $reference = (int)$transation->getReference();
+                $transaction_id = $transation->getCode();
+                
+                // caso tenha alguma alteracao de status
+                if ($pagamento->status != $status) {                
+                    $this->processaTransacao($status, $reference, $transaction_id);
+                }
             }
         }
-        
-        //die("To verificando");
-        
-        
     }
     
     /**

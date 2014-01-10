@@ -1,7 +1,9 @@
 <div id="pages">
     <div id="planos-response-plano">
         <?php if ($this->status == Application_Controller::PAID) : ?>
-        <h2>PAGAMENTO EFETUADO COM SUCESSO.</h2>
+        <h2>PAGAMENTO EFETUADO COM SUCESSO.</h2>        
+        <?php elseif ($this->status == Application_Controller::CANCELLED) : ?>
+        <h2>PAGAMENTO NÃO AUTORIZADO.</h2>
         <?php else : ?>
         <h2>ESTAMOS AGUARDANDO A CONFIRMAÇÃO DO PAGAMENTO</h2>
         <?php endif; ?>

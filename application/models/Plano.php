@@ -61,7 +61,8 @@ class Model_Plano extends Zend_Db_Table {
                 'p.unidade_tempo_plano'                                       
             ))                
             ->where('p.usuario_plano = ?', 1)                
-            ->where('p.cobranca = ?', 0);
+            ->where('p.cobranca = ?', 0)
+            ->where('p.ativo_plano = ?', 1);
         
         return $this->fetchRow($select);
     }

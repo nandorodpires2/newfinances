@@ -1,0 +1,15 @@
+/* 
+    Document   : termo
+    Created on : 09/01/2014, 20:55:28
+    Author     : Fernando Rodrigues
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+#cliente-politica-termo {
+    float: left;
+    width: 80%;
+    margin: 10px 8%;
+    padding: 5px 1%;
+    background: #EBEBEB;
+}

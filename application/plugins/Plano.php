@@ -18,6 +18,8 @@ class Plugin_Plano extends Zend_Controller_Plugin_Abstract {
         if (Zend_Auth::getInstance()->hasIdentity()) {
             
             $id_usuario = Zend_Auth::getInstance()->getIdentity()->id_usuario;
+            $email_usuario = Zend_Auth::getInstance()->getIdentity()->email_usuario;
+            
             // verifica se o plano do usuario expirou
             $modelUsuarioPlano = new Model_UsuarioPlano();
             $modelPlano = new Model_Plano();
@@ -48,9 +50,7 @@ class Plugin_Plano extends Zend_Controller_Plugin_Abstract {
 
                     $mail->setBodyHtml("O seu plano expirou! Agora você estpa cadastrado no plano básico");
                     $mail->setFrom('email@portal.redemorar.com.br', 'NewFinances - Controle Financeiro');
-                    $mail->addTo("nandorodpires@gmail.com");
-                    //$mail->addTo('tiago@realter.com.br');
-                    //$mail->setReplyTo('email@portal.redemorar.com.br');
+                    $mail->addTo($email_usuario);
                     $mail->setSubject('Plano expirado');
 
                     $mail->send(Zend_Registry::get('mail_transport'));
