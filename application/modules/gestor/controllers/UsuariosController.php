@@ -19,7 +19,7 @@ class Gestor_UsuariosController extends Application_Controller {
     public function indexAction() {
         
         // busca os usuários
-        $usuarios = $this->_modelUsuario->getListaDadosUsuarios();
+        $usuarios = $this->_modelUsuario->getListaDadosUsuarios();               
         $this->view->usuarios = $usuarios;
         
     }

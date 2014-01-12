@@ -1,10 +1,10 @@
-<?php
+r<?php
 
 require_once APPLICATION_PATH . '/../library/PagSeguroLibrary/PagSeguroLibrary.php';
 
 class UsuariosController extends Zend_Controller_Action {
 
-    const URL_ATIVAR = "http://localhost/newfinances/public/usuarios/ativar-usuario/id_usuario/";
+    const URL_ATIVAR = "http://newfinances.com.br/usuarios/ativar-usuario/id_usuario/";
     
     protected $_session;
     

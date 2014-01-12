@@ -6,9 +6,7 @@
     
     $currency = new Zend_Currency();
     $date = new Zend_Date(null, null, "pt_BR");
-    
-    $sql = "update movimentacao set notificado = 1 where id_movimentacao = 993";
-        
+            
     $sql = "
         select	mov.id_movimentacao,
                 usu.nome_completo,
@@ -26,9 +24,6 @@
     
     $notificacoes = $db->fetchAll($sql);
     
-    //Zend_Debug::dump(Zend_Registry::get("mail_transport")); die();
-    
-        
     $count = 0;
     $errors = 0;
     foreach ($notificacoes as $key => $notificacao) {
@@ -48,7 +43,7 @@
             // create mail object
             $mail = new Zend_Mail('utf-8');
             $mail->setBodyHtml($body);
-            $mail->setFrom('contato@newfinances.w.pw', 'NewFinances - Controle Financeiro');
+            $mail->setFrom('noreply@newfinances.com.br', 'NewFinances - Controle Financeiro');
             $mail->addTo($notificacao['email_usuario']);            
             $mail->setSubject('Notificação');
             $mail->send(Zend_Registry::get('mail_transport'));

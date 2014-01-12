@@ -163,20 +163,14 @@ class Model_Usuario extends Zend_Db_Table {
                 ))
                 ->joinInner(array('pv' => 'plano_valor'), 'up.id_plano_valor = pv.id_plano_valor', array(
                     '*'
-                ))
-                ->joinInner(array('c' => 'cidade'), 'u.id_cidade = c.id_cidade', array(
+                ))                
+                ->joinInner(array('e' => 'estado'), 'u.id_estado = e.id_estado', array(
                     '*'
-                ))
-                ->joinInner(array('e' => 'estado'), 'c.id_estado = e.id_estado', array(
-                    '*'
-                ))
-                ->joinLeft(array('mov' => 'movimentacao'), 'u.id_usuario = mov.id_usuario', array(
-                    'movimentacoes' => 'count(mov.id_movimentacao)'
-                ))
+                ))        
                 ->where("up.ativo_plano = ?", 1)
                 ->group("u.id_usuario")
                 ->order("u.nome_completo asc");                
-                        
+        
         return $this->fetchAll($select);
     }
 }
