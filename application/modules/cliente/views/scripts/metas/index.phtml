@@ -5,26 +5,31 @@
         <fieldset>
             <legend>Novo Orçamento</legend>
             <form method="post">
-                <div class="">
-                    <div id="hidden">
-                        <?php echo $this->formMetas->id_usuario; ?> 
-                        <?php echo $this->formMetas->mes_meta; ?> 
-                        <?php echo $this->formMetas->ano_meta; ?> 
-                    </div>
-                    <div id="categoria-meta">
-                        <?php echo $this->formMetas->id_categoria; ?> 
-                    </div>
-                    <div id="valor-meta">
-                        <?php echo $this->formMetas->valor_meta; ?> 
-                    </div>
-                    <div id="repetir-meta">
-                        <?php echo $this->formMetas->repetir; ?> 
-                        <span id="label-repetir-meta">Repete o lançamento desta meta para os outros meses.</span>
-                    </div>
-                    <div id="submit-meta">
-                        <?php echo $this->formMetas->submit; ?> 
-                    </div>
-                </div>
+                
+                <table>                    
+                    <tr>
+                        <td><?php echo $this->formMetas->id_categoria; ?> </td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $this->formMetas->valor_meta; ?> </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <?php echo $this->formMetas->repetir; ?> 
+                            <span id="label-repetir-meta">Repete o lançamento desta meta para os outros meses.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $this->formMetas->submit; ?> </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <?php echo $this->formMetas->id_usuario; ?> 
+                            <?php echo $this->formMetas->mes_meta; ?> 
+                            <?php echo $this->formMetas->ano_meta; ?> 
+                        </td>
+                    </tr>
+                </table>                
             </form>     
         </fieldset>        
         <div style="margin-top: 10px;">
@@ -32,13 +37,24 @@
                 <tr>
                     <td>Categoria</td>
                     <td>Meta</td>
+                    <td>Gastos</td>
+                    <td>Porcentagem</td>
+                    <td>Projeção</td>
                     <td colspan="2">Ações</td>
                 </tr>
                 <?php if ($this->metasUsuario->count() > 0) : ?>
                 <?php foreach ($this->metasUsuario as $meta) : ?>
+                
+                <?php $total_gasto = View_Helper_Meta::getTotalGastosMetaMes($meta->id_categoria); ?>
+                <?php $porcentagem = View_Helper_Meta::getPorcentagemTotalGastos($meta->valor_meta, $total_gasto) ?>
+                <?php $projecao = View_Helper_Meta::getProjecaoMeta($porcentagem); ?>
+                
                 <tr>
                     <td><?php echo $meta->descricao_categoria; ?></td>
                     <td><?php echo View_Helper_Currency::getCurrency($meta->valor_meta); ?></td>
+                    <td><?php echo $total_gasto; ?></td>
+                    <td><?php echo $porcentagem; ?></td>
+                    <td><?php echo $projecao; ?></td>
                     <td>
                         <a href="<?php echo $this->url(array(
                             'action' => 'editar-meta',
@@ -52,14 +68,14 @@
                             'action' => 'excluir-meta',
                             'id_meta' => $meta->id_meta
                         )); ?>">
-                            <img src="<?php echo $this->baseUrl('views/img/icon_delete.png'); ?>" title="Editar"  width="20" />
+                            <img src="<?php echo $this->baseUrl('views/img/icon_delete.png'); ?>" title="Excluir"  width="20" />
                         </a>
                     </td>
                 </tr>
                 <?php endforeach; ?>
                 <tr>
                     <th>Total: </th>
-                    <td colspan="2"><?php echo View_Helper_Currency::getCurrency($this->total_meta); ?></td>
+                    <td><?php echo View_Helper_Currency::getCurrency($this->total_meta); ?></td>
                 </tr>
                 <?php else : ?>
                 <tr>

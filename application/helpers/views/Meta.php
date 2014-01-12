@@ -24,6 +24,15 @@ class View_Helper_Meta extends Zend_View_Helper_Abstract {
         
     } 
     
+    public static function getTotalGastosMetaMes($id_categoria) {
+        
+        $modelCategoria = new Model_Categoria();
+        $totalGastos = $modelCategoria->getTotalGastoCategoriaMes($id_categoria);
+        
+        return View_Helper_Currency::getCurrency($totalGastos->total);
+        
+    }
+
     /**
      * retorna a porcentagem total dos gastos
      */

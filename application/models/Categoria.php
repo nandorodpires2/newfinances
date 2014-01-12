@@ -62,5 +62,26 @@ class Model_Categoria extends Zend_Db_Table {
         return $this->fetchAll($select); 
     }
     
+    public function getTotalGastoCategoriaMes($id_categoria) {
+        
+        $id_usuario = Zend_Auth::getInstance()->getIdentity()->id_usuario; 
+        
+        $select = $this->select()
+                ->from(array('cat' => 'categoria'), array(
+                    'cat.descricao_categoria'
+                ))                
+                ->setIntegrityCheck(false)
+                ->joinInner(array('mov' => 'movimentacao'), 'cat.id_categoria = mov.id_categoria', array(
+                    'total' => 'sum(mov.valor_movimentacao)'
+                ))
+                ->where("mov.id_usuario = ?", $id_usuario)                
+                ->where("mov.realizado = ?", 1)
+                ->where("cat.id_categoria = ?", $id_categoria)
+                ->where("month(mov.data_movimentacao) = month(now())")
+                ->where("year(mov.data_movimentacao) = year(now())");
+        
+        return $this->fetchRow($select); 
+    }
+    
 }
 

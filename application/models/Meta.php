@@ -22,9 +22,10 @@ class Model_Meta extends Zend_Db_Table {
     public function getMetasUsuario($id_usuario) {
         
         $select = $this->select()
-                ->from(array('met' => $this->_name), array(
+                ->from(array('met' => $this->_name), array(                    
                     'met.id_meta',
-                    'met.valor_meta'
+                    'met.valor_meta',
+                    'met.id_categoria'
                 ))
                 ->setIntegrityCheck(false)
                 ->joinInner(array('cat' => 'categoria'), 'met.id_categoria = cat.id_categoria', array(
