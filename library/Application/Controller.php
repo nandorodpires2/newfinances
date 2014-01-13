@@ -108,8 +108,10 @@ class Application_Controller extends Zend_Controller_Action {
     // form de receitas
     public $_formMovimentacoesReceitas;
     // form de transferencias
-    public $_formMovimentacoesTransferencia;    
-    
+    public $_formMovimentacoesTransferencia;   
+    // form de metas
+    public $_formMetasMeta;
+
     /* PAGSEGURO CREDENTIALS */
     public $_credentials;
 
@@ -159,6 +161,7 @@ class Application_Controller extends Zend_Controller_Action {
         $this->_formMovimentacoesReceitas = new Form_Movimentacoes_Receita();
         $this->_formMovimentacoesTransferencia = new Form_Movimentacoes_Transferencia();
         $this->_formChamadosResponder = new Form_Chamados_Responder;
+        $this->_formMetasMeta = new Form_Metas_Meta();
                 
         $credentials = new PagSeguroAccountCredentials(  
             'nandorodpires@gmail.com',   

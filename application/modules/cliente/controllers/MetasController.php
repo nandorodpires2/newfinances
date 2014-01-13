@@ -1,23 +1,9 @@
 <?php
 
-class MetasController extends Zend_Controller_Action {
-
-    protected $_session;
-    
-    protected $_modelMeta;
-    protected $_modelCategoria;
-
-    protected $_formMetasMeta;
+class MetasController extends Application_Controller {
 
     public function init() {
-        
-        $this->_session = Zend_Auth::getInstance()->getIdentity();       
-        
-        $this->_modelMeta = new Model_Meta();
-        $this->_modelCategoria = new Model_Categoria();
-        
-        $this->_formMetasMeta = new Form_Metas_Meta();
-        
+        parent::init();        
     }
 
     public function indexAction() {
@@ -129,6 +115,28 @@ class MetasController extends Zend_Controller_Action {
         } catch (Zend_Db_Exception $error) {
             echo $error->getMessage();
         }   
+        
+    }
+    
+    /**
+     * sugestao de valor de meta
+     * baseado nos gastos dos meses anteriores
+     */
+    public function sugestValuesAction() {
+                
+        $this->_disabledLayout();
+        $this->_disabledView();
+        
+        // recupera o id da categoria
+        $id_categoria = $this->_getParam("id_categoria");
+        
+        // buscar no banco 
+        /*
+        select	avg(m.valor_meta)
+        from	meta m
+        where	m.id_categoria = 5
+                and m.id_usuario = 1
+        */
         
     }
 

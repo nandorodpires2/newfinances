@@ -14,6 +14,16 @@ $(document).ready(function (){
         }
     });
     
+    // sugestao de meta
+    $("#id_categoria").change(function(){
+       
+       var id_categoria = $(this).val();
+        sugestValue(id_categoria);
+    });
+    
 });
 
+function sugestValue(id_categoria) {
+    
+}
 

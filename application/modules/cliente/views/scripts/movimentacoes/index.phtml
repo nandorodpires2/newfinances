@@ -54,13 +54,15 @@
                         <div class="descricao-movimentacao">
                             <?php echo (View_Helper_Date::isPending($movimentacao)) ? '' : ''; ?>
                             <?php echo $movimentacao->descricao_movimentacao; ?>
-                            <?php if ($movimentacao->id_tipo_movimentacao == 4) : ?>
                             <br />
                             <span class="descricao-mini">
+                                <?php if ($movimentacao->id_tipo_movimentacao == 4) : ?>                            
                                 De <?php echo $movimentacao->descricao_conta; ?>
                                 Para <?php echo $movimentacao->descricao_conta_destino; ?>
-                            </span>
-                            <?php endif; ?>
+                                <?php else : ?>
+                                Conta: <?php echo $movimentacao->descricao_conta; ?>
+                                <?php endif; ?>                                
+                            </span>                            
                         </div>
                         <div class="categoria-movimentacao">
                             <?php echo $movimentacao->descricao_categoria; ?>
