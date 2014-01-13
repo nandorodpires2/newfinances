@@ -1,6 +1,6 @@
 <?php
 
-    require 'teste.php';
+    require 'index.php';
     
     $data_inicio = date('Y-m-d H:m:s');
     
@@ -31,21 +31,21 @@
         $valor = $currency->toCurrency($notificacao['valor_movimentacao']);
         
         $body = "
-            <p><h3>NOTIFICAÇÃO DE LANÇAMENTO</h3></p>
+            <p><h3>NOTIFICAÇÃO DE LANÇAMENTO PENDENTE</h3></p>
             <p>Dados:</p>
             Data: {$notificacao['data_movimentacao']}<br/>
             Tipo: {$notificacao['tipo_movimentacao']}<br/>
             Descrição: {$notificacao['descricao_movimentacao']}<br/>
             Valor: {$valor}<br/>
         ";
-        
+    
         try {    
             // create mail object
             $mail = new Zend_Mail('utf-8');
             $mail->setBodyHtml($body);
             $mail->setFrom('noreply@newfinances.com.br', 'NewFinances - Controle Financeiro');
             $mail->addTo($notificacao['email_usuario']);            
-            $mail->setSubject('Notificação');
+            $mail->setSubject('Notificação: ' . $notificacao['descricao_movimentacao']);
             $mail->send(Zend_Registry::get('mail_transport'));
             
             $count++;

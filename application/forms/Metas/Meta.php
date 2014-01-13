@@ -20,7 +20,7 @@ class Form_Metas_Meta extends Zend_Form {
                 ->setMethod('post');
         
         // id_usuario
-        $this->addElement("hidden", "id_usuario", array('value' => $formDefault->_session->id_usuario));
+        $this->addElement("hidden", "id_usuario", array('value' => $formDefault->id_usuario));
         
         // mes
         $this->addElement("hidden", "mes_meta", array('value' => date('m')));

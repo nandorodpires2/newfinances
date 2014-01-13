@@ -3,7 +3,11 @@
 class MetasController extends Application_Controller {
 
     public function init() {
+<<<<<<< HEAD
         parent::init();        
+=======
+        parent::init();
+>>>>>>> 60f6981b3a1b4aac3e479854f94865b84890d4b5
     }
 
     public function indexAction() {
@@ -13,7 +17,7 @@ class MetasController extends Application_Controller {
         // recupera as metas ja cadastradas para este mes
         $metasUsuario = $this->_modelMeta->getMetasUsuario($this->_session->id_usuario);
         $this->view->metasUsuario = $metasUsuario;
-        
+                
         $total_meta = $this->_modelMeta->getTotalMetaMes($this->_session->id_usuario, date('m'), date('Y'));
         $this->view->total_meta= $total_meta;
         
@@ -119,17 +123,26 @@ class MetasController extends Application_Controller {
     }
     
     /**
+<<<<<<< HEAD
      * sugestao de valor de meta
      * baseado nos gastos dos meses anteriores
      */
     public function sugestValuesAction() {
                 
+=======
+     * sugestao de valor para meta
+     */
+    public function valSugestAction() {
+        
+        // desabilita o layout e view
+>>>>>>> 60f6981b3a1b4aac3e479854f94865b84890d4b5
         $this->_disabledLayout();
         $this->_disabledView();
         
         // recupera o id da categoria
         $id_categoria = $this->_getParam("id_categoria");
         
+<<<<<<< HEAD
         // buscar no banco 
         /*
         select	avg(m.valor_meta)
@@ -138,6 +151,23 @@ class MetasController extends Application_Controller {
                 and m.id_usuario = 1
         */
         
+=======
+        // busca a media de gastos mensais para a categoria
+        $mediaMovimentacao = $this->_modelMovimentacao->getMediaMovimentacaoCategoria($id_categoria, $this->_session->id_usuario);
+        
+        if ($mediaMovimentacao->count() > 0) {
+            $total = 0;
+            foreach ($mediaMovimentacao as $valores) {                        
+                $total += $valores->total;           
+            }                
+
+            $media = ($total / $mediaMovimentacao->count()) * -1;
+
+            echo View_Helper_Currency::getCurrency($media);                    
+        } else {
+            echo " - ";
+        }
+>>>>>>> 60f6981b3a1b4aac3e479854f94865b84890d4b5
     }
 
 }

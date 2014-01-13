@@ -23,7 +23,7 @@ class Form_Movimentacoes_Despesa extends Zend_Form {
         
         // id_usuario (hidden)
         $this->addElement("hidden", "id_usuario", array(
-            'value' => $formDefault->_session->id_usuario
+            'value' => $formDefault->id_usuario
         ));
         
         // descricao

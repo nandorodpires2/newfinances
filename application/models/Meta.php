@@ -109,8 +109,7 @@ class Model_Meta extends Zend_Db_Table {
         
         $query = $this->fetchRow($select);
         return $query->total;
-    }
-    
+    }    
     
 }
 

@@ -88,10 +88,18 @@ class Plugin_Acl extends Zend_Controller_Plugin_Abstract {
     protected function isAllowed() {        
         $url = $this->_request->getModuleName() . ':' . $this->_request->getControllerName();
 
+        $module = 0;
+        if ($this->_request->getModuleName() == 'gestor') {
+            $module =1;
+        } else {
+            $module =2;
+        }
+        
         if (!$this->_acl->isAllowed($this->_role, $url, $this->_request->getActionName())) {           
             $this->_request->setModuleName("cliente")
                     ->setControllerName("index")
                     ->setActionName("deny")
+                    ->setParam("module", $module)
                     ->setDispatched();
         } 
     }

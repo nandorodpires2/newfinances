@@ -60,6 +60,29 @@ class Gestor_ChamadosController extends Application_Controller {
                     $whereStatus = "id_chamado = " . $id_chamado;
                     $this->_modelChamado->update($status, $whereStatus);
                     
+                    // envia o email para o usuario
+                    $mail = new Zend_Mail('utf-8');
+
+                    $message = "
+                        <p>Olá {$dadosChamado->nome_completo}</p>
+                        <p>O seu chamado foi respondido!</p>
+                        <p>Assunto: {$dadosChamado->assunto}</p>                    
+                        <p>Mensagem: {$dadosResponderChamado['resposta']}</p>                    
+                        <p>
+                            Caso a resposta não tenha sido satisfatório, acesse 
+                            sua conta e envia uma nova mensagem para reabrir o
+                            chamado.
+                        </p>
+                        <p>Obrigado. Equipe NewFinances.</p>
+                    ";
+
+                    $mail->setBodyHtml($message);
+                    $mail->setFrom('newfinances@newfinances.com.br', 'NewFinances - Controle Financeiro');
+                    $mail->addTo($dadosChamado->email_usuario);
+                    $mail->setSubject('Chamado Respondido');
+
+                    $mail->send(Zend_Registry::get('mail_transport'));
+                    
                     $this->_redirect("gestor/chamados/ver-chamado/id_chamado/" . $id_chamado);
                 } catch (Exception $error) {
                     echo $error->getMessage();

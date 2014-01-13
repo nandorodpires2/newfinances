@@ -80,6 +80,7 @@
             </table>
         </div>    
         <div class="box_2">
+            <?php if (View_Helper_Application::hasAcl("cliente:metas")) : ?>            
             <!-- orcamentos -->
             <div class="fundo-visao-geral">
                 <label>Orçamentos</label>
@@ -139,6 +140,7 @@
                 </tr>
                 <?php endif; ?>
             </table>
+            <?php endif; ?>
             <!-- receitas -->
             <div class="fundo-visao-geral">
                 <label>Receitas (<?php echo $this->receitas->count(); ?>)</label>

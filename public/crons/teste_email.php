@@ -1,6 +1,6 @@
 <?php
 
-    require 'teste.php';
+    require 'index.php';
     
     echo "Início: " . date('Y-m-d H:m:s') . "<br />";
     

@@ -64,6 +64,15 @@ class IndexController extends Application_Controller {
     
     public function denyAction() {
         
+        $module = $this->_getParam("module");
+        
+        // caso o bloqueio de acesso seja do tipo 1 
+        // e pq e o gestor do sistema e nao tem permissao para ver
+        // caso 2 e pq o plano nao contempla esta visualizacao
+        // envia uma msg especifica para o usurio        
+        $this->view->typeDeny = $module;
+        
+        
     }
 
 }

@@ -1,5 +1,23 @@
 <div id="pages">
     <div id="index-deny">
-        Você não pode ver esta página
+        <?php if ($this->typeDeny == 1) : ?>
+        <div style="float: left; width: 45%; font-weight: bold; margin: 10px 25%;">
+            <center>
+            <img style="float: left;" src="<?php echo $this->baseUrl('views/img/access_deny.png'); ?>" />
+            <h3 class="titulo-laranja">Acesso Negado</h3>
+            <p>Desculpe, você não tem permissão para visualizar esta página.</p>
+            <p>Obrigado.</p>
+            </center>
+        </div>
+        <?php else : ?>
+        <div style="float: left; width: 45%; font-weight: bold; margin: 10px 25%;">
+            <center>
+            <img style="float: left; padding: 0 7px;" src="<?php echo $this->baseUrl('views/img/access_deny.png'); ?>" />
+            <h2 class="titulo-laranja">Acesso Negado</h2>
+            <p>Desculpe, o seu plano não contempla a visualização desta página.</p>
+            <p>Obrigado.</p>
+            </center>
+        </div>
+        <?php endif; ?>
     </div>
 </div>

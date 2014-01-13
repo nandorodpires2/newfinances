@@ -64,8 +64,8 @@ class PlanosController extends Application_Controller {
                 } else {
                     
                     // busca os dados do plano atual
-                    $dadosPlanoAtual = $this->_modelUsuarioPlano->getPlanoAtual($last_id);
-
+                    $dadosPlanoAtual = $this->_modelUsuarioPlano->getPlanoAtual($last_id);                    
+                                        
                     // desativa o plano atual                
                     $dadosDesativaPlano['ativo_plano'] = 0;
                     $whereDesativaPlano = "id_usuario_plano = " . $dadosPlanoAtual->id_usuario_plano;
@@ -86,7 +86,44 @@ class PlanosController extends Application_Controller {
 
                     try {
                         $this->_modelUsuarioPlano->insert($dadosPlanoUsuarioNovo);
+                        
+                        // envia o email para o usario  
+                        $mail = new Zend_Mail('utf-8');
+
+                        $data_encerramento = Controller_Helper_Date::getDateViewComplete($dadosPlanoUsuarioNovo['data_encerramento']);
+                        
+                        $message = "                            
+                            <p>Olá {$dadosUsuario->nome_completo}</p>
+                            <p>Seu plano foi alterado com sucesso!</p>                            
+                            <p>De: {$dadosPlanoAtual->descricao_plano} para: {$cobranca->descricao_plano}</p> 
+                            <p>Data Encerramento: {$data_encerramento}</p>    
+                        ";
+
+                        $mail->setBodyHtml($message);
+                        $mail->setFrom('newfinances@newfinances.com.br', 'NewFinances - Controle Financeiro');
+                        $mail->addTo($dadosUsuario->email_usuario);
+                        $mail->setSubject('Plano Alterado');
+
+                        $mail->send(Zend_Registry::get('mail_transport'));
+                        
+                        // envia a mensagem para o gestor do sistema
+                        $mail = new Zend_Mail('utf-8');
+
+                        $message = "                            
+                            <p>O plano do usuário {$dadosUsuario->nome_completo} foi alterado</p>                            
+                            <p>De: {$dadosPlanoAtual->descricao_plano} para: {$cobranca->descricao_plano}</p>
+                            <p>Data Encerramento: {$data_encerramento}</p>
+                        ";
+
+                        $mail->setBodyHtml($message);
+                        $mail->setFrom('newfinances@newfinances.com.br', 'NewFinances - Controle Financeiro');
+                        $mail->addTo("nandorodpires@gmail.com");
+                        $mail->setSubject('Plano Alterado');
+
+                        $mail->send(Zend_Registry::get('mail_transport'));
+                        
                         // seta a mensagem de parabens
+                        
                         // redireciona para a pagina principal
                         $this->_redirect("index/");
                     } catch (Zend_Exception $error) {                        

@@ -122,5 +122,25 @@ class Model_Movimentacao extends Zend_Db_Table {
         return $this->fetchAll($select);
     }
     
+    /**
+     * get media movimentacao categoria
+     */
+    public function getMediaMovimentacaoCategoria($id_categoria, $id_usuario) {
+        
+        $select = $this->select()
+                ->from(array('mov' => $this->_name), array(
+                    'mes' => 'month(mov.data_movimentacao)',
+                    'ano' => 'year(mov.data_movimentacao)',
+                    'total' => 'sum(mov.valor_movimentacao)'
+                ))
+                ->where("id_categoria = ?", $id_categoria)
+                ->where("id_usuario = ?", $id_usuario)
+                ->where("mov.id_tipo_movimentacao in (2,3)")
+                ->group("month(mov.data_movimentacao)");
+        
+        return $this->fetchAll($select);			
+        
+    }
+    
 }
 

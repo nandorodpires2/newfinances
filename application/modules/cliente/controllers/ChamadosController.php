@@ -42,14 +42,42 @@ class ChamadosController extends Application_Controller {
                 
                 // inserir na pagina de chamado
                 $this->_modelChamado->insert($dadosChamado);
-                
-                // faz o upload do anexo caso exista
-                // o nome do arquivo sera definido por id_chamado, id_usuario,
-                // data_abertura
-                
+                                
                 // disparar e-mail para usuario sobre o recebimento 
+                $mail = new Zend_Mail('utf-8');
+
+                $message = "
+                    <p>Olá {$this->_session->nome_completo}</p>
+                    <p>O seu chamado foi aberto com sucesso!</p>
+                    <p>Assunto: {$dadosChamado['assunto']}</p>                    
+                    <p>Mensagem: {$dadosChamado['mensagem']}</p>                    
+                    <p>Em breve nossa equipe irá responder seu chamado.</p>
+                    <p>Obrigado.</p>
+                ";
+
+                $mail->setBodyHtml($message);
+                $mail->setFrom('newfinances@newfinances.com.br', 'NewFinances - Controle Financeiro');
+                $mail->addTo($this->_session->email_usuario);
+                $mail->setSubject('Chamado Aberto');
+
+                $mail->send(Zend_Registry::get('mail_transport'));
                 
                 // disparar e-mail gestor sobre novo chamado
+                $mail = new Zend_Mail('utf-8');
+
+                $message = "
+                    <p>Novo chamado aberto</p>
+                    <p>Usuário: {$this->_session->nome_completo}</p>                    
+                    <p>Assunto: {$dadosChamado['assunto']}</p>                    
+                    <p>Mensagem: {$dadosChamado['mensagem']}</p>    
+                ";
+
+                $mail->setBodyHtml($message);
+                $mail->setFrom('newfinances@newfinances.com.br', 'NewFinances - Controle Financeiro');
+                $mail->addTo("nandorodpires@gmail.com");
+                $mail->setSubject("Chamado Aberto");
+
+                $mail->send(Zend_Registry::get('mail_transport'));
                 
                 $this->_redirect("chamados/");
                 
@@ -90,6 +118,42 @@ class ChamadosController extends Application_Controller {
                     $status['status'] = "Aberto";
                     $whereStatus = "id_chamado = " . $id_chamado;
                     $this->_modelChamado->update($status, $whereStatus);
+                    
+                    // envia o email para o usuario
+                    $mail = new Zend_Mail('utf-8');
+
+                    $message = "
+                        <p>Olá {$this->_session->nome_completo}</p>
+                        <p>O chamado {$dadosChamado->id_chamado} foi reaberto com sucesso!</p>
+                        <p>Assunto: {$dadosChamado->assunto}</p>                    
+                        <p>Mensagem: {$dadosResponderChamado['resposta']}</p>                    
+                        <p>Em breve nossa equipe irá responder seu chamado.</p>
+                        <p>Obrigado.</p>
+                    ";
+
+                    $mail->setBodyHtml($message);
+                    $mail->setFrom('newfinances@newfinances.com.br', 'NewFinances - Controle Financeiro');
+                    $mail->addTo($this->_session->email_usuario);
+                    $mail->setSubject('Chamado Reaberto');
+
+                    $mail->send(Zend_Registry::get('mail_transport'));
+
+                    // disparar e-mail gestor sobre novo chamado
+                    $mail = new Zend_Mail('utf-8');
+
+                    $message = "
+                        <p>O chamado {$dadosChamado->id_chamado} foi reaberto</p>
+                        <p>Usuário: {$this->_session->nome_completo}</p>                    
+                        <p>Assunto: {$dadosChamado->assunto}</p>                    
+                        <p>Mensagem: {$dadosResponderChamado['resposta']}</p>    
+                    ";
+
+                    $mail->setBodyHtml($message);
+                    $mail->setFrom('newfinances@newfinances.com.br', 'NewFinances - Controle Financeiro');
+                    $mail->addTo("nandorodpires@gmail.com");
+                    $mail->setSubject("Chamado Reaberto");
+
+                    $mail->send(Zend_Registry::get('mail_transport'));
                     
                     $this->_redirect("chamados/ver-chamado/id_chamado/" . $id_chamado);
                 } catch (Exception $error) {
