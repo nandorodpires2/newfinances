@@ -1,35 +1,24 @@
-r<?php
+<?php
 
 require_once APPLICATION_PATH . '/../library/PagSeguroLibrary/PagSeguroLibrary.php';
 
-class UsuariosController extends Zend_Controller_Action {
+class UsuariosController extends Application_Controller {
 
     const URL_ATIVAR = "http://newfinances.com.br/usuarios/ativar-usuario/id_usuario/";
+    //const URL_ATIVAR = "http://localhost/newfinances/public/usuarios/ativar-usuario/id_usuario/";
     
-    protected $_session;
+    public $_formUsuariosLogin;
+    public $_formNovoUsuario;
+    public $_formPlanoUsuario;
     
-    protected $_modelUsuario;
-    protected $_modelPlano;
-    protected $_modelUsuarioPlano;
-    protected $_modelPlanoValor;
-
-    protected $_formUsuariosLogin;
-    protected $_formNovoUsuario;
-    protected $_formPlanoUsuario;
-    
-    protected $_formUsuariosRecuperarSenha;
+    public $_formUsuariosRecuperarSenha;
     
     const PLANO_BASICO = 8;
     const VALOR_PLANO_BASICO = 9;
 
     public function init() {
         
-        $this->_session = Zend_Auth::getInstance()->getIdentity();        
-        
-        $this->_modelUsuario = new Model_Usuario();        
-        $this->_modelPlano = new Model_Plano();
-        $this->_modelUsuarioPlano = new Model_UsuarioPlano();
-        $this->_modelPlanoValor = new Model_PlanoValor();
+        parent::init();
         
         $this->_formUsuariosLogin = new Form_Usuarios_Login();
         $this->_formNovoUsuario = new Form_Usuarios_NovoUsuario();
@@ -158,6 +147,7 @@ class UsuariosController extends Zend_Controller_Action {
                                         $mail = new Zend_Mail('utf-8');
 
                                         $message = "
+                                            <p>Olá {$dadosNovoUsuario['nome_completo']}</p>
                                             <p>Seu cadastro foi realizado com sucesso! Seja Bem vindo ao NewFinances</p>
                                             <p>Acesse o link abaixo para ativar sua conta: </p>
                                             <p><a href='" . self::URL_ATIVAR . "{$last_id}'>Ativar Minha Conta</a></p>
@@ -166,18 +156,34 @@ class UsuariosController extends Zend_Controller_Action {
                                         $mail->setBodyHtml($message);
                                         $mail->setFrom('newfinances@newfinances.com.br', 'NewFinances - Controle Financeiro');
                                         $mail->addTo($dadosNovoUsuario['email_usuario']);
-                                        //$mail->addTo('tiago@realter.com.br');
-                                        //$mail->setReplyTo('email@portal.redemorar.com.br');
                                         $mail->setSubject('Seja Bem Vindo');
 
                                         $mail->send(Zend_Registry::get('mail_transport'));
 
+                                        // envia o email para o gestor do sistema
+                                        $mail = new Zend_Mail('utf-8');
+
+                                        $message = "
+                                            <p>Novo Usuário Cadastrado</p>
+                                            <p>Nome: {$dadosNovoUsuario['nome_completo']}</p>
+                                            <p>E-mail: {$dadosNovoUsuario['email_usuario']}</p>
+                                            <p>Cidade: {$dadosNovoUsuario['cidade']}</p>                                            
+                                        ";
+                                        
+                                        $mail->setBodyHtml($message);
+                                        $mail->setFrom('newfinances@newfinances.com.br', 'NewFinances - Controle Financeiro');                                                                                
+                                        $mail->setSubject('Novo Usuário');
+                                        $mail->addTo("nandorodpires@gmail.com");
+                                        $mail->send(Zend_Registry::get('mail_transport'));
+                                        
+                                        // redireciona o usuario para a mensagem de ativar a conta
                                         $this->_redirect("usuarios/ativar");
+                                        
                                         
                                     } catch (Exception $error) {
                                         $messeges = array(
                                             array(                                         
-                                                "alert" => "Houve um problema ao mandar o e-mail"
+                                                "alert" => "Houve um problema ao mandar o e-mail: {$error->getMessage()}"
                                             )
                                         );
 
@@ -239,7 +245,7 @@ class UsuariosController extends Zend_Controller_Action {
     }
     
     public function ativarAction() {
-        
+        $this->_helper->layout->setLayout("site");
     }
 
     public function ativarUsuarioAction() {
@@ -268,6 +274,7 @@ class UsuariosController extends Zend_Controller_Action {
         $mail = new Zend_Mail('utf-8');
 
         $message = "
+            <p>Olá {$dadosUsuario->nome_completo}</p>
             <p>Seu cadastro foi ativado com sucesso!</p>
             <p>Obrigado por fazer parte da equipe NewFinances</p>            
         ";
@@ -345,6 +352,8 @@ class UsuariosController extends Zend_Controller_Action {
      */
     public function meusDadosAction() {
         
+        $this->view->messages = Controller_Helper_Messeges::getMesseges();
+        
         $id_usuario = $this->_session->id_usuario;
         
         // busca os dados do Usuario
@@ -372,6 +381,7 @@ class UsuariosController extends Zend_Controller_Action {
         */
         
         $this->_formNovoUsuario->submit->setLabel("Alterar");
+        $this->_formNovoUsuario->getElement('email_usuario')->setAttrib('readonly', 'readonly');
         
         $this->view->formMeusDados = $this->_formNovoUsuario;
         
@@ -385,6 +395,15 @@ class UsuariosController extends Zend_Controller_Action {
                 
                 try {
                     $this->_modelUsuario->update($dadosUpdateUsuario, $whereUpdate);
+                    
+                    $messeges = array(
+                        array(                                         
+                            "success" => "Dados alterado com sucesso!"
+                        )
+                    );
+
+                    $this->view->messages = $messeges;
+                    
                     $this->_redirect("usuarios/meus-dados");
                 } catch (Zend_Exception $error) {
                     echo $error->getMessage();
@@ -442,8 +461,6 @@ class UsuariosController extends Zend_Controller_Action {
                 } else {
                     die('false');
                 }
-                
-                
                 
             }
         }

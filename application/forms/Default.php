@@ -12,10 +12,16 @@
  */
 class Form_Default extends Zend_Form {
 
-    public $_session;
+    public $id_usuario;
     
-    public function init() {
-        $this->_session = Zend_Auth::getInstance()->getIdentity();
+    public function init() {        
+        
+        if (Zend_Auth::getInstance()->hasIdentity()) {
+            $this->id_usuario = Zend_Auth::getInstance()->getIdentity()->id_usuario;
+        } else {
+            $this->id_usuario = 0;
+        }
+        
     }
 
     /**
@@ -48,7 +54,7 @@ class Form_Default extends Zend_Form {
         $multiOptions = array('' => 'Selecione...');
         
         $modelCategoria = new Model_Categoria();
-        $categorias = $modelCategoria->getCategoriasCadastradasMes($this->_session->id_usuario);
+        $categorias = $modelCategoria->getCategoriasCadastradasMes($this->id_usuario);
         
         // busca as categorias cadastradas para este mes
         $categoriasCadastradas = $modelCategoria;
@@ -71,7 +77,7 @@ class Form_Default extends Zend_Form {
     public function getContasUsuario() {
         
         $modelConta = new Model_Conta();
-        $contas = $modelConta->getContasUsuario($this->_session->id_usuario);
+        $contas = $modelConta->getContasUsuario($this->id_usuario);
         
         if ($contas->count() == 0 ) {            
             return $multiOptions = array('' => "Nenhuma conta cadastrada");
@@ -89,7 +95,7 @@ class Form_Default extends Zend_Form {
     public function getCartoesUsuario() {
         
         $modelCartao = new Model_Cartao();
-        $cartoes = $modelCartao->fetchAll("id_usuario = {$this->_session->id_usuario} and ativo_cartao = 1");
+        $cartoes = $modelCartao->fetchAll("id_usuario = {$this->id_usuario} and ativo_cartao = 1");
         
         if ($cartoes->count() == 0 ) {            
             return $multiOptions = array('' => "Nenhum cartão cadastrado");
@@ -203,7 +209,7 @@ class Form_Default extends Zend_Form {
         $funcionalidades = $modelFuncionalidades->getFuncionalidadesPermissao();
         
         foreach ($funcionalidades as $funcionalidade) {
-            $multiOptions[$funcionalidade->id_funcionalidade] = "  -  " . $funcionalidade->descricao_permissao;
+            $multiOptions[$funcionalidade->id_funcionalidade] = "  -  " . $funcionalidade->descricao_permissao . " -> " . $funcionalidade->controller . " - " . $funcionalidade->action;
         }
         
         return $multiOptions;

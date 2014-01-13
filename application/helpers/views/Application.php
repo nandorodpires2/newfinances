@@ -19,5 +19,12 @@ class View_Helper_Application extends Zend_View_Helper_Abstract {
         return $plano->id_plano == Application_Controller::PLANO_GESTOR ? true : false;
     }    
     
+    public static function hasAcl($resource) {
+        
+        $acl = new Zend_Acl();              
+        return $acl->has($resource);
+        
+    }
+    
 }
 

@@ -33,6 +33,7 @@ class Model_Categoria extends Zend_Db_Table {
                                 and met.id_categoria = cat.id_categoria
                     )
                 ")
+                ->where("cat.ativo_categoria = ?", 1)
                 ->order("cat.descricao_categoria asc");
         
         return $this->fetchAll($select);
@@ -76,10 +77,11 @@ class Model_Categoria extends Zend_Db_Table {
                 ))
                 ->where("mov.id_usuario = ?", $id_usuario)                
                 ->where("mov.realizado = ?", 1)
+                ->where("mov.id_tipo_movimentacao in (2,3)")
                 ->where("cat.id_categoria = ?", $id_categoria)
                 ->where("month(mov.data_movimentacao) = month(now())")
                 ->where("year(mov.data_movimentacao) = year(now())");
-        
+                
         return $this->fetchRow($select); 
     }
     

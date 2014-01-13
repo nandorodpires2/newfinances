@@ -29,7 +29,7 @@ class View_Helper_Meta extends Zend_View_Helper_Abstract {
         $modelCategoria = new Model_Categoria();
         $totalGastos = $modelCategoria->getTotalGastoCategoriaMes($id_categoria);
         
-        return View_Helper_Currency::getCurrency($totalGastos->total);
+        return $totalGastos->total;
         
     }
 
@@ -37,6 +37,9 @@ class View_Helper_Meta extends Zend_View_Helper_Abstract {
      * retorna a porcentagem total dos gastos
      */
     public static function getPorcentagemTotalGastos($total_meta, $total_gasto) {        
+        
+        $total_gasto *= -1;
+        
         return $porcentagem_gastos = number_format(
             ($total_gasto * 100) / $total_meta, 
             2, 

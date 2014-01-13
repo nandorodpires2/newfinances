@@ -24,6 +24,8 @@ class MovimentacoesController extends Application_Controller {
 
     public function indexAction() {        
         
+        set_time_limit(60);
+        
         // enviando os forms de filtros para a view
         $this->view->formMes = $this->_formMes;
         $this->view->formDias = $this->_formDias;

@@ -108,8 +108,10 @@ class Application_Controller extends Zend_Controller_Action {
     // form de receitas
     public $_formMovimentacoesReceitas;
     // form de transferencias
-    public $_formMovimentacoesTransferencia;    
-    
+    public $_formMovimentacoesTransferencia;
+    // form de metas
+    public $_formMetasMeta;
+
     /* PAGSEGURO CREDENTIALS */
     public $_credentials;
 
@@ -133,8 +135,7 @@ class Application_Controller extends Zend_Controller_Action {
         $this->_modelFuncionalidade = new Model_Funcionalidade();    
         $this->_modelPlanoFuncionalidade = new Model_PlanoFuncionalidade();
         $this->_modelChamado = new Model_Chamado();
-        $this->_modelChamadoResposta = new Model_ChamadoResposta();        
-        $this->_modelMovimentacao = new Model_Movimentacao();
+        $this->_modelChamadoResposta = new Model_ChamadoResposta();                
         $this->_modelVwMovimentacao = new Model_VwMovimentacao();
         $this->_modelMovimentacaoRepeticao = new Model_MovimentacaoRepeticao();
         $this->_modelMeta = new Model_Meta();        
@@ -159,6 +160,7 @@ class Application_Controller extends Zend_Controller_Action {
         $this->_formMovimentacoesReceitas = new Form_Movimentacoes_Receita();
         $this->_formMovimentacoesTransferencia = new Form_Movimentacoes_Transferencia();
         $this->_formChamadosResponder = new Form_Chamados_Responder;
+        $this->_formMetasMeta = new Form_Metas_Meta();
                 
         $credentials = new PagSeguroAccountCredentials(  
             'nandorodpires@gmail.com',   
@@ -236,12 +238,16 @@ class Application_Controller extends Zend_Controller_Action {
      */
     public function verificaPlanoBasico() {
         
-        $planoUsuario = $this->_modelUsuarioPlano->getPlanoAtual($this->_session->id_usuario);
+        if ($this->_hasIdentity) {
         
-        if ($planoUsuario->id_plano == self::PLANO_BASICO) {
-            return true;
-        } else {
-            return false;
+            $planoUsuario = $this->_modelUsuarioPlano->getPlanoAtual($this->_session->id_usuario);
+
+            if ($planoUsuario->id_plano == self::PLANO_BASICO) {
+                return true;
+            } else {
+                return false;
+            }
+        
         }
                 
     }
@@ -250,8 +256,10 @@ class Application_Controller extends Zend_Controller_Action {
      * retorna o plano do usuario
      */
     public function getPlanoAtual() {
-        $dadosPlano = $planoUsuario = $this->_modelUsuarioPlano->getPlanoAtual($this->_session->id_usuario);
-        return $this->_session->descricao_plano = $dadosPlano->descricao_plano;
+        if ($this->_hasIdentity) {
+            $dadosPlano = $planoUsuario = $this->_modelUsuarioPlano->getPlanoAtual($this->_session->id_usuario);
+            return $this->_session->descricao_plano = $dadosPlano->descricao_plano;
+        }
     }
     
     /**
@@ -259,21 +267,23 @@ class Application_Controller extends Zend_Controller_Action {
      */
     protected function processaPagamentosPendentes() {
         
-        // verificar se existem pagamentos pendentes para o usuario
-        $pagamentos = $this->_modelPagamento->fetchAll("id_usuario = {$this->_session->id_usuario}");
-        
-        foreach ($pagamentos as $pagamento) {
-            if (!$pagamento->processado && $pagamento->cod_transacao !== "") {                
-                
-                $transation = $this->getTransaction($pagamento->cod_transacao);                
-                
-                $status = (int)$transation->getStatus()->getValue();
-                $reference = (int)$transation->getReference();
-                $transaction_id = $transation->getCode();
-                
-                // caso tenha alguma alteracao de status
-                if ($pagamento->status != $status) {                
-                    $this->processaTransacao($status, $reference, $transaction_id);
+        if ($this->_hasIdentity) {
+            // verificar se existem pagamentos pendentes para o usuario
+            $pagamentos = $this->_modelPagamento->fetchAll("id_usuario = {$this->_session->id_usuario}");
+
+            foreach ($pagamentos as $pagamento) {
+                if (!$pagamento->processado && $pagamento->cod_transacao !== "") {                
+
+                    $transation = $this->getTransaction($pagamento->cod_transacao);                
+
+                    $status = (int)$transation->getStatus()->getValue();
+                    $reference = (int)$transation->getReference();
+                    $transaction_id = $transation->getCode();
+
+                    // caso tenha alguma alteracao de status
+                    if ($pagamento->status != $status) {                
+                        $this->processaTransacao($status, $reference, $transaction_id);
+                    }
                 }
             }
         }

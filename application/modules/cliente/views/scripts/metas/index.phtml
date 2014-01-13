@@ -4,42 +4,40 @@
     <div id="metas-index"> 
         <fieldset>
             <legend>Novo Orçamento</legend>
-            <form method="post">
-                
+            <form method="post">                
                 <table>                    
                     <tr>
-                        <td><?php echo $this->formMetas->id_categoria; ?> </td>
-                    </tr>
-                    <tr>
-                        <td><?php echo $this->formMetas->valor_meta; ?> </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <?php echo $this->formMetas->repetir; ?> 
-                            <span id="label-repetir-meta">Repete o lançamento desta meta para os outros meses.</span>
+                        <td width="200"><?php echo $this->formMetas->id_categoria; ?> </td>
+                        <td width="200"><?php echo $this->formMetas->valor_meta; ?> </td>
+                        <td width="400">
+                            <?php echo $this->formMetas->repetir; ?>                         
                         </td>
-                    </tr>
-                    <tr>
                         <td><?php echo $this->formMetas->submit; ?> </td>
                     </tr>
                     <tr>
-                        <td>
-                            <?php echo $this->formMetas->id_usuario; ?> 
-                            <?php echo $this->formMetas->mes_meta; ?> 
-                            <?php echo $this->formMetas->ano_meta; ?> 
-                        </td>
+                        <td id="val-sugest"></td>
+                        <td>&nbsp;</td>
+                        <td><span id="label-repetir-meta">Repete o lançamento desta meta para os outros meses.</span></td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $this->formMetas->id_usuario; ?></td> 
+                        <td><?php echo $this->formMetas->mes_meta; ?></td> 
+                        <td><?php echo $this->formMetas->ano_meta; ?></td>
+                        <td>&nbsp;</td>
                     </tr>
                 </table>                
             </form>     
         </fieldset>        
         <div style="margin-top: 10px;">
+            <h2 class="titulo-laranja">Orçamentos Cadastrados</h2>
             <table class="tabless-green">
                 <tr>
                     <td>Categoria</td>
                     <td>Meta</td>
                     <td>Gastos</td>
                     <td>Porcentagem</td>
-                    <td>Projeção</td>
+                    <td>Projeção(%)</td>
                     <td colspan="2">Ações</td>
                 </tr>
                 <?php if ($this->metasUsuario->count() > 0) : ?>
@@ -47,15 +45,14 @@
                 
                 <?php $total_gasto = View_Helper_Meta::getTotalGastosMetaMes($meta->id_categoria); ?>
                 <?php $porcentagem = View_Helper_Meta::getPorcentagemTotalGastos($meta->valor_meta, $total_gasto) ?>
-                <?php $projecao = View_Helper_Meta::getProjecaoMeta($porcentagem); ?>
-                
+                <?php $projecao = View_Helper_Meta::getProjecaoMeta($porcentagem); ?>                
                 <tr>
-                    <td><?php echo $meta->descricao_categoria; ?></td>
-                    <td><?php echo View_Helper_Currency::getCurrency($meta->valor_meta); ?></td>
-                    <td><?php echo $total_gasto; ?></td>
-                    <td><?php echo $porcentagem; ?></td>
-                    <td><?php echo $projecao; ?></td>
-                    <td>
+                    <td class="align_left"><?php echo $meta->descricao_categoria; ?></td>
+                    <td class="align_right"><?php echo View_Helper_Currency::getCurrency($meta->valor_meta); ?></td>
+                    <td class="align_right"><?php echo View_Helper_Currency::getCurrency($total_gasto); ?></td>
+                    <td class="align_center"><?php echo $porcentagem; ?>%</td>
+                    <td class="align_center"><?php echo $projecao; ?>%</td>
+                    <td class="align_center">
                         <a href="<?php echo $this->url(array(
                             'action' => 'editar-meta',
                             'id_meta' => $meta->id_meta
@@ -63,7 +60,7 @@
                             <img src="<?php echo $this->baseUrl('views/img/icon_edit.png'); ?>" title="Editar" width="20" />
                         </a>
                     </td>
-                    <td>
+                    <td class="align_center">
                         <a href="<?php echo $this->url(array(
                             'action' => 'excluir-meta',
                             'id_meta' => $meta->id_meta
@@ -74,8 +71,10 @@
                 </tr>
                 <?php endforeach; ?>
                 <tr>
-                    <th>Total: </th>
-                    <td><?php echo View_Helper_Currency::getCurrency($this->total_meta); ?></td>
+                    <th class="totais totais-bg">Totais: </th>
+                    <th class="totais totais-bg"><?php echo View_Helper_Currency::getCurrency($this->total_meta); ?></th>
+                    <th class="totais totais-bg">&nbsp;</th>
+                    <th class="totais totais-bg" colspan="4">&nbsp;</th>
                 </tr>
                 <?php else : ?>
                 <tr>

@@ -1,23 +1,9 @@
 <?php
 
-class MetasController extends Zend_Controller_Action {
-
-    protected $_session;
-    
-    protected $_modelMeta;
-    protected $_modelCategoria;
-
-    protected $_formMetasMeta;
+class MetasController extends Application_Controller {
 
     public function init() {
-        
-        $this->_session = Zend_Auth::getInstance()->getIdentity();       
-        
-        $this->_modelMeta = new Model_Meta();
-        $this->_modelCategoria = new Model_Categoria();
-        
-        $this->_formMetasMeta = new Form_Metas_Meta();
-        
+        parent::init();
     }
 
     public function indexAction() {
@@ -27,7 +13,7 @@ class MetasController extends Zend_Controller_Action {
         // recupera as metas ja cadastradas para este mes
         $metasUsuario = $this->_modelMeta->getMetasUsuario($this->_session->id_usuario);
         $this->view->metasUsuario = $metasUsuario;
-        
+                
         $total_meta = $this->_modelMeta->getTotalMetaMes($this->_session->id_usuario, date('m'), date('Y'));
         $this->view->total_meta= $total_meta;
         
@@ -130,6 +116,35 @@ class MetasController extends Zend_Controller_Action {
             echo $error->getMessage();
         }   
         
+    }
+    
+    /**
+     * sugestao de valor para meta
+     */
+    public function valSugestAction() {
+        
+        // desabilita o layout e view
+        $this->_disabledLayout();
+        $this->_disabledView();
+        
+        // recupera o id da categoria
+        $id_categoria = $this->_getParam("id_categoria");
+        
+        // busca a media de gastos mensais para a categoria
+        $mediaMovimentacao = $this->_modelMovimentacao->getMediaMovimentacaoCategoria($id_categoria, $this->_session->id_usuario);
+        
+        if ($mediaMovimentacao->count() > 0) {
+            $total = 0;
+            foreach ($mediaMovimentacao as $valores) {                        
+                $total += $valores->total;           
+            }                
+
+            $media = ($total / $mediaMovimentacao->count()) * -1;
+
+            echo View_Helper_Currency::getCurrency($media);                    
+        } else {
+            echo " - ";
+        }
     }
 
 }
