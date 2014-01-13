@@ -13,29 +13,15 @@ $(document).ready(function (){
             $("#label-repetir-meta").hide();
         }
     });
-    
-<<<<<<< HEAD
-    // sugestao de meta
-    $("#id_categoria").change(function(){
-       
-       var id_categoria = $(this).val();
-        sugestValue(id_categoria);
-=======
     // sugere o valor da meta de acordo com a media mensal
     $("#id_categoria").change(function(){
         var id_categoria = $(this).val(); 
         valueSugest(id_categoria);
         $("#valor_meta").focus();
->>>>>>> 60f6981b3a1b4aac3e479854f94865b84890d4b5
     });
     
 });
 
-<<<<<<< HEAD
-function sugestValue(id_categoria) {
-    
-}
-=======
 function valueSugest(id_categoria) {
     
     var base_url = baseUrl();
@@ -60,6 +46,3 @@ function valueSugest(id_categoria) {
     });    
     
 }
-
->>>>>>> 60f6981b3a1b4aac3e479854f94865b84890d4b5
-

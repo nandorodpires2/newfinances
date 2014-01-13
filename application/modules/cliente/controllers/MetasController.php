@@ -3,11 +3,11 @@
 class MetasController extends Application_Controller {
 
     public function init() {
-<<<<<<< HEAD
+
         parent::init();        
-=======
+
         parent::init();
->>>>>>> 60f6981b3a1b4aac3e479854f94865b84890d4b5
+
     }
 
     public function indexAction() {
@@ -123,35 +123,18 @@ class MetasController extends Application_Controller {
     }
     
     /**
-<<<<<<< HEAD
      * sugestao de valor de meta
      * baseado nos gastos dos meses anteriores
-     */
-    public function sugestValuesAction() {
-                
-=======
-     * sugestao de valor para meta
      */
     public function valSugestAction() {
         
         // desabilita o layout e view
->>>>>>> 60f6981b3a1b4aac3e479854f94865b84890d4b5
         $this->_disabledLayout();
         $this->_disabledView();
         
         // recupera o id da categoria
         $id_categoria = $this->_getParam("id_categoria");
         
-<<<<<<< HEAD
-        // buscar no banco 
-        /*
-        select	avg(m.valor_meta)
-        from	meta m
-        where	m.id_categoria = 5
-                and m.id_usuario = 1
-        */
-        
-=======
         // busca a media de gastos mensais para a categoria
         $mediaMovimentacao = $this->_modelMovimentacao->getMediaMovimentacaoCategoria($id_categoria, $this->_session->id_usuario);
         
@@ -167,7 +150,6 @@ class MetasController extends Application_Controller {
         } else {
             echo " - ";
         }
->>>>>>> 60f6981b3a1b4aac3e479854f94865b84890d4b5
     }
 
 }

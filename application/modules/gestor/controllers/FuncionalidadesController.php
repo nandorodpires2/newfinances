@@ -22,7 +22,6 @@ class Gestor_FuncionalidadesController extends Zend_Controller_Action  {
         
         $this->_modelFuncionalidade = new Model_Funcionalidade();        
         $this->_formFuncionalidades = new Form_Funcionalidades_NovaFuncionalidade();
-        $this->_grid = new Plugin_Grid();
         
     }
     

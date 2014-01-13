@@ -108,11 +108,7 @@ class Application_Controller extends Zend_Controller_Action {
     // form de receitas
     public $_formMovimentacoesReceitas;
     // form de transferencias
-<<<<<<< HEAD
-    public $_formMovimentacoesTransferencia;   
-=======
     public $_formMovimentacoesTransferencia;
->>>>>>> 60f6981b3a1b4aac3e479854f94865b84890d4b5
     // form de metas
     public $_formMetasMeta;
 
