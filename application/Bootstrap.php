@@ -78,5 +78,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         Zend_Registry::set('Zend_Locale', $locale);
     }    
 
+    /**
+     * Inclui os javascripts comuns da aplicacao no header
+     *
+     * @return Zend_View
+     */
+    protected function _initJavascript() {
+
+    }
+    
 }
 

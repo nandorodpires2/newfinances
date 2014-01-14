@@ -21,6 +21,12 @@ class View_Helper_Application extends Zend_View_Helper_Abstract {
     
     public static function hasAcl($resource) {
         
+        $id_usuario = Zend_Auth::getInstance()->getIdentity()->id_usuario;
+        
+        if (View_Helper_Application::isGestor($id_usuario)) {
+            return true;
+        }
+        
         $acl = new Zend_Acl();              
         return $acl->has($resource);
         

@@ -25,6 +25,23 @@ $(document).ready(function (){
         $("#formConta").submit();
     });
     
+    var mes = $("#mes").val();
+    var ano = $("#ano").val();
+    
+    var dia = 1;
+    while (dia <= 31) {        
+        
+        $("#loader-lanc-"+dia).hide();
+        
+        var data = ano + '-' + mes + '-' + dia;
+        
+        if ($("#"+dia).length) {
+            buscaLancamentos(data, dia);
+        }
+        
+        dia++;        
+    }
+    
 });
 
 /*
@@ -61,6 +78,34 @@ function status(id_movimentacao, status) {
         }
     }); 
     
+}
+
+
+/**
+ * busca os lancamentos
+ */
+function buscaLancamentos(data, dia) {
+    
+    var base_url = baseUrl();
+    
+    $.ajax({
+        url: base_url + "movimentacoes/busca-lancamentos",
+        type: "get",
+        data: {
+            data: data
+        },
+        dataType: "html",
+        beforeSend: function() {            
+            $("#loader-lanc-"+dia).show();
+        },
+        success: function(dados) {     
+            $("#lanc-" + dia).html(dados);
+            $("#loader-lanc-"+dia).hide();
+        },
+        error: function(error) {
+            alert('Houve um erro');
+        }
+    }); 
 }
 
 

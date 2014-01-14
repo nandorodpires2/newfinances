@@ -2,8 +2,8 @@
 <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/movimentacoes/nova-despesa.js')); ?>
 <div id="pages">
     <div id="movimentacoes-nova-despesa">
-        <fieldset>
-            <legend><?php echo $this->titulo; ?></legend>
+        <fieldset style="border-color: #FF4040">
+            <legend style="color: #FF4040"><b>Nova Despesa</b></legend>
             <form method="post">
                 <table>
                     <?php foreach ($this->formMovimentacoesDespesa->getElements() as $key => $element) : ?>

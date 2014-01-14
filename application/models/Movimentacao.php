@@ -17,6 +17,33 @@ class Model_Movimentacao extends Zend_Db_Table {
     protected $_primary = 'id_movimentacao';
     
     /**
+     * 
+     * Retorna as que tiveram movimentacao de acordo com o mes
+     * 
+     * @param type $mes
+     * @return type
+     */
+    public function getDatasMes($ano, $mes, $id_usuario, $conta = null) {
+        $select = $this->select()
+                ->from($this->_name, array(
+                    'data_movimentacao',
+                    'dia' => 'day(data_movimentacao)'
+                ))
+                ->where("year(data_movimentacao) = ?", $ano)
+                ->where("month(data_movimentacao) = ?", $mes)                
+                ->where("id_usuario = ?", $id_usuario)                
+                ->group("data_movimentacao");
+        
+        // caso seja filtrado por conta
+        if ($conta) {
+            $select->where("id_conta = ?", $conta);
+        }
+                
+        return $this->fetchAll($select);
+        
+    }
+    
+    /**
      *  busca os dados de uma movimentacao
      */
     public function getDadosMovimentacao($idMovimentacao, $id_usuario) {

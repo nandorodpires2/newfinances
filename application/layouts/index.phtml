@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
     <?php $auth = Zend_Auth::getInstance()->getIdentity(); ?>
     <link rel="icon" href="<?php echo $this->baseUrl('views/img/icon_logo.png'); ?>" />    
     <?php header("Content-Type: text/html; charset=UTF-8",true); ?>
@@ -21,7 +22,7 @@
     <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/application.js')); ?>
     <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/facebook.js')); ?>
     <?php //echo $this->headScript()->appendFile($this->baseUrl('views/js/jsapi.js')); ?>
-    
+    </head>
     <body>      
         <?php if($this->planoBasico) : ?>
         <div id="plano-basico">
@@ -143,6 +144,10 @@
                                      data-share="false">                            
                                 </div>
                                 <div id="fb-root"></div>                            
+                            </div>
+                            <div class="seguir">
+                                <a href="https://twitter.com/NewFinances" class="twitter-follow-button" data-show-count="false" data-lang="pt" data-dnt="true">Seguir @NewFinances</a>
+                                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
                             </div>
                         </div>
                         <?php echo $this->layout()->content; ?>                                                 

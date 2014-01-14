@@ -1,162 +1,46 @@
 <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/movimentacoes/index.css')); ?>
 <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/movimentacoes/index.js')); ?>
 <div id="pages">
+    <div id="movimentacoes-index">                             
+        <fieldset>
+            <legend>Filtros</legend>
+            <div id="sub-options-bar">
+                <div id="form-filto-mes">
+                    <table>
+                        <tr>
+                            <td><?php echo $this->formMes; ?></td>
+                            <td><?php echo $this->formDias; ?></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>                
+        </fieldset>            
+    </div>
+</div>
+<div id="pages">
     <div id="movimentacoes-index">                     
         <div class="lista-movimentacoes">           
-            <fieldset>
-                <legend>Filtros</legend>
-                <div id="sub-options-bar">
-                    <div id="form-filto-mes">
-                        <table>
-                            <tr>
-                                <td><?php echo $this->formMes; ?></td>
-                                <td><?php echo $this->formDias; ?></td>
-                            </tr>
-                        </table>
-                    </div>
-                    <!--
-                    <div id="form-filtro-conta">
-                        <table>
-                            <tr>
-                                <td><?php echo $this->formConta; ?></td>                                
-                            </tr>
-                        </table>
-                    </div>
-                    -->
-                    <!--
-                    <div id="form-filto-busca">
-                        <table>
-                            <tr>
-                                <td><?php echo $this->formBusca; ?></td>
-                                <td><img id="icon-busca" src="<?php echo $this->baseUrl('views/img/icon_find.png'); ?>" title="buscar" width="35" /></td>
-                            </tr>
-                        </table>
-                    </div>
-                    -->
+            <?php if ($this->datasMes->count() > 0) : ?>
+                <div id="subtitulo-lista">
+                    <div class="subtitulo-tipo">TIPO</div>
+                    <div class="subtitulo-descricao">DESCRIÇÃO</div>
+                    <div class="subtitulo-categoria">CATEGORIA</div>
+                    <div class="subtitulo-valor">VALOR</div>
+                    <div class="subtitulo-status">STATUS</div>
+                    <div class="subtitulo-acoes">AÇÕES</div>
+                </div>
+                <?php foreach ($this->datasMes as $data) : ?>            
+                <div id="<?php echo $data->dia; ?>" class="data-movimentacao">
+                    <?php echo View_Helper_Date::getDateCompleteView($data->data_movimentacao); ?>
+                </div>
+                <div style="text-align: center; margin: 7px 0;" id="<?php echo 'loader-lanc-' . $data->dia; ?>">
+                    <img src="<?php echo $this->baseUrl('views/img/loader-lanc.gif'); ?>">
+                    <span>Carregando os lançamentos...</span>
                 </div>                
-            </fieldset>
-            <div id="subtitulo-lista">
-                <div class="subtitulo-tipo">TIPO</div>
-                <div class="subtitulo-descricao">DESCRIÇÃO</div>
-                <div class="subtitulo-categoria">CATEGORIA</div>
-                <div class="subtitulo-valor">VALOR</div>
-                <div class="subtitulo-status">STATUS</div>
-                <div class="subtitulo-acoes">AÇÕES</div>
-            </div>
-            <?php if ($this->countListaMovimentacoes > 0) : ?>               
-                <?php foreach ($this->listaMovimentacoes as $lista) : ?>                    
-            <div class="data-movimentacao" id="<?php echo $lista['data_id']; ?>"><?php echo $lista['data_movimentacao']; ?><?php echo View_Helper_Date::isToday($lista['data_movimentacao']) ? ' - HOJE' : ''; ?></div>                    
-                    <?php foreach ($lista['movimentacoes'] as $movimentacao) : ?>                    
-                    <div id='dados-movimentacao' class="<?php echo (View_Helper_Date::isPending($movimentacao)) ? 'pendente' : ''; ?>">                        
-                        <div class="tipo-movimentacao">
-                            <?php echo View_Helper_TipoMovimentacao::getTipoMovimentacaoImage($movimentacao->id_tipo_movimentacao); ?>
-                        </div>
-                        <div class="descricao-movimentacao">
-                            <?php echo (View_Helper_Date::isPending($movimentacao)) ? '' : ''; ?>
-                            <?php echo $movimentacao->descricao_movimentacao; ?>
-                            <br />
-                            <span class="descricao-mini">
-                                <?php if ($movimentacao->id_tipo_movimentacao == 4) : ?>                            
-                                De <?php echo $movimentacao->descricao_conta; ?>
-                                Para <?php echo $movimentacao->descricao_conta_destino; ?>
-                                <?php else : ?>
-                                Conta: <?php echo $movimentacao->descricao_conta; ?>
-                                <?php endif; ?>                                
-                            </span>                            
-                        </div>
-                        <div class="categoria-movimentacao">
-                            <?php echo $movimentacao->descricao_categoria; ?>
-                        </div>                    
-                        <div class="valor-movimentacao">
-                            <?php echo View_Helper_Currency::getCurrency($movimentacao->valor_movimentacao); ?>
-                        </div>                    
-                        <div class="status-movimentacao">
-                            <?php if (!in_array($movimentacao->id_tipo_movimentacao, array(0,5,3,6))) : ?>
-                                <?php if ((bool)$movimentacao->realizado) : ?>
-                                <a href="javascript:status(<?php echo $movimentacao->id_movimentacao; ?>, 1);">
-                                    <img src="<?php echo $this->baseUrl('views/img/ok_green.png'); ?>" title="Realizado" />                                    
-                                </a>                            
-                                <?php else : ?>
-                                <a href="javascript:status(<?php echo $movimentacao->id_movimentacao; ?>, 0);">
-                                    <img src="<?php echo $this->baseUrl('views/img/ok_gray.png'); ?>" title="Previsto" />                                    
-                                </a>
-                                <?php endif; ?>                            
-                            <?php elseif ($movimentacao->id_tipo_movimentacao == 6) : ?>
-                            <a href="<?php echo $this->url(array(
-                                'module' => 'cliente',
-                                'controller' => 'cartoes',
-                                'action' => 'ver-fatura',
-                                'id_cartao' => $movimentacao->id_cartao,
-                                'vencimento' => $movimentacao->data_movimentacao
-                            )); ?>">
-                                <img src="<?php echo $this->baseUrl('views/img/icon_list.png'); ?>" title="Ver Fatura" />
-                            </a>
-                            <a href="<?php echo $this->url(array(
-                                'module' => 'cliente',
-                                'controller' => 'cartoes',
-                                'action' => 'pagar-fatura',
-                                'id_cartao' => $movimentacao->id_cartao,
-                                'vencimento' => $movimentacao->data_movimentacao
-                            )); ?>">
-                                <img src="<?php echo $this->baseUrl('views/img/icon_pay.png'); ?>" title="Pagar Fatura" />
-                            </a>
-                            <?php endif; ?>
-                        </div>                                  
-                        <div class="acoes-movimentacao">                                                        
-                            <?php if (!in_array($movimentacao->id_tipo_movimentacao, array(0,5))) : ?>
-                                <?php if ($movimentacao->id_tipo_movimentacao != 4) : ?>
-                                <a href="<?php echo $this->url(array(
-                                    'action' => 'editar-movimentacao',
-                                    'id_movimentacao' => $movimentacao->id_movimentacao                                                                    
-                                )); ?>">
-                                    <img src="<?php echo $this->baseUrl('views/img/icon_edit.png'); ?>" title="Editar" />
-                                </a>
-                                <?php endif; ?>
-                            <a href="<?php echo $this->url(array(
-                                'action' => 'excluir-movimentacao',
-                                'id_movimentacao' => $movimentacao->id_movimentacao 
-                            )); ?>">
-                                <img src="<?php echo $this->baseUrl('views/img/icon_delete.png'); ?>" title="Excluir" />
-                            </a>
-                            <?php elseif ($movimentacao->fatura) : ?>
-                            <a href="<?php echo $this->url(array(
-                                    'controller' => 'cartoes',
-                                    'action' => 'ver-fatura',
-                                    'id_cartao' => $movimentacao->id_cartao,
-                                    'vencimento' => $movimentacao->data_movimentacao
-                                )); ?>">
-                                <img src="<?php echo $this->baseUrl('views/img/icon_list.png'); ?>" title="Ver Fatura" />
-                            </a>
-                            <a href="<?php echo $this->url(array(
-                                    'controller' => 'cartoes',
-                                    'action' => 'pagar-fatura',
-                                    'id_cartao' => $movimentacao->id_cartao,
-                                    'vencimento' => $movimentacao->data_movimentacao
-                                )); ?>">
-                                <img src="<?php echo $this->baseUrl('views/img/icon_pay.png'); ?>" title="Pagar" />
-                            </a>
-                            <?php endif; ?>
-                        </div>  
-                        
-                    </div>                    
-                    <?php endforeach; ?>
-                    <div class="totais-movimentacao-dia">
-                        <div class="saldo-dia-realizado">
-                            <label>Saldo do Dia: </label>
-                            <span>
-                                <?php echo View_Helper_Currency::getCurrency($lista['previsto_realizado']['realizado']); ?>
-                            </span>
-                        </div>                        
-                        <div class="saldo-dia-previsto">
-                            <label>Saldo Previsto: </label>
-                            <span>
-                                <?php echo View_Helper_Currency::getCurrency($lista['previsto_realizado']['previsto']); ?>
-                            </span>
-                        </div>                        
-                    </div>
+                <div id="<?php echo 'lanc-' . $data->dia; ?>"></div>
                 <?php endforeach; ?>
             <?php else : ?>
-                <div class="lista-vazia">Nenhuma movimentação cadastrada.</div>
+                <center>Nenhum Lançamento Cadastrado para este Mês</center>
             <?php endif; ?>
         </div>
     </div>

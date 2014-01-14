@@ -1,0 +1,97 @@
+<?php if ($this->movimentacoes->count() > 0) : ?>
+<?php foreach ($this->movimentacoes as $movimentacao) : ?>
+<div id='dados-movimentacao' class="<?php echo (View_Helper_Date::isPending($movimentacao)) ? 'pendente' : ''; ?>">  
+    <div class="tipo-movimentacao">
+        <?php echo View_Helper_TipoMovimentacao::getTipoMovimentacaoImage($movimentacao->id_tipo_movimentacao); ?>
+    </div>
+    <div class="descricao-movimentacao">
+        <?php echo (View_Helper_Date::isPending($movimentacao)) ? '' : ''; ?>
+        <?php echo $movimentacao->descricao_movimentacao; ?>
+        <br />
+        <span class="descricao-mini">
+            <?php if ($movimentacao->id_tipo_movimentacao == 4) : ?>                            
+            De <?php echo $movimentacao->descricao_conta; ?>
+            Para <?php echo $movimentacao->descricao_conta_destino; ?>
+            <?php elseif ($movimentacao->id_tipo_movimentacao == 1 || $movimentacao->id_tipo_movimentacao == 2) : ?>
+            Conta: <?php echo $movimentacao->descricao_conta; ?>
+            <?php else : ?>
+            Cartão: <?php echo $movimentacao->descricao_cartao; ?>
+            <?php endif; ?>                                
+        </span>                            
+    </div>
+    <div class="categoria-movimentacao">
+        <?php echo $movimentacao->descricao_categoria; ?>
+    </div>                    
+    <div class="valor-movimentacao">
+        <?php echo View_Helper_Currency::getCurrency($movimentacao->valor_movimentacao); ?>
+    </div>                    
+    <div class="status-movimentacao">
+        <?php if (!in_array($movimentacao->id_tipo_movimentacao, array(0,5,3,6))) : ?>
+            <?php if ((bool)$movimentacao->realizado) : ?>
+            <a href="javascript:status(<?php echo $movimentacao->id_movimentacao; ?>, 1);">
+                <img src="<?php echo $this->baseUrl('views/img/ok_green.png'); ?>" title="Realizado" />                                    
+            </a>                            
+            <?php else : ?>
+            <a href="javascript:status(<?php echo $movimentacao->id_movimentacao; ?>, 0);">
+                <img src="<?php echo $this->baseUrl('views/img/ok_gray.png'); ?>" title="Previsto" />                                    
+            </a>
+            <?php endif; ?>                            
+        <?php elseif ($movimentacao->id_tipo_movimentacao == 6) : ?>
+        <a href="<?php echo $this->url(array(
+            'module' => 'cliente',
+            'controller' => 'cartoes',
+            'action' => 'ver-fatura',
+            'id_cartao' => $movimentacao->id_cartao,
+            'vencimento' => $movimentacao->data_movimentacao
+        )); ?>">
+            <img src="<?php echo $this->baseUrl('views/img/icon_list.png'); ?>" title="Ver Fatura" />
+        </a>
+        <a href="<?php echo $this->url(array(
+            'module' => 'cliente',
+            'controller' => 'cartoes',
+            'action' => 'pagar-fatura',
+            'id_cartao' => $movimentacao->id_cartao,
+            'vencimento' => $movimentacao->data_movimentacao
+        )); ?>">
+            <img src="<?php echo $this->baseUrl('views/img/icon_pay.png'); ?>" title="Pagar Fatura" />
+        </a>
+        <?php endif; ?>
+    </div>                                  
+    <div class="acoes-movimentacao">                                                        
+        <?php if (!in_array($movimentacao->id_tipo_movimentacao, array(0,5))) : ?>
+            <?php if ($movimentacao->id_tipo_movimentacao != 4) : ?>
+            <a href="<?php echo $this->url(array(
+                'action' => 'editar-movimentacao',
+                'id_movimentacao' => $movimentacao->id_movimentacao                                                                    
+            )); ?>">
+                <img src="<?php echo $this->baseUrl('views/img/icon_edit.png'); ?>" title="Editar" />
+            </a>
+            <?php endif; ?>
+        <a href="<?php echo $this->url(array(
+            'action' => 'excluir-movimentacao',
+            'id_movimentacao' => $movimentacao->id_movimentacao 
+        )); ?>">
+            <img src="<?php echo $this->baseUrl('views/img/icon_delete.png'); ?>" title="Excluir" />
+        </a>
+        <?php elseif ($movimentacao->fatura) : ?>
+        <a href="<?php echo $this->url(array(
+                'controller' => 'cartoes',
+                'action' => 'ver-fatura',
+                'id_cartao' => $movimentacao->id_cartao,
+                'vencimento' => $movimentacao->data_movimentacao
+            )); ?>">
+            <img src="<?php echo $this->baseUrl('views/img/icon_list.png'); ?>" title="Ver Fatura" />
+        </a>
+        <a href="<?php echo $this->url(array(
+                'controller' => 'cartoes',
+                'action' => 'pagar-fatura',
+                'id_cartao' => $movimentacao->id_cartao,
+                'vencimento' => $movimentacao->data_movimentacao
+            )); ?>">
+            <img src="<?php echo $this->baseUrl('views/img/icon_pay.png'); ?>" title="Pagar" />
+        </a>
+        <?php endif; ?>
+    </div>
+</div>
+<?php endforeach; ?>
+<?php endif; ?>

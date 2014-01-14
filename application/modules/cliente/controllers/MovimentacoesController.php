@@ -43,27 +43,30 @@ class MovimentacoesController extends Application_Controller {
         $this->_formMes->populate(array("mes" => $mes, "ano" => $ano));
         
         // busca as datas onde possui lancamentos
-        $datasMes = $this->_modelVwMovimentacao->getDatasMes($ano, $mes, $this->_session->id_usuario, $conta);        
-                      
-        if ($datasMes->count() > 0) {
+        $datasMes = $this->_modelMovimentacao->getDatasMes($ano, $mes, $this->_session->id_usuario, $conta);        
+        $this->view->datasMes = $datasMes;
         
-            $listaMovimentacoes = array();        
-            foreach ($datasMes  as $key => $data) {            
-                $listaMovimentacoes[$key]['data_movimentacao'] = Controller_Helper_Date::getDateViewComplete($data->data_movimentacao);
-                // para setar o id da data da movimentacao para rolar o scroll 
-                // jquery para esta data
-                $listaMovimentacoes[$key]['data_id'] = $data->dia;
-                $listaMovimentacoes[$key]['movimentacoes'] = $this->_modelVwMovimentacao->getMovimentacoesData($data->data_movimentacao, $this->_session->id_usuario);
-                $listaMovimentacoes[$key]['previsto_realizado']['previsto'] = Controller_Helper_Movimentacao::saldoDiaPrevisto($data->data_movimentacao, $this->_session->id_usuario);
-                $listaMovimentacoes[$key]['previsto_realizado']['realizado'] = Controller_Helper_Movimentacao::saldoDiaRealizado($data->data_movimentacao, $this->_session->id_usuario);
-            }
-            //die();
-            $this->view->countListaMovimentacoes = count($datasMes);
-            $this->view->listaMovimentacoes = $listaMovimentacoes;            
-            
-        }     
     }
     
+    /**
+     * busca as movimentacoes da data (Ajax)
+     */
+    public function buscaLancamentosAction() {
+    
+        set_time_limit(3600);
+        
+        $this->_disabledLayout();
+        
+        // recupera a data
+        $data = $this->_getParam("data");
+        
+        // busca as movimentacoes da data
+        $movimentacoes = $this->_modelVwMovimentacao->getMovimentacoesData($data, $this->_session->id_usuario);
+        
+        $this->view->movimentacoes = $movimentacoes;
+        
+    }
+
     /**
      * Nova Receita
      */
@@ -257,7 +260,7 @@ class MovimentacoesController extends Application_Controller {
         
         try {
             $this->_modelMovimentacao->update($statusUpdate, $where);
-            echo $statusUpdate['realizado']; // retorna o novo status para o ajax
+            //echo $statusUpdate['realizado']; // retorna o novo status para o ajax
         } catch (Zend_Exception $error) {
             echo $error->getMessage();
         }
