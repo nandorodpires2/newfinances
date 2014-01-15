@@ -27,7 +27,8 @@ class Model_Movimentacao extends Zend_Db_Table {
         $select = $this->select()
                 ->from($this->_name, array(
                     'data_movimentacao',
-                    'dia' => 'day(data_movimentacao)'
+                    'dia' => 'day(data_movimentacao)',
+                    'id_usuario'
                 ))
                 ->where("year(data_movimentacao) = ?", $ano)
                 ->where("month(data_movimentacao) = ?", $mes)                

@@ -1,0 +1,27 @@
+/* 
+    Document   : excluir
+    Created on : 15/01/2014, 12:36:15
+    Author     : Realter
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+#excluir-movimentacao {
+    float: left;
+    width: 100%;
+    margin: 10px 0;
+    text-align: center
+}
+
+.message-excluir {
+    font-size: 15px;
+    font-weight: bold;
+    color: #CC0000;
+}
+
+.lancamento {
+    font-size: 18px;
+    padding: 8px 0;
+}
+
+#excluir-movimentacao input { margin: 0 5px; }

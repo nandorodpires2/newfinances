@@ -1,5 +1,24 @@
+<?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/usuarios/index.css')); ?>
 <div id="pages">
     <div id="recuperar-senha">
-        <?php echo $this->formUsuariosRecuperarSenha; ?>        
+        <?php echo View_Helper_Messeges::getMessages($this->messages); ?>
+        <?php if (!$this->redirect) : ?>
+        <h2 class="titulo-laranja">Recuperar Senha</h2>
+        <?php echo $this->formUsuariosRecuperarSenha; ?>                
+        <?php else : ?>
+        <div class="icon">
+            <img src="<?php echo $this->baseUrl('views/img/icon_ok.png'); ?>" width="50" />
+        </div>
+        <div class="message">
+            <span>Uma nova senha foi enviada para o seu e-mail.</span>
+            <p class="access-acconut">
+                <a href="<?php echo $this->url(array(
+                    'module' => 'cliente',
+                    'controller' => 'usuarios',
+                    'action' => 'login'
+                )); ?>">Acessa Minha Conta</a>
+            </p>
+        </div>
+        <?php endif; ?>
     </div>
 </div>

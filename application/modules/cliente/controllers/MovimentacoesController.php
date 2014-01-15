@@ -61,9 +61,13 @@ class MovimentacoesController extends Application_Controller {
         $data = $this->_getParam("data");
         
         // busca as movimentacoes da data
-        $movimentacoes = $this->_modelVwMovimentacao->getMovimentacoesData($data, $this->_session->id_usuario);
-        
+        $movimentacoes = $this->_modelVwMovimentacao->getMovimentacoesData($data, $this->_session->id_usuario);        
         $this->view->movimentacoes = $movimentacoes;
+        
+        // busca os saldos previstos e realizados
+        $this->view->saldoAnterior = Controller_Helper_Movimentacao::getSaldoAnterior($data, $this->_session->id_usuario);
+        $this->view->saldoRealizado = Controller_Helper_Movimentacao::saldoDiaRealizado($data, $this->_session->id_usuario);
+        $this->view->saldoPrevisto = Controller_Helper_Movimentacao::saldoDiaPrevisto($data, $this->_session->id_usuario);
         
     }
 
@@ -260,7 +264,12 @@ class MovimentacoesController extends Application_Controller {
         
         try {
             $this->_modelMovimentacao->update($statusUpdate, $where);
-            //echo $statusUpdate['realizado']; // retorna o novo status para o ajax
+            
+            // verificar de onde veio a solicitacao
+            if(!isset($_GET['ajax'])) {
+                $this->_redirect("index/");
+            }
+            
         } catch (Zend_Exception $error) {
             echo $error->getMessage();
         }

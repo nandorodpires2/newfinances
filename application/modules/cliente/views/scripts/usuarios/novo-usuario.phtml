@@ -1,7 +1,8 @@
 <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/usuario/novo-usuario.js')); ?>
 <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/cliente/usuario/novo-usuario.css')); ?> 
 <div id="pages">
-    <div id="novo-usuario">        
+    <div id="novo-usuario">
+        <h3 class="titulo-laranja">Novo Usuário</h3>
         <?php echo View_Helper_Messeges::getMessages($this->messages); ?>              
         <div class="form-nov-usuario">
             <?php echo $this->formNovoUsuario; ?>

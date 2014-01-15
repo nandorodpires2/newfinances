@@ -31,11 +31,15 @@ class Plugin_Saldos extends Zend_Controller_Plugin_Abstract {
                 $saldo_total += $saldo->saldo;
             }
 
-            // saldo previsto
+            // saldo previsto            
+            $data_ini = '2013-01-01';
             
-            $data_ini = '2013-12-01';
-            $data_fim = '2013-12-31';
+            $mes = date('m');
+            $ano = date("Y");
+            $ultimo_dia = date("t", mktime(0,0,0,$mes,'01',$ano));
             
+            $data_fim = date('Y-m-') . $ultimo_dia;
+                        
             $saldo_previsto = Controller_Helper_Movimentacao::saldoDiaPrevisto(
                 $data_fim, 
                 $auth->getIdentity()->id_usuario, 

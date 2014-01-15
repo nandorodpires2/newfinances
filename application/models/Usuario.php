@@ -75,7 +75,7 @@ class Model_Usuario extends Zend_Db_Table {
     /**
      * retorna todos os dados do usuario
      */
-    public function getDadosUsuario($email, $id_usuario) {
+    public function getDadosUsuario($email) {
         
         $select = $this->select()
                 ->from(array('u' => $this->_name), array('*'))
@@ -85,7 +85,6 @@ class Model_Usuario extends Zend_Db_Table {
                     'p.descricao_plano'
                 ))
                 ->where("u.email_usuario = ?", $email)
-                ->where("u.id_usuario = ?", $id_usuario)
                 ->where("u.ativo_usuario = ?", 1)
                 ->where("up.ativo_plano = ?", 1);                
         

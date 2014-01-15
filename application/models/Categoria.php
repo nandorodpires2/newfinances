@@ -46,6 +46,7 @@ class Model_Categoria extends Zend_Db_Table {
     public function getGastosCategoriasMes($id_usuario) {
         $select = $this->select()
                 ->from(array('cat' => 'categoria'), array(
+                    'cat.id_categoria',
                     'cat.descricao_categoria'
                 ))                
                 ->setIntegrityCheck(false)
@@ -59,6 +60,32 @@ class Model_Categoria extends Zend_Db_Table {
                 ->where("year(mov.data_movimentacao) = year(now())")
                 ->group("cat.id_categoria")
                 ->order("sum(mov.valor_movimentacao) asc");
+                
+        return $this->fetchAll($select); 
+    }
+    
+    /**
+     * retorna os gastos por categoria no mes
+     */
+    public function getGastosCategoriaMes($id_usuario, $id_categoria) {
+        $select = $this->select()
+                ->from(array('cat' => 'categoria'), array(
+                    'cat.descricao_categoria'
+                ))                
+                ->setIntegrityCheck(false)
+                ->joinInner(array('mov' => 'movimentacao'), 'cat.id_categoria = mov.id_categoria', array(
+                    '*'
+                ))
+                ->joinInner(array('tmv' => 'tipo_movimentacao'), 'mov.id_tipo_movimentacao = tmv.id_tipo_movimentacao', array(
+                    'tmv.tipo_movimentacao'
+                ))
+                ->where("mov.id_usuario = ?", $id_usuario)
+                ->where("mov.id_categoria = ?", $id_categoria)
+                ->where("mov.realizado = ?", 1)
+                ->where("mov.id_tipo_movimentacao in (2,3)")
+                ->where("month(mov.data_movimentacao) = month(now())")
+                ->where("year(mov.data_movimentacao) = year(now())")        
+                ->order("mov.data_movimentacao asc");
         
         return $this->fetchAll($select); 
     }

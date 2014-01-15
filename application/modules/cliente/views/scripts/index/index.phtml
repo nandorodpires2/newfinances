@@ -9,13 +9,16 @@
             <table>
                 <?php if ($this->gastosCategorias->count() > 0) : ?>
                     <tr>
+                        <th>Nº</th>
                         <th>Categoria</th>
                         <th>Valor</th>
                         <th>Porcentagem</th>
                         <th>Ações</th>
-                    </tr>                
+                    </tr>        
+                    <?php $count = 1; ?>
                     <?php foreach ($this->gastosCategorias as $categoria) : ?>
                         <tr>
+                            <td class="align_center"><?php echo $count; ?>º</td>
                             <td class="align_left">
                                 <span><?php echo $categoria->descricao_categoria; ?></span>
                             </td>                    
@@ -26,11 +29,17 @@
                                 <span><?php echo View_Helper_Categorias::getPorcentagemGastCategoriaMesAtual($categoria->total); ?></span>
                             </td>
                             <td class="align_center">
-                                <a href="">
+                                <a href="<?php echo $this->url(array(
+                                    'module' => 'cliente',
+                                    'controller' => 'categorias',
+                                    'action' => 'listar-gastos',
+                                    'id_categoria' => $categoria->id_categoria
+                                )); ?>">
                                     <img src="<?php echo $this->baseUrl('views/img/icon_list.png'); ?>" title="Ver Gastos" width="15"/>
                                 </a>
                             </td>
                         </tr>                    
+                        <?php $count++; ?>
                     <?php endforeach; ?>
                 <?php else : ?>
                     <tr class="align_center">
@@ -56,17 +65,33 @@
                         <td class="align_left"><?php echo $pendencia->descricao_movimentacao; ?></td>
                         <td class="align_right"><?php echo View_Helper_Currency::getCurrency($pendencia->valor_movimentacao); ?></td>
                         <td>
-                            <a href="">
+                            <a href="<?php echo $this->url(array(
+                                'module' => 'cliente',
+                                'controller' => 'movimentacoes',
+                                'action' => 'status',
+                                'id_movimentacao' => $pendencia->id_movimentacao,
+                                'status' => $pendencia->realizado
+                            )); ?>">
                                 <img src="<?php echo $this->baseUrl('views/img/ok_gray.png'); ?>" title="Realizado" width="15"/>
                             </a>
                         </td>
                         <td>
-                            <a href="">
+                            <a href="<?php echo $this->url(array(
+                                'module' => 'cliente',
+                                'controller' => 'movimentacoes',
+                                'action' => 'editar-movimentacao',
+                                'id_movimentacao' => $pendencia->id_movimentacao
+                            )); ?>">
                                 <img src="<?php echo $this->baseUrl('views/img/icon_edit.png'); ?>" title="Editar" width="15"/>
                             </a>
                         </td>
                         <td>
-                            <a href="">
+                            <a href="<?php echo $this->url(array(
+                                'module' => 'cliente',
+                                'controller' => 'movimentacoes',
+                                'action' => 'excluir-movimentacao',
+                                'id_movimentacao' => $pendencia->id_movimentacao
+                            )); ?>">
                                 <img src="<?php echo $this->baseUrl('views/img/icon_delete.png'); ?>" title="Excluir" width="15"/>
                             </a>
                         </td>
@@ -113,13 +138,13 @@
                         <span><?php echo View_Helper_Meta::getProjecaoMeta($meta->porcentagem); ?>%</span>
                     </td>
                     <td>
-                        <a href="">
-                            <img src="<?php echo $this->baseUrl('views/img/icon_list.png'); ?>" title="Ver Gastos" width="15"/>
-                        </a>
-                    </td>
-                    <td>
-                        <a href="">
-                            <img src="<?php echo $this->baseUrl('views/img/icon_edit.png'); ?>" title="Ver Gastos" width="15"/>
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'cliente',
+                            'controller' => 'metas',
+                            'action' => 'editar-meta',
+                            'id_meta' => $meta->id_meta
+                        )); ?>">
+                            <img src="<?php echo $this->baseUrl('views/img/icon_edit.png'); ?>" title="Editar Orçamento" width="15"/>
                         </a>
                     </td>
                 </tr>                    

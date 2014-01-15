@@ -14,7 +14,7 @@
             Para <?php echo $movimentacao->descricao_conta_destino; ?>
             <?php elseif ($movimentacao->id_tipo_movimentacao == 1 || $movimentacao->id_tipo_movimentacao == 2) : ?>
             Conta: <?php echo $movimentacao->descricao_conta; ?>
-            <?php else : ?>
+            <?php elseif ($movimentacao->id_tipo_movimentacao == 3) : ?>
             Cartão: <?php echo $movimentacao->descricao_cartao; ?>
             <?php endif; ?>                                
         </span>                            
@@ -94,4 +94,20 @@
     </div>
 </div>
 <?php endforeach; ?>
+<div class="totais-movimentacao-dia">    
+    <div class="box-saldo">             
+        <div class="saldo-dia-realizado">
+            <label>Saldo do Dia: </label>
+            <span>
+                <?php echo View_Helper_Currency::getCurrency($this->saldoRealizado); ?>
+            </span>
+        </div>                        
+        <div class="saldo-dia-previsto">
+            <label>Saldo Previsto: </label>
+            <span>
+                <?php echo View_Helper_Currency::getCurrency($this->saldoPrevisto); ?>
+            </span>
+        </div>                        
+    </div>
+</div>
 <?php endif; ?>

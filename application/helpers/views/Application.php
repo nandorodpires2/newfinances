@@ -12,7 +12,12 @@
  */
 class View_Helper_Application extends Zend_View_Helper_Abstract {
 
-    public static function isGestor($id_usuario) {        
+    public static function isGestor($id_usuario = null) {        
+        
+        if (!$id_usuario) {
+            $id_usuario = Zend_Auth::getInstance()->getIdentity()->id_usuario;
+        }
+        
         $modelUsuarioPlano = new Model_UsuarioPlano();
         $plano = $modelUsuarioPlano->getPlanoAtual($id_usuario);
         
@@ -21,15 +26,18 @@ class View_Helper_Application extends Zend_View_Helper_Abstract {
     
     public static function hasAcl($resource) {
         
-        $id_usuario = Zend_Auth::getInstance()->getIdentity()->id_usuario;
+        if (Zend_Auth::getInstance()->hasIdentity()) {
         
-        if (View_Helper_Application::isGestor($id_usuario)) {
-            return true;
+            $id_usuario = Zend_Auth::getInstance()->getIdentity()->id_usuario;
+
+            if (View_Helper_Application::isGestor($id_usuario)) {
+                return true;
+            }
+
+            $acl = new Zend_Acl();              
+            return $acl->has($resource);
+            
         }
-        
-        $acl = new Zend_Acl();              
-        return $acl->has($resource);
-        
     }
     
 }

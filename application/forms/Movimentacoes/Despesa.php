@@ -45,13 +45,17 @@ class Form_Movimentacoes_Despesa extends Zend_Form {
             'required' => true
         ));
         
+        $contas['conta'] = 'Conta';
+        
+        // verifica se o usuario tem permissao
+        if (View_Helper_Application::hasAcl("cliente:orcamentos")) {
+            $contas['cartao'] = 'Cartão de Crédito';
+        }
+        
         // tipo pagamento
         $this->addElement("radio", "tipo_pgto", array(
             'label' => 'Pagamento: ',
-            'multioptions' => array(
-                'conta' => 'Conta',
-                'cartao' => 'Cartão de Crédito'
-            ),
+            'multioptions' => $contas,
             'required' => true
         ));
         

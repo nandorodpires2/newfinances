@@ -61,8 +61,30 @@ root {
     background: #F8F8FF; 
 }
 
-.saldo-dia-realizado { font-size: 13px; font-style: italic; color: blue; margin-right: 5px; }
-.saldo-dia-previsto { font-size: 12px; font-style: italic; color: gray; margin-right: 5px; }
+.box-saldo {
+    float: right;
+    width: 21%;
+}
+
+.saldo-entrada-saida {
+    font-size: 13px; 
+    font-style: italic; 
+    color: blue; 
+    margin-right: 5px; 
+}
+
+.saldo-dia-realizado { 
+    font-size: 13px; 
+    font-style: italic; 
+    color: blue; 
+    margin-right: 5px; 
+}
+.saldo-dia-previsto { 
+    font-size: 12px; 
+    font-style: italic; 
+    color: gray; 
+    margin-right: 5px;
+}
 
 /* totais mes */
 .totais-mes { float: left; width: 100%; text-align: right; margin: 3px 0 0 0; padding: 3px 0; background: #F5F5F5; border-top: 2px solid #87CEEB; }

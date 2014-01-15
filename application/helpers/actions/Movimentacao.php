@@ -31,7 +31,7 @@ class Controller_Helper_Movimentacao extends Zend_Controller_Action_Helper_Abstr
     public static function saldoDiaPrevisto($data_fim, $id_usuario, $data_ini = null) {
         
         if (!$data_ini) {
-            $data_ini = '2013-11-01';
+            $data_ini = "2013-01-01";
         }
         
         $modelVwMovimentacao = new Model_VwMovimentacao();        
@@ -46,13 +46,36 @@ class Controller_Helper_Movimentacao extends Zend_Controller_Action_Helper_Abstr
     public static function saldoDiaRealizado($data_fim, $id_usuario, $data_ini = null) {
         
         if (!$data_ini) {
-            $data_ini = '2013-11-01';
+            $data_ini = "2013-01-01";
         }
         
         $modelVwMovimentacao = new Model_VwMovimentacao();        
         $saldo_realizado = $modelVwMovimentacao->getSaldoRealizado($data_fim, $id_usuario, $data_ini);
         
         return $saldo_realizado;
+    }
+    
+    
+    
+    /**
+     * Busca o saldo anterior
+     */
+    public static function getSaldoAnterior($data_fim, $id_usuario, $data_ini = null) {
+        
+        if (!$data_ini) {
+            $data_ini = "2013-01-01";
+        }
+        
+        // retira um dia na data
+        $zendDate = new Zend_Date($data_fim);
+        $zendDate->subDay(1);
+        $data_fim = $zendDate->toString("YYYY-MM-DD");
+        
+        $modelVwMovimentacao = new Model_VwMovimentacao();        
+        $saldo_realizado = $modelVwMovimentacao->getSaldoRealizado($data_fim, $id_usuario, $data_ini);
+        
+        return $saldo_realizado;
+        
     }
     
 }

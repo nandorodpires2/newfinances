@@ -130,6 +130,9 @@
                 <span>Ferramentas</span></a>
                 <ul>                                
                    <li><a href='<?php echo $this->baseUrl('../cm/'); ?>' target="_blank"><span>Calc Money</span></a></li>                  
+                   <?php if (View_Helper_Application::isGestor()) : ?>
+                   <li><a href='http://newfinances.com.br/stats' target="_blank"><span>Stats</span></a></li>                  
+                   <?php endif; ?>
                 </ul>
             </li>            
         </ul>

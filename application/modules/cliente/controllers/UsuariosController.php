@@ -26,16 +26,16 @@ class UsuariosController extends Application_Controller {
         
         $this->_formUsuariosRecuperarSenha = new Form_Usuarios_RecuperarSenha();
         
-        $this->view->messages = Controller_Helper_Messeges::getMesseges();
     }
 
     public function indexAction() {
         // action body
     }
 
-    public function loginAction()
-    {
+    public function loginAction() {
      
+        $this->view->messages = Controller_Helper_Messeges::getMesseges();
+        
         // desabilitando o layout
         $this->_helper->layout->setLayout("login");
         
@@ -63,11 +63,13 @@ class UsuariosController extends Application_Controller {
                     
                     $this->_redirect("index/");
                 } else {                    
-                    $this->_helper->FlashMessenger->addMessage(array(
-                            "Login e/ou senha inválidos!",
-                            "error"
+                    $message =  array(
+                        array(
+                            'error' => "E-mail e/ou senha inválidos!"
                         )
-                    );                                        
+                    );
+                    
+                    $this->view->messages = $message;
                 }                                
                 
             }
@@ -420,6 +422,11 @@ class UsuariosController extends Application_Controller {
      * recuperar senha do usuario
      */
     public function recuperarSenhaAction() {
+        
+        $this->view->messages = Controller_Helper_Messeges::getMesseges();
+        
+        $this->view->redirect = false;
+        
         $this->_helper->layout->setLayout("login");
         
         $this->view->formUsuariosRecuperarSenha = $this->_formUsuariosRecuperarSenha;
@@ -441,6 +448,8 @@ class UsuariosController extends Application_Controller {
                     $whereUpdateSenha = "id_usuario = $dadosUsuario->id_usuario";
                     $this->_modelUsuario->update($dadosUpdateSenha, $whereUpdateSenha);                    
                     
+                    $this->view->redirect = true;
+                    
                     // envia o codigo pro e-mail
                     $mail = new Zend_Mail('utf-8');
 
@@ -459,7 +468,13 @@ class UsuariosController extends Application_Controller {
                     $mail->send(Zend_Registry::get('mail_transport'));
                     
                 } else {
-                    die('false');
+                    $message = array(
+                        array(
+                            'error' => 'E-mail não cadastrado!'
+                        )
+                    );
+                    
+                    $this->view->messages = $message;
                 }
                 
             }

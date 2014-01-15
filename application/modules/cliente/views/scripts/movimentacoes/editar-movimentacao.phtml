@@ -2,6 +2,9 @@
 <div id="pages">
     <div id="editar-movimentacao">            
         <?php echo View_Helper_Messeges::getMessages($this->messages); ?>              
-        <?php echo $this->formMovimentacoes; ?>
+        <fieldset style="border: 1px solid #1d5fa1;">
+            <legend style="color: #1d5fa1">Editar Movimentação</legend>
+            <?php echo $this->formMovimentacoes; ?>
+        </fieldset>        
     </div>
 </div>

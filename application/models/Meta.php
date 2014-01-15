@@ -46,6 +46,7 @@ class Model_Meta extends Zend_Db_Table {
         
         $select = $this->select()
                 ->from(array('met' => $this->_name), array(
+                    'met.id_meta',
                     'met.valor_meta',
                     'porcentagem' => '(sum(mov.valor_movimentacao) * -100) / met.valor_meta'
                 ))

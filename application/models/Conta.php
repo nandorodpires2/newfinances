@@ -75,7 +75,7 @@ class Model_Conta extends Zend_Db_Table {
                 ->where("ct.ativo_conta = 1")
                 ->group("ct.id_conta")
                 ->order("ct.descricao_conta asc");
-        
+                
         return $this->fetchAll($select);
     }
 }

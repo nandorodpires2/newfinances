@@ -63,13 +63,18 @@ class MetasController extends Application_Controller {
         $id_meta = (int)$this->_getParam("id_meta");
         
         $meta = $this->_modelMeta->fetchRow("id_meta = {$id_meta} and id_usuario = {$this->_session->id_usuario}")->toArray();
+        
+        $dadosCategoria = $this->_modelCategoria->find($meta['id_categoria'])->current();
+        $this->view->dadosCategoria = $dadosCategoria;
+        
+        $meta['valor_meta'] = number_format($meta['valor_meta'], 2, ',', '.');
+        
         $this->_formMetasMeta->removeElement("repetir");
+        $this->_formMetasMeta->removeElement("id_categoria");
         $this->_formMetasMeta->submit->setLabel("Alterar");
         
-        $this->_formMetasMeta->addElement("hidden", "id_categoria", array('value' => $meta['id_categoria']));
-        
         $this->_formMetasMeta->populate($meta);        
-        $this->view->formMeta = $this->_formMetasMeta;
+        $this->view->formMetas = $this->_formMetasMeta;
         
         // recupera as metas ja cadastradas para este mes
         $metasUsuario = $this->_modelMeta->getMetasUsuario($this->_session->id_usuario);

@@ -61,7 +61,7 @@
         insert  into cron
         values  (
             null,
-            'cron_emails_lancamentos_a_vencer',
+            'cron_planos_vencidos',
             '{$data_inicio}',
             '{$data_fim}',
             {$count}

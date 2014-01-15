@@ -7,7 +7,16 @@ body {
     margin: 0;   
     background:transparent url("../img/bg_green.png") repeat;
     background-attachment: fixed;
-    background-position: center center;    
+    background-position: center center;  
+    
+    /* Para Mozilla/Gecko (Firefox etc) */
+    /*background: -moz-linear-gradient(top, #CAFF70, #fff) repeat-X;*/
+    /* Para WebKit (Safari, Google Chrome etc) */
+    /*background: -webkit-gradient(linear, left top, left bottom, from(#CAFF70), to(#fff)) repeat-X;*/
+    /* Para IE 8 */
+    /*-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#CAFF70, endColorstr=#FFFFFFFF)";*/
+    /* Para IE 5.5 - 7 */
+    /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#CAFF70, endColorstr=#FFFFFFFF);    */
 }
 
 #plano-basico {

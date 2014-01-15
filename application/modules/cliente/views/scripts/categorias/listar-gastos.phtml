@@ -1,0 +1,24 @@
+<div id="pages">
+    <div id="categorias-listar-categorias">
+        <table class="tabless-green">
+            <tr>
+                <td>Data</td>
+                <td>Descrição</td>
+                <td>Tipo</td>
+                <td>Valor</td>
+            </tr>
+            <?php foreach ($this->gastosCategoria as $gasto) : ?>
+            <tr>
+                <td class="align_center"><?php echo View_Helper_Date::getDataView($gasto->data_movimentacao); ?></td>
+                <td><?php echo $gasto->descricao_movimentacao; ?></td>
+                <td><?php echo $gasto->tipo_movimentacao; ?></td>
+                <td class="align_right"><?php echo View_Helper_Currency::getCurrency($gasto->valor_movimentacao); ?></td>
+            </tr>
+            <?php endforeach; ?>
+            <tr>
+                <td class="totais-bg align_center" colspan="3"><span class="totais">TOTAL</span></td>
+                <td class="totais-bg">&nbsp;</td>
+            </tr>
+        </table>
+    </div>
+</div>
