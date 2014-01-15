@@ -79,12 +79,53 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     }    
 
     /**
-     * Inclui os javascripts comuns da aplicacao no header
-     *
-     * @return Zend_View
+     * 
+     * @return \Zend_View
      */
-    protected function _initJavascript() {
+    protected function _initView() {
+        //Initialize view
+        $view = new Zend_View();  
 
+        
+        
+        //set css includes    
+        /*
+        $view->headLink()->appendStylesheet(PUBLIC_PATH . '/views/css/site.css');
+        $view->headLink()->appendStylesheet(PUBLIC_PATH . '/views/css/style.css');
+        $view->headLink()->appendStylesheet(PUBLIC_PATH . '/views/css/styles.css');
+        $view->headLink()->appendStylesheet(PUBLIC_PATH . '/views/css/default.css');
+        $view->headLink()->appendStylesheet(PUBLIC_PATH . '/views/css/jquery-ui-1.10.3.css');
+        $view->headLink()->appendStylesheet(PUBLIC_PATH . '/views/css/menu_1.css');
+        $view->headLink()->appendStylesheet(PUBLIC_PATH . '/views/css/menu-site.css');
+        $view->headLink()->appendStylesheet(PUBLIC_PATH . '/views/css/index/index.css');    
+        $view->headLink()->appendStylesheet(PUBLIC_PATH . '/views/css/table.css');        
+        */
+        
+        
+        // seta o caminho base
+        $prefix = "";
+        if (SERVER_NAME === 'localhost') {
+            $prefix = "/newfinances/public/";
+        } else {
+            $prefix = "/newfinances/";
+        }
+        
+        //add javascript files          
+        $view->headScript()->appendFile($prefix . 'views/js/jquery-2.0.3.js');
+        $view->headScript()->appendFile($prefix . 'views/js/jquery-ui-1.10.3.js');
+        $view->headScript()->appendFile($prefix . 'views/js/jquery.ui.datepicker-pt-BR.js');
+        $view->headScript()->appendFile($prefix . 'views/js/jquery.maskMoney.js');
+        $view->headScript()->appendFile($prefix . 'views/js/jquery.maskedinput.js');        
+        $view->headScript()->appendFile($prefix . 'views/js/application.js');
+        $view->headScript()->appendFile($prefix . 'views/js/facebook.js');        
+        
+        //add it to the view renderer
+        $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper(
+                'ViewRenderer');
+        $viewRenderer->setView($view);
+
+        //Return it, so that it can be stored by the bootstrap
+        return $view;
     }
     
 }

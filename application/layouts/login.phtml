@@ -8,12 +8,7 @@
     <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/default.css')); ?> 
     <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/jquery-ui-1.10.3.css')); ?> 
     <!-- arquivos js -->
-    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery-2.0.3.js')); ?>
-    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery-ui-1.10.3.js')); ?>    
-    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery.ui.datepicker-pt-BR.js')); ?>    
-    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery.maskedinput.js')); ?>
-    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery.maskMoney.js')); ?>    
-    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/application.js')); ?>    
+    <?php echo $this->headScript(); ?>    
     <body>    
         <div id="wrapper">
             <div id="header">

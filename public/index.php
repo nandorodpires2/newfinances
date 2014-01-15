@@ -9,6 +9,10 @@ defined('CRONS_PATH')
 
 // Define path to public directory
 defined('PUBLIC_PATH') || define('PUBLIC_PATH', realpath(dirname(__FILE__)));
+
+// Define path to public directory
+defined('SERVER_NAME') || define('SERVER_NAME', $_SERVER['SERVER_NAME']);
+
 /*
 defined('PUBLIC_PATH')
     || define('PUBLIC_PATH', realpath(dirname(__FILE__) . '/../public/'));

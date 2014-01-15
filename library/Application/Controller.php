@@ -168,15 +168,17 @@ class Application_Controller extends Zend_Controller_Action {
         );
         $this->setCredentials($credentials);
                 
-        // verifica se esta no plano basico
-        $this->view->planoBasico = $this->verificaPlanoBasico();     
         
-        // seta o plano atual do usuario e envia para as views
-        $this->view->planoAtual = $this->getPlanoAtual();
-                        
-        // processa os pagamentos pendentes
-        $this->processaPagamentosPendentes();
-        
+        if ($this->_hasIdentity) {
+            // verifica se esta no plano basico
+            $this->view->planoBasico = $this->verificaPlanoBasico();     
+
+            // seta o plano atual do usuario e envia para as views
+            $this->view->planoAtual = $this->getPlanoAtual();
+
+            // processa os pagamentos pendentes        
+            $this->processaPagamentosPendentes();
+        }
     }
     
     public function setLayout($layout) {
