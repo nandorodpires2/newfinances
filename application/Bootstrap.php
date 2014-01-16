@@ -101,13 +101,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         $view->headLink()->appendStylesheet(PUBLIC_PATH . '/views/css/table.css');        
         */
         
-        
         // seta o caminho base
         $prefix = "";
         if (SERVER_NAME === 'localhost') {
             $prefix = "/newfinances/public/";
         } else {
-            $prefix = "/newfinances/";
+            $prefix = "/";
         }
         
         //add javascript files          
