@@ -52,8 +52,6 @@ class Model_Conta extends Zend_Db_Table {
         
     }
     
-    
-    
     /**
      * retorna o saldo das contas
      */

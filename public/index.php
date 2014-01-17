@@ -3,6 +3,10 @@
 defined('APPLICATION_PATH')
     || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
 
+// Define path to emails layouts
+defined('EMAILS_PATH')
+    || define('EMAILS_PATH', realpath(dirname(__FILE__) . '/../application/modules/cliente/views/emails'));
+
 // Define path to crons directory
 defined('CRONS_PATH')
     || define('CRONS_PATH', realpath(dirname(__FILE__) . '/../public/crons'));

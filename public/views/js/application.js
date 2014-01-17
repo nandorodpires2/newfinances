@@ -30,10 +30,11 @@ $(document).ready(function (){
     });
     
    
-    
+    /*
     $("a").click(function (event) {
        $('#loading').fadeIn().delay(6000).fadeOut('slow');  
-    });    
+    });
+    */
    
     $("input:submit").click(function (event) {
        $('#loading').fadeIn().delay(5000).fadeOut('slow');  

@@ -103,7 +103,8 @@ function buscaLancamentos(data, dia) {
             $("#loader-lanc-"+dia).hide();
         },
         error: function(error) {
-            alert('Houve um erro');
+            $("#lanc-" + dia).html("<center><b>Não foi possível carregar os dados.</b></center>");
+            $("#loader-lanc-"+dia).hide();
         }
     }); 
 }

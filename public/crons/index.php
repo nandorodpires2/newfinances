@@ -4,6 +4,9 @@
 defined('APPLICATION_PATH')
     || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../../application'));
 
+// Define path to public directory
+defined('PUBLIC_PATH') || define('PUBLIC_PATH', realpath(dirname(__FILE__) . '/../' ));
+
 $server = $_SERVER['SERVER_NAME'];
 
 // verifica em qual base a aplicacao esta

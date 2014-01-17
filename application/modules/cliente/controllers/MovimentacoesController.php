@@ -13,7 +13,7 @@ class MovimentacoesController extends Application_Controller {
         
         // verifica se tem pelo menos uma conta cadastrada
         if (!Controller_Helper_Application::hasConta()) {        
-            Controller_Helper_Messeges::setMesseges(array('alert' => 'Cadastre uma conta'));
+            Controller_Helper_Messeges::setMesseges(array('alert' => 'É necessário cadastrar uma conta para acessar esta página'));
             $this->_redirect("configuracoes/nova-conta");
         } 
         
@@ -125,7 +125,7 @@ class MovimentacoesController extends Application_Controller {
                         $this->_modelMovimentacaoRepeticao->insert($dadosRepeticao);                    
                     }
                     
-                    $this->_redirect("movimentacoes/index");
+                    $this->_redirect("index/index");
                 } catch (Zend_Exception $error) {
                     echo $error->getMessage();
                 }
@@ -197,7 +197,7 @@ class MovimentacoesController extends Application_Controller {
                         $this->_modelMovimentacaoRepeticao->insert($dadosRepeticao);                    
                     }
                     
-                    $this->_redirect("movimentacoes/index");
+                    $this->_redirect("index/index");
                 } catch (Zend_Exception $error) {
                     echo $error->getMessage();
                 }            
@@ -236,7 +236,7 @@ class MovimentacoesController extends Application_Controller {
                     $dadosTransferencia['valor_movimentacao'] *= -1; 
                 
                     $this->_modelMovimentacao->insert($dadosTransferencia);
-                    $this->_redirect("movimentacoes/index");                            
+                    $this->_redirect("index/index");                            
                 } catch (Zend_Exception $error) {
                     echo $error->getMessage();
                 }
@@ -363,7 +363,7 @@ class MovimentacoesController extends Application_Controller {
                             $this->_modelMovimentacao->update($dadosMovimentacaoUpdate, $whereOrigem);
                         }
                         
-                        $this->_redirect("movimentacoes/index");
+                        $this->_redirect("index/index");
                     } catch (Exception $erro) {
                         echo $erro->getMessage();
                     }

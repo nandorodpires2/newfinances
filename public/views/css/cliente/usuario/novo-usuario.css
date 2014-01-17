@@ -10,6 +10,11 @@ root {
     display: block;
 }
 
+#politica-privacidade, #termo-uso {
+    border-left: 1px solid #DCDCDC;
+    background: aqua;
+}
+
 .form-nov-usuario {
     float: left;
     width: 50%;

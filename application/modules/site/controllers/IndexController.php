@@ -23,6 +23,7 @@ class Site_IndexController extends Zend_Controller_Action {
     
     public function indexAction() {
         
+        /*
         // enviando os feeds de noticia financeira        
         $feed_url = 'http://www.valor.com.br/financas/rss';
         
@@ -40,7 +41,7 @@ class Site_IndexController extends Zend_Controller_Action {
         }
         
         $this->view->dadosFeed = $dadosFeed;        
-        
+        */
     }
     
 }

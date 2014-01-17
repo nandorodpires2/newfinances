@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
+    
     <?php $auth = Zend_Auth::getInstance()->getIdentity(); ?>
     <link rel="icon" href="<?php echo $this->baseUrl('views/img/icon_logo.png'); ?>" />    
     <?php header("Content-Type: text/html; charset=UTF-8",true); ?>
@@ -14,9 +14,16 @@
     <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/table.css')); ?>
     
     <!-- arquivos js -->
-    <?php echo $this->headScript(); ?>
-    <?php //echo $this->headScript()->appendFile($this->baseUrl('views/js/jsapi.js')); ?>
-    </head>
+    <?php //echo $this->headScript(); ?>
+    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery-2.0.3.js')); ?>
+    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery-ui-1.10.3.js'));  ?>
+    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery.ui.datepicker-pt-BR.js')); ?>
+    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery.maskMoney.js')); ?>
+    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jquery.maskedinput.js'));         ?>
+    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/application.js')); ?>
+    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/facebook.js')); ?>
+    <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/jsapi.js')); ?>
+    
     <body>      
         <?php if($this->planoBasico) : ?>
         <div id="plano-basico">

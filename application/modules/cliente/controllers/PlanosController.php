@@ -252,15 +252,8 @@ class PlanosController extends Application_Controller {
         // envia o status para a view
         $this->view->status = $status;
         
-        $data .= "<p>Cod.: {$transaction_id}</p>";        
-        
-        // create mail object
-        $mail = new Zend_Mail('utf-8');
-        $mail->setBodyHtml($data);
-        $mail->setFrom('newfinances@newfinances.com.br', 'NewFinances - Controle Financeiro');
-        $mail->addTo("nandorodpires@gmail.com");            
-        $mail->setSubject('Alteração do Status (PagSeguro)');
-        $mail->send(Zend_Registry::get('mail_transport'));
+        // enviando os dados do usuario para a view
+        $this->view->nomeCompleto = $this->_session->nome_completo;
                 
     }
     

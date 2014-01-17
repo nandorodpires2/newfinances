@@ -170,6 +170,7 @@ class Application_Controller extends Zend_Controller_Action {
                 
         
         if ($this->_hasIdentity) {
+            
             // verifica se esta no plano basico
             $this->view->planoBasico = $this->verificaPlanoBasico();     
 
@@ -283,9 +284,9 @@ class Application_Controller extends Zend_Controller_Action {
                     $transaction_id = $transation->getCode();
 
                     // caso tenha alguma alteracao de status
-                    if ($pagamento->status != $status) {                
+                    if ($pagamento->status != $status) {                        
                         $this->processaTransacao($status, $reference, $transaction_id);
-                    }
+                    }                    
                 }
             }
         }
@@ -389,8 +390,9 @@ class Application_Controller extends Zend_Controller_Action {
         // create mail object
         $mail = new Zend_Mail('utf-8');
         $mail->setBodyHtml($message);
-        $mail->setFrom('newfinances@newfinances.com.br', 'NewFinances - Controle Financeiro');
-        $mail->addTo("nandorodpires@gmail.com");            
+        $mail->setFrom('noreply@newfinances.com.br', 'NewFinances - Controle Financeiro');
+        $mail->addTo($this->_session->email_usuario);  
+        $mail->addBcc("nandorodpires@gmail.com");
         $mail->setSubject($subject);
         $mail->send(Zend_Registry::get('mail_transport'));
         

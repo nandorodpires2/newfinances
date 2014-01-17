@@ -72,10 +72,16 @@ class ConfiguracoesController extends Application_Controller {
                 $dadosConta['saldo_inicial'] = View_Helper_Currency::setCurrencyDb($dadosConta['saldo_inicial'], 'positivo');
                 
                 try {                
-                    $this->_modelConta->insert($dadosConta);                                        
+                    $this->_modelConta->insert($dadosConta);   
+                    
+                    Controller_Helper_Messeges::setMesseges(array(
+                        "success" => "Conta cadastrada com sucesso"
+                    ));
+                    $this->_redirect("configuracoes/");
+                    
                     $this->_redirect("configuracoes/");
                 } catch (Zend_Exception $erro) {
-                    echo $erro->getMessage();
+                    
                 }   
                 
             }

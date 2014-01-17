@@ -145,17 +145,22 @@ class UsuariosController extends Application_Controller {
                                     $this->_modelUsuarioPlano->insert($planoBasico);
 
                                     try {
+                                        
+                                        $html = new Zend_View();
+                                        $html->setScriptPath(EMAILS_PATH . '/usuario/');
+
+                                        // assign values
+                                        $html->assign('nome_completo', $dadosNovoUsuario['nome_completo']);
+                                        $html->assign('last_id', $last_id);
+                                        $html->assign('url_ativar', self::URL_ATIVAR . $last_id);
+
+                                        // render view
+                                        $bodyText = $html->render('novo-usuario.phtml');
+                                        
                                         // envia o email para o novo usuario                                
                                         $mail = new Zend_Mail('utf-8');
 
-                                        $message = "
-                                            <p>Olá {$dadosNovoUsuario['nome_completo']}</p>
-                                            <p>Seu cadastro foi realizado com sucesso! Seja Bem vindo ao NewFinances</p>
-                                            <p>Acesse o link abaixo para ativar sua conta: </p>
-                                            <p><a href='" . self::URL_ATIVAR . "{$last_id}'>Ativar Minha Conta</a></p>
-                                        ";
-                                        
-                                        $mail->setBodyHtml($message);
+                                        $mail->setBodyHtml($bodyText);
                                         $mail->setFrom('newfinances@newfinances.com.br', 'NewFinances - Controle Financeiro');
                                         $mail->addTo($dadosNovoUsuario['email_usuario']);
                                         $mail->setSubject('Seja Bem Vindo');

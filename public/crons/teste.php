@@ -2,13 +2,22 @@
 
     require 'index.php';
     
-    echo "Início: " . date('Y-m-d H:m:s') . "<br />";
+    $data_inicio = date("d/m/Y H:i:s");
+    
+    $html = new Zend_View();
+    $html->setScriptPath(APPLICATION_PATH . '/modules/cliente/views/emails/crons/');
+
+    // assign values
+    $html->assign('data_inicio', $data_inicio);
+
+    // render view
+    $bodyText = $html->render('teste.phtml');
     
     try {
         
         // create mail object
        $mail = new Zend_Mail('utf-8');
-       $mail->setBodyHtml("Testando o e-mail");
+       $mail->setBodyHtml($bodyText);
        $mail->setFrom('noreply@newfinances.com.br', 'NewFinances - Controle Financeiro');
        $mail->addTo("nandorodpires@gmail.com");            
        $mail->setSubject('Notificação');

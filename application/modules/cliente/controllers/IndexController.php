@@ -8,7 +8,7 @@ class IndexController extends Application_Controller {
                 
         // verifica se tem pelo menos uma conta cadastrada
         if (!Controller_Helper_Application::hasConta()) {        
-            Controller_Helper_Messeges::setMesseges(array('alert' => 'Cadastre uma conta'));
+            Controller_Helper_Messeges::setMesseges(array('alert' => 'É necessário cadastrar uma conta para acessar esta página'));
             $this->_redirect("configuracoes/nova-conta");
         }      
         
@@ -16,6 +16,14 @@ class IndexController extends Application_Controller {
 
     public function indexAction() {
      
+        
+        /**
+         * busca as movimentacoes do dia
+         */        
+        $data = date("Y-m-d");
+        $movimentacoes = $this->_modelVwMovimentacao->getMovimentacoesData($data, $this->_session->id_usuario);        
+        $this->view->movimentacoes = $movimentacoes;
+                
         /**
          * top categorias
          */

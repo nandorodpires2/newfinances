@@ -1,11 +1,125 @@
 <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/index/index.js')); ?>
+<?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/movimentacoes/index.css')); ?>
+<?php echo $this->headScript()->appendFile($this->baseUrl('views/js/movimentacoes/index.js')); ?>
 <div id="pages">
     <div id="index-index">
+        <div class="box">
+            <h3 class=" margim-top-10px margim-left-10px titulo-laranja">Lançamentos do Dia</h3>
+            <?php if ($this->movimentacoes->count() > 0) : ?>
+                <div id="subtitulo-lista">
+                    <div class="subtitulo-tipo">TIPO</div>
+                    <div class="subtitulo-descricao">DESCRIÇÃO</div>
+                    <div class="subtitulo-categoria">CATEGORIA</div>
+                    <div class="subtitulo-valor">VALOR</div>
+                    <div class="subtitulo-status">STATUS</div>
+                    <div class="subtitulo-acoes">AÇÕES</div>
+                </div>
+                <?php foreach ($this->movimentacoes as $movimentacao) : ?>
+                <div id='dados-movimentacao' class="<?php echo (View_Helper_Date::isPending($movimentacao)) ? 'pendente' : ''; ?>">  
+                    <div class="tipo-movimentacao">
+                        <?php echo View_Helper_TipoMovimentacao::getTipoMovimentacaoImage($movimentacao->id_tipo_movimentacao); ?>
+                    </div>
+                    <div class="descricao-movimentacao">
+                        <?php echo (View_Helper_Date::isPending($movimentacao)) ? '' : ''; ?>
+                        <?php echo $movimentacao->descricao_movimentacao; ?>
+                        <br />
+                        <span class="descricao-mini">
+                            <?php if ($movimentacao->id_tipo_movimentacao == 4) : ?>                            
+                            De <?php echo $movimentacao->descricao_conta; ?>
+                            Para <?php echo $movimentacao->descricao_conta_destino; ?>
+                            <?php elseif ($movimentacao->id_tipo_movimentacao == 1 || $movimentacao->id_tipo_movimentacao == 2) : ?>
+                            Conta: <?php echo $movimentacao->descricao_conta; ?>
+                            <?php elseif ($movimentacao->id_tipo_movimentacao == 3) : ?>
+                            Cartão: <?php echo $movimentacao->descricao_cartao; ?>
+                            <?php endif; ?>                                
+                        </span>                            
+                    </div>
+                    <div class="categoria-movimentacao">
+                        <?php echo $movimentacao->descricao_categoria; ?>
+                    </div>                    
+                    <div class="valor-movimentacao">
+                        <?php echo View_Helper_Currency::getCurrency($movimentacao->valor_movimentacao); ?>
+                    </div>                    
+                    <div class="status-movimentacao">
+                        <?php if (!in_array($movimentacao->id_tipo_movimentacao, array(0,5,3,6))) : ?>
+                            <?php if ((bool)$movimentacao->realizado) : ?>
+                            <a href="javascript:status(<?php echo $movimentacao->id_movimentacao; ?>, 1);">
+                                <img src="<?php echo $this->baseUrl('views/img/ok_green.png'); ?>" title="Realizado" />                                    
+                            </a>                            
+                            <?php else : ?>
+                            <a href="javascript:status(<?php echo $movimentacao->id_movimentacao; ?>, 0);">
+                                <img src="<?php echo $this->baseUrl('views/img/ok_gray.png'); ?>" title="Previsto" />                                    
+                            </a>
+                            <?php endif; ?>                            
+                        <?php elseif ($movimentacao->id_tipo_movimentacao == 6) : ?>
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'cliente',
+                            'controller' => 'cartoes',
+                            'action' => 'ver-fatura',
+                            'id_cartao' => $movimentacao->id_cartao,
+                            'vencimento' => $movimentacao->data_movimentacao
+                        )); ?>">
+                            <img src="<?php echo $this->baseUrl('views/img/icon_list.png'); ?>" title="Ver Fatura" />
+                        </a>
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'cliente',
+                            'controller' => 'cartoes',
+                            'action' => 'pagar-fatura',
+                            'id_cartao' => $movimentacao->id_cartao,
+                            'vencimento' => $movimentacao->data_movimentacao
+                        )); ?>">
+                            <img src="<?php echo $this->baseUrl('views/img/icon_pay.png'); ?>" title="Pagar Fatura" />
+                        </a>
+                        <?php endif; ?>
+                    </div>                                  
+                    <div class="acoes-movimentacao">                                                        
+                        <?php if (!in_array($movimentacao->id_tipo_movimentacao, array(0,5))) : ?>
+                            <?php if ($movimentacao->id_tipo_movimentacao != 4) : ?>
+                            <a href="<?php echo $this->url(array(
+                                'module' => 'cliente',
+                                'controller' => 'movimentacoes',
+                                'action' => 'editar-movimentacao',
+                                'id_movimentacao' => $movimentacao->id_movimentacao                                                                    
+                            )); ?>">
+                                <img src="<?php echo $this->baseUrl('views/img/icon_edit.png'); ?>" title="Editar" />
+                            </a>
+                            <?php endif; ?>
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'cliente',
+                                'controller' => 'movimentacoes',
+                            'action' => 'excluir-movimentacao',
+                            'id_movimentacao' => $movimentacao->id_movimentacao 
+                        )); ?>">
+                            <img src="<?php echo $this->baseUrl('views/img/icon_delete.png'); ?>" title="Excluir" />
+                        </a>
+                        <?php elseif ($movimentacao->fatura) : ?>
+                        <a href="<?php echo $this->url(array(
+                                'controller' => 'cartoes',
+                                'action' => 'ver-fatura',
+                                'id_cartao' => $movimentacao->id_cartao,
+                                'vencimento' => $movimentacao->data_movimentacao
+                            )); ?>">
+                            <img src="<?php echo $this->baseUrl('views/img/icon_list.png'); ?>" title="Ver Fatura" />
+                        </a>
+                        <a href="<?php echo $this->url(array(
+                                'controller' => 'cartoes',
+                                'action' => 'pagar-fatura',
+                                'id_cartao' => $movimentacao->id_cartao,
+                                'vencimento' => $movimentacao->data_movimentacao
+                            )); ?>">
+                            <img src="<?php echo $this->baseUrl('views/img/icon_pay.png'); ?>" title="Pagar" />
+                        </a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            <?php else : ?>
+            <center>Nenhum lançamento para hoje</center>
+            <?php endif; ?>
+        </div>
         <div class="box_1">
             <!-- top categorias -->
-            <div class="fundo-visao-geral">
-                <label>Top Categorias</label>
-            </div>
+            <h3 class="titulo-laranja margim-left-10px">Top Categorias</h3>
             <table>
                 <?php if ($this->gastosCategorias->count() > 0) : ?>
                     <tr>
@@ -19,15 +133,12 @@
                     <?php foreach ($this->gastosCategorias as $categoria) : ?>
                         <tr>
                             <td class="align_center"><?php echo $count; ?>º</td>
-                            <td class="align_left">
-                                <span><?php echo $categoria->descricao_categoria; ?></span>
-                            </td>                    
+                            <td class="align_left"><?php echo $categoria->descricao_categoria; ?></td>                    
                             <td class="align_right">
-                                <span><?php echo View_Helper_Currency::getCurrency($categoria->total); ?></span>
+                                <?php echo View_Helper_Currency::getCurrency($categoria->total); ?><br />
+                                <span class="descricao-mini">Previsto: <?php echo View_Helper_Categorias::getValorPrevistoCategoria($categoria->id_categoria); ?></span>
                             </td>                    
-                            <td class="align_center">
-                                <span><?php echo View_Helper_Categorias::getPorcentagemGastCategoriaMesAtual($categoria->total); ?></span>
-                            </td>
+                            <td class="align_center"><?php echo View_Helper_Categorias::getPorcentagemGastCategoriaMesAtual($categoria->total); ?></td>                            
                             <td class="align_center">
                                 <a href="<?php echo $this->url(array(
                                     'module' => 'cliente',
@@ -40,7 +151,7 @@
                             </td>
                         </tr>                    
                         <?php $count++; ?>
-                    <?php endforeach; ?>
+                    <?php endforeach; ?>                    
                 <?php else : ?>
                     <tr class="align_center">
                         <td>Você ainda não tem nenhuma despesa lançada.</td>
@@ -48,9 +159,7 @@
                 <?php endif; ?>
             </table>
             <!-- pendencias -->
-            <div class="fundo-visao-geral">
-                <label>Pendências (<?php echo $this->pendencias->count(); ?>)</label>
-            </div>
+            <h3 class="titulo-laranja margim-left-10px">Pendências (<?php echo $this->pendencias->count(); ?>)</h3>            
             <table>
                 <?php if ($this->pendencias->count() > 0) : ?>                                        
                 <tr>
@@ -107,9 +216,7 @@
         <div class="box_2">
             <?php if (View_Helper_Application::hasAcl("cliente:metas")) : ?>            
             <!-- orcamentos -->
-            <div class="fundo-visao-geral">
-                <label>Orçamentos</label>
-            </div>
+            <h3 class="titulo-laranja margim-left-10px">Orçamentos</h3>
             <table>
                 <?php if ($this->metas->count() > 0) : ?>
                 <tr>
@@ -118,25 +225,17 @@
                     <th>Total Gasto</th>
                     <th>Porcentagem</th>
                     <th>Projeção</th>
+                    <th>Sinal</th>
                     <th colspan="2">Ações</th>
                 </tr>                
                 <?php foreach ($this->metas as $meta) : ?>
-                <tr class="align_center">
-                    <td class="align_left">
-                        <span><?php echo $meta->descricao_categoria; ?></span>
-                    </td>                    
-                    <td>
-                        <span><?php echo View_Helper_Currency::getCurrency($meta->valor_meta); ?></span>
-                    </td>                    
-                    <td>
-                        <span><?php echo View_Helper_Currency::getCurrency($meta->total); ?></span>
-                    </td>
-                    <td>
-                        <span><?php echo number_format($meta->porcentagem, 2, ',', ''); ?>%</span>
-                    </td>
-                    <td>
-                        <span><?php echo View_Helper_Meta::getProjecaoMeta($meta->porcentagem); ?>%</span>
-                    </td>
+                <tr class="align_center">                    
+                    <td class="align_left"><?php echo $meta->descricao_categoria; ?></td>                    
+                    <td><?php echo View_Helper_Currency::getCurrency($meta->valor_meta); ?></td>                    
+                    <td><?php echo View_Helper_Currency::getCurrency($meta->total); ?></td>
+                    <td><?php echo number_format($meta->porcentagem, 2, ',', ''); ?>%</td>
+                    <td><?php echo View_Helper_Meta::getProjecaoMeta($meta->porcentagem); ?>%</td>
+                    <td><?php echo View_Helper_Meta::getColorMeta($meta->porcentagem); ?></td>
                     <td>
                         <a href="<?php echo $this->url(array(
                             'module' => 'cliente',
@@ -167,9 +266,7 @@
             </table>
             <?php endif; ?>
             <!-- receitas -->
-            <div class="fundo-visao-geral">
-                <label>Receitas (<?php echo $this->receitas->count(); ?>)</label>
-            </div>
+            <h3 class="titulo-laranja margim-left-10px">Receitas (<?php echo $this->receitas->count(); ?>)</h3>            
             <table>
                 <?php if ($this->receitas->count() > 0) : ?>
                 <tr>
@@ -191,9 +288,7 @@
                 <?php endif; ?>
             </table>
             <!-- despesas -->
-            <div class="fundo-visao-geral">
-                <label>Despesas (<?php echo $this->despesas->count(); ?>)</label>
-            </div>
+            <h3 class="titulo-laranja margim-left-10px">Despesas (<?php echo $this->despesas->count(); ?>)</h3>
             <table>
                 <?php if ($this->despesas->count() > 0) : ?>
                 <tr>

@@ -26,5 +26,18 @@ class View_Helper_Categorias extends Zend_View_Helper_Abstract {
         
     }
     
+    /**
+     * retorna o valor previsto para a categoria
+     */
+    public static function getValorPrevistoCategoria($id_categoria) {
+        $id_usuario = Zend_Auth::getInstance()->getIdentity()->id_usuario;
+        
+        // busca o total gasto do mes
+        $modelMovimentacao = new Model_Movimentacao();
+        $totalPrevistoCategoria = $modelMovimentacao->getTotalPrevistoCategoriaMes($id_categoria, $id_usuario);
+        
+        return View_Helper_Currency::getCurrency($totalPrevistoCategoria->total_categoria);
+    }
+    
 }
 

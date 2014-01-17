@@ -1,11 +1,24 @@
+<?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/planos/response-plano.css')); ?>
 <div id="pages">
     <div id="planos-response-plano">
+        <p class='name-user'>Olá <?php echo $this->nomeCompleto; ?></p>        
         <?php if ($this->status == Application_Controller::PAID) : ?>
-        <h2>PAGAMENTO EFETUADO COM SUCESSO.</h2>        
+        <p class='paid-ok'>Pagamento Confirmado</p>
+        <p>
+            Seu plano já foi liberado e agora você pode usufruir de todas as 
+            funcionalidades do sistema.
+        </p>
         <?php elseif ($this->status == Application_Controller::CANCELLED) : ?>
-        <h2>PAGAMENTO NÃO AUTORIZADO.</h2>
+        <p class='not-paid'>Não foi possível realizar o pagamento.</p>
+        <p>
+            Por favor pedimos que você faça o seu pedido novamente.
+        </p>
         <?php else : ?>
-        <h2>ESTAMOS AGUARDANDO A CONFIRMAÇÃO DO PAGAMENTO</h2>
+        <p class='wait-paid'>Estamos aguardando a confirmação do pagamento</p>
+        <p>
+            Assim que for confirmado você receberá uma notificação em seu e-mail
+            e seu plano será liberado automaticamente.
+        </p>
         <?php endif; ?>
     </div>
 </div>
