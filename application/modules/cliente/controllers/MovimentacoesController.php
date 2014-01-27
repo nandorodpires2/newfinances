@@ -411,7 +411,7 @@ class MovimentacoesController extends Application_Controller {
                 
                 try {
                     $this->_modelMovimentacao->delete($where);
-                    $this->_redirect("movimentacoes/");
+                    $this->_redirect("index/");
                 } catch (Exception $error) {
                     echo $error->getMessage();
                 }
