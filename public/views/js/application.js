@@ -8,6 +8,16 @@
  */
 $(document).ready(function (){
 
+    /*
+    var deviceAgent = navigator.userAgent.toLowerCase();
+    var agentID = deviceAgent.match(/(iphone|ipod|ipad|android)/);
+
+    if (agentID) {
+        alert("Você está em um aplicativo mobile");
+        location = "index/";    
+    }
+    */
+
     // calculadora
     $("#calculator").click(function (){        
         $("#box-calculator").show();
