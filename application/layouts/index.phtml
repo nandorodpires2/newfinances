@@ -1,6 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     
+    <head>
+        <META NAME="DESCRIPTION" CONTENT="Sistema de controle financeiro">
+        <META NAME="ABSTRACT" CONTENT="controla suas finanças ">
+        <META NAME="KEYWORDS" CONTENT="finanças, controle financeiro, gastos, receitas, despesas, cartão de crédito, transferências">
+        <META NAME="ROBOT" CONTENT="All">
+        <META NAME="RATING" CONTENT="general">
+        <META NAME="DISTRIBUTION" CONTENT="global">
+        <META NAME="LANGUAGE" CONTENT="PT">
+    </head>
+    
     <?php $auth = Zend_Auth::getInstance()->getIdentity(); ?>
     <link rel="icon" href="<?php echo $this->baseUrl('views/img/icon_logo.png'); ?>" />    
     <?php header("Content-Type: text/html; charset=UTF-8",true); ?>
