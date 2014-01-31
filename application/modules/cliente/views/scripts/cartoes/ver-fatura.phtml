@@ -1,5 +1,32 @@
 <div id='pages'>
     <div id='cartoes-ver-fatura'>
-        EM DESENVOLVIMENTO
+        <div class="listar-faturas">
+            <table class="tabless-green">
+                <tr>
+                    <td>Data</td>
+                    <td>Descrição</td>
+                    <td>Categoria</td>
+                    <td>Valor</td>
+                </tr>
+                <?php if ($this->lancamentosFatura->count() > 0) : ?>
+                <?php foreach ($this->lancamentosFatura as $lancamento) : ?>
+                <tr>
+                    <td class="align_center"><?php echo View_Helper_Date::getDataView($lancamento->data_movimentacao); ?></td>
+                    <td><?php echo $lancamento->descricao_movimentacao; ?></td>
+                    <td><?php echo $lancamento->descricao_categoria; ?></td>
+                    <td class="align_right"><?php echo View_Helper_Currency::getCurrency($lancamento->valor_movimentacao); ?></td>
+                </tr>
+                <?php endforeach; ?>
+                <tr>
+                    <td colspan="3" class="align_center">TOTAL</td>
+                    <td class="align_center"><?php echo View_Helper_Currency::getCurrency($this->totalFatura->valor_fatura); ?></td>
+                </tr>
+                <?php else : ?>
+                <tr>
+                    <td>Nenhuma movimentação</td>
+                </tr>
+                <?php endif; ?>
+            </table>
+        </div>
     </div>
 </div>

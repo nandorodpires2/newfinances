@@ -10,22 +10,11 @@
  *
  * @author Realter
  */
-class CartoesController extends Zend_Controller_Action {
-
-    protected $_session;
-
-    protected $_modelMovimentacao;
-
-    protected $_formCartoesPagamento;
+class CartoesController extends Application_Controller {
 
     public function init() {
         
-        $this->_session = Zend_Auth::getInstance()->getIdentity();
-        
-        $this->_modelMovimentacao = new Model_Movimentacao();
-                
-        $this->_formCartoesPagamento = new Form_Cartoes_Pagamento();
-        
+        parent::init();
         // enviando as mensagens para a view
         $this->view->messages = Controller_Helper_Messeges::getMesseges();
         
@@ -42,6 +31,22 @@ class CartoesController extends Zend_Controller_Action {
      
         $id_cartao = (int)$this->_getParam("id_cartao");
         $vencimento_fatura = $this->_getParam("vencimento");
+        
+        // busca as movimentacoes do cartao
+        $lancamentosFatura = $this->_modelVwLancamentoCartao->getLancamentosFatura(
+                $id_cartao,
+                $vencimento_fatura,
+                $this->_session->id_usuario
+        );
+        
+        $this->view->lancamentosFatura = $lancamentosFatura; 
+        // total da fatura
+        $totalFatura = $this->_modelVwLancamentoCartao->getTotalFatura(                
+                $id_cartao,
+                $vencimento_fatura,
+                $this->_session->id_usuario
+        );
+        $this->view->totalFatura = $totalFatura;
                 
     }
     

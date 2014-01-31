@@ -42,6 +42,5 @@ class Model_Cartao extends Zend_Db_Table {
         
         return $query->cartoes;
     }
-    
 }
 

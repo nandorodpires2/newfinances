@@ -59,5 +59,41 @@ class Model_VwLancamentoCartao extends Zend_Db_Table {
         
     }
     
+    /**
+     * retorna os lancamentos da fatura
+     */
+    public function getLancamentosFatura($id_cartao, $vencimento_fatura, $id_usuario) {
+        
+        $select = $this->select()
+                ->from(array('vlc' => $this->_name), array('*'))
+                ->setIntegrityCheck(false)
+                ->joinInner(array('mov' => 'movimentacao'), 'vlc.id_movimentacao = mov.id_movimentacao', array('*'))
+                ->joinInner(array('cat' => 'categoria'), 'mov.id_categoria = cat.id_categoria', array('*'))
+                ->where('vlc.id_cartao = ?', $id_cartao)
+                ->where('vlc.vencimento_fatura = ?', $vencimento_fatura)
+                ->where('vlc.id_usuario = ?', $id_usuario)
+                ->order('vlc.data_movimentacao asc');
+        
+        return $this->fetchAll($select);
+        
+    }
+    
+    /**
+     * retorna total da fatura
+     */
+    public function getTotalFatura($id_cartao, $vencimento_fatura, $id_usuario) {
+        
+        $select = $this->select()
+                ->from(array('vlc' => $this->_name), array(
+                    'valor_fatura' => 'sum(vlc.valor_movimentacao)'
+                ))                
+                ->where("vlc.id_usuario = ?", $id_usuario)
+                ->where("vlc.id_cartao = ?", $id_cartao)
+                ->where("vlc.vencimento_fatura = ?", $vencimento_fatura);
+        
+        return $this->fetchRow($select);
+        
+    }
+    
 }
 
