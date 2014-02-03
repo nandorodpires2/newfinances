@@ -109,6 +109,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             $prefix = "/";
         }
         
+        $view->headMeta()->appendName('DESCRIPTION', "Sistema de controle financeiro");     
+        $view->headMeta()->appendName('ABSTRACT', "controla suas finanças");     
+        $view->headMeta()->appendName('KEYWORDS', "finanças, controle financeiro, controle de finanças, gastos pessoais, receitas, despesas, cartão de crédito, transferências");     
+        $view->headMeta()->appendName('ROBOT', "All");     
+        $view->headMeta()->appendName('RATING', "general");     
+        $view->headMeta()->appendName('DISTRIBUTION', "global");     
+        $view->headMeta()->appendName('LANGUAGE', "PT");     
+        
         //add javascript files          
         $view->headScript()->appendFile($prefix . 'views/js/jquery-2.0.3.js');
         $view->headScript()->appendFile($prefix . 'views/js/jquery-ui-1.10.3.js');
