@@ -24,6 +24,10 @@ class IndexController extends Application_Controller {
         $movimentacoes = $this->_modelVwMovimentacao->getMovimentacoesData($data, $this->_session->id_usuario);        
         $this->view->movimentacoes = $movimentacoes;
                 
+        // busca as faturas do mes
+        $faturasCartoes = $this->_modelVwLancamentoCartao->getFaturasAtual($this->_session->id_usuario);
+        $this->view->faturasCartoes = $faturasCartoes;
+        
         /**
          * top categorias
          */

@@ -24,6 +24,7 @@ class Model_VwLancamentoCartao extends Zend_Db_Table {
         $select = $this->select()
                 ->from(array('vlc' => $this->_name), array(
                     'vlc.id_cartao',
+                    'vlc.bandeira_cartao',
                     'vlc.descricao_cartao',
                     'vencimento_fatura' => 'date(vlc.vencimento_fatura)',
                     'valor_fatura' => 'sum(vlc.valor_movimentacao)'

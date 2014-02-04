@@ -3,8 +3,8 @@
 <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/movimentacoes/index.js')); ?>
 <div id="pages">
     <div id="index-index">
-        <div class="box">
-            <h3 class=" margim-top-10px margim-left-10px titulo-laranja">Lançamentos do Dia</h3>
+        <h3 class=" margim-top-10px margim-left-10px titulo-laranja">Lançamentos do Dia</h3>
+        <div class="box">            
             <?php if ($this->movimentacoes->count() > 0) : ?>
                 <div id="subtitulo-lista">
                     <div class="subtitulo-tipo">TIPO</div>
@@ -115,6 +115,42 @@
                 <?php endforeach; ?>
             <?php else : ?>
             <center>Nenhum lançamento para hoje</center>
+            <?php endif; ?>
+        </div>
+        <!-- cartoes de credito -->
+        <h3 class="titulo-laranja margim-left-10px">Cartões de Crédito</h3>
+        <div>
+            <?php if($this->faturasCartoes->count() > 0) : ?>
+            <table>
+                <tr>
+                    <th>Cartão</th>
+                    <th>Bandeira</th>
+                    <th>Vencimento</th>
+                    <th>Total Fatura</th>
+                    <th>Ações</th>
+                </tr>
+                <?php foreach ($this->faturasCartoes as $fatura) : ?>
+                <tr>
+                    <td><?php echo $fatura->descricao_cartao; ?></td>
+                    <td class="align_center"><?php echo ucfirst($fatura->bandeira_cartao); ?></td>
+                    <td class="align_center"><?php echo View_Helper_Date::getDataView($fatura->vencimento_fatura); ?></td>
+                    <td class="align_right"><?php echo View_Helper_Currency::getCurrency($fatura->valor_fatura); ?></td>
+                    <td class="align_center">
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'cliente',
+                            'controller' => 'cartoes',
+                            'action' => 'ver-fatura',
+                            'id_cartao' => $fatura->id_cartao,
+                            'vencimento' => $fatura->vencimento_fatura
+                        )); ?>">
+                            <img src="<?php echo $this->baseUrl('views/img/icon_list.png'); ?>" title="Ver Fatura" width="15"/>
+                        </a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+            <?php else : ?>
+            <center>Nenhum cartão cadastrado ou fatura para este mês</center>
             <?php endif; ?>
         </div>
         <div class="box_1">
