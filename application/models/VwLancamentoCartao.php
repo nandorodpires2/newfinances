@@ -30,10 +30,11 @@ class Model_VwLancamentoCartao extends Zend_Db_Table {
                     'valor_fatura' => 'sum(vlc.valor_movimentacao)'
                 ))                
                 ->where("vlc.id_usuario = ?", $id_usuario)
-                ->where("now() between vlc.inicio_fatura and vlc.fim_fatura")
+                ->where("year(vlc.vencimento_fatura) = year(now())")
+                ->where("month(vlc.vencimento_fatura) = month(now())")
                 ->group("vlc.id_cartao")
                 ->group("vlc.vencimento_fatura");
-        
+                
         return $this->fetchAll($select);
         
     }
