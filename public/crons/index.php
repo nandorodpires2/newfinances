@@ -41,7 +41,9 @@ $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', $st
 $mail_config = array(
     'auth'     => $config->mail->auth,
     'username' => $config->mail->username,
-    'password' => $config->mail->password
+    'password' => $config->mail->password,
+    'ssl' => $config->mail->ssl,
+    'port' => $config->mail->port
 );
 $transport = new Zend_Mail_Transport_Smtp($config->mail->host, $mail_config);
 Zend_Registry::set('mail_transport', $transport);

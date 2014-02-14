@@ -3,23 +3,38 @@
     <div id="site-planos-index">
         <h3 class="titulo-laranja">Nossos Planos</h3>
         <div class="box-planos">
-            <div class="box-plano-trimestral">
-                <div class="titulo-plano bg_blue">Plano Trimestral</div>
-                <div class="valor-plano">R$19,90</div>
-                <div class="valor-mes-plano">apenas R$6,63/mês</div>
-            </div>
-            <div class="box-plano-anual">
-                <div class="titulo-plano bg_orange">Plano Anual</div>
-                <div class="valor-plano">R$39,90</div>
-                <div class="valor-mes-plano">apenas R$3,33/mês</div>
-                <div class="economia-plano">Economize <span class="valor-economia">50%</span></div>
-            </div>
-            <div class="box-plano-semestral">
-                <div class="titulo-plano bg_green">Plano Semestral</div>
-                <div class="valor-plano">R$27,90</div>
-                <div class="valor-mes-plano">apenas R$4,65/mês</div>                
-                <div class="economia-plano">Economize <span class="valor-economia">30%</span></div>
-            </div>            
+            <form method="post">
+                <div class="box-plano-trimestral">
+                    <div class="titulo-plano bg_blue">Plano Trimestral</div>
+                    <div class="valor-plano"><?php echo View_Helper_Currency::getCurrency($this->planoTrimestral->valor_plano); ?></div>
+                    <div class="valor-mes-plano">apenas <?php echo View_Helper_Currency::getCurrency($this->planoTrimestral->valor_plano / 3); ?>/mês</div>
+                    <input type="hidden" name="id_plano" id="id_plano" value="3" />
+                    <input type="hidden" name="id_usuario" id="id_usuario" value="<?php echo $this->id_usuario; ?>" />
+                    <input type="submit" name="submit" class="submit" value="Escolher" />
+                </div>
+            </form>
+            <form method="post">
+                <div class="box-plano-anual">
+                    <div class="titulo-plano bg_orange">Plano Anual</div>
+                    <div class="valor-plano"><?php echo View_Helper_Currency::getCurrency($this->planoAnual->valor_plano); ?></div>
+                    <div class="valor-mes-plano">apenas <?php echo View_Helper_Currency::getCurrency($this->planoAnual->valor_plano / 12); ?>/mês</div>
+                    <div class="economia-plano">Economize <span class="valor-economia"><?php echo View_Helper_Planos::getEconomiaPlano($this->planoAnual); ?>%</span></div>
+                    <input type="hidden" name="id_plano" id="id_plano" value="5" />
+                    <input type="hidden" name="id_usuario" id="id_usuario" value="<?php echo $this->id_usuario; ?>" />
+                    <input type="submit" name="submit" class="submit" value="Escolher" />
+                </div>
+            </form>
+            <form method="post">
+                <div class="box-plano-semestral">
+                    <div class="titulo-plano bg_green">Plano Semestral</div>
+                    <div class="valor-plano"><?php echo View_Helper_Currency::getCurrency($this->planoSemestral->valor_plano); ?></div>
+                    <div class="valor-mes-plano">apenas <?php echo View_Helper_Currency::getCurrency($this->planoSemestral->valor_plano / 6); ?>/mês</div>                
+                    <div class="economia-plano">Economize <span class="valor-economia"><?php echo View_Helper_Planos::getEconomiaPlano($this->planoSemestral); ?>%</span></div>
+                    <input type="hidden" name="id_plano" id="id_plano" value="4" />
+                    <input type="hidden" name="id_usuario" id="id_usuario" value="<?php echo $this->id_usuario; ?>" />
+                    <input type="submit" name="submit" class="submit" value="Escolher" />
+                </div>            
+            </form>    
         </div>    
         <div id="experimente">
             Você pode experimentar o sistema pelo período de 30 dias

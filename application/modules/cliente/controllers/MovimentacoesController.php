@@ -125,6 +125,14 @@ class MovimentacoesController extends Application_Controller {
                         $this->_modelMovimentacaoRepeticao->insert($dadosRepeticao);                    
                     }
                     
+                    // recupera o id da movimentacao repeticao
+                    $lastId = $this->_modelMovimentacaoRepeticao->lastInsertId();
+                    
+                    // atualiza o id pai 
+                    $dadosUpdateMovimentacao['id_movimentacao_pai'] = $lastId;
+                    $whereUpdateMovimentacao = "id_movimentacao = " . $this->_modelMovimentacao->lastInsertId();
+                    $this->_modelMovimentacao->update($dadosUpdateMovimentacao, $whereUpdateMovimentacao);
+                    
                     $this->_redirect("index/index");
                 } catch (Zend_Exception $error) {
                     echo $error->getMessage();
@@ -196,6 +204,14 @@ class MovimentacoesController extends Application_Controller {
                         $dadosRepeticao['id_movimentacao'] = $this->_modelMovimentacao->lastInsertId();                    
                         $this->_modelMovimentacaoRepeticao->insert($dadosRepeticao);                    
                     }
+                    
+                    // recupera o id da movimentacao repeticao
+                    $lastId = $this->_modelMovimentacaoRepeticao->lastInsertId();
+                    
+                    // atualiza o id pai 
+                    $dadosUpdateMovimentacao['id_movimentacao_pai'] = $lastId;
+                    $whereUpdateMovimentacao = "id_movimentacao = " . $this->_modelMovimentacao->lastInsertId();
+                    $this->_modelMovimentacao->update($dadosUpdateMovimentacao, $whereUpdateMovimentacao);
                     
                     $this->_redirect("index/index");
                 } catch (Zend_Exception $error) {
@@ -285,6 +301,9 @@ class MovimentacoesController extends Application_Controller {
         // buscando os dados da movimentacao
         $dadosMovimentacao = $this->_modelMovimentacao->getDadosMovimentacao($idMovimentacao, $this->_session->id_usuario);
 
+        // data da movimentacao
+        $data_movimentacao = $dadosMovimentacao->data_movimentacao;
+        
         if ($dadosMovimentacao) {
 
             $dadosMovimentacao = $dadosMovimentacao->toArray();
@@ -308,6 +327,13 @@ class MovimentacoesController extends Application_Controller {
                 $dadosMovimentacao['tipo_pgto'] = 'conta';
             }
             
+            // verifica se a movimentacao se repete
+            if ($dadosMovimentacao['id_movimentacao_pai'] != null) {                 
+                $this->view->dadosRepeticao = false;                
+            } else {
+                $this->view->dadosRepeticao = false;
+            }
+            
             $formUpdate = $this->populateMovimentacao($dadosMovimentacao);            
             
             // atualizando a movimentacao            
@@ -315,6 +341,8 @@ class MovimentacoesController extends Application_Controller {
                 $dadosMovimentacaoUpdate = $this->_request->getPost();
                 if ($formUpdate->isValid($dadosMovimentacaoUpdate)) {
                     $dadosMovimentacaoUpdate = $formUpdate->getValues();
+                    
+                    Zend_Debug::dump($dadosMovimentacaoUpdate);
                     
                     if (isset ($dadosMovimentacaoUpdate['tipo_pgto'])) {                    
                         if ($dadosMovimentacaoUpdate['tipo_pgto'] == 'conta') {
@@ -346,14 +374,15 @@ class MovimentacoesController extends Application_Controller {
                     unset($dadosMovimentacaoUpdate['opt_repetir']);
                     unset($dadosMovimentacaoUpdate['modo_repeticao']);
                     unset($dadosMovimentacaoUpdate['parcelas']);
-                    unset($dadosMovimentacaoUpdate['repetir']);
+                    unset($dadosMovimentacaoUpdate['repetir']);                    
+                    unset($dadosMovimentacaoUpdate['modo_edicao']);                    
                     
                     $whereUpdate = "id_movimentacao = " . $idMovimentacao;
                     
                     try {
                         $this->_modelMovimentacao->update($dadosMovimentacaoUpdate, $whereUpdate);
-                        
-                        // atualizando a movimentacao de origem
+                                                
+                        // atualizando a movimentacao de origem no caso de transferencia
                         $idMovimentacao++;
                         $whereOrigem = "id_movimentacao = " . $idMovimentacao;
                         $dadosMovimentacaoUpdate['id_conta'] = $id_conta_origem;
@@ -413,7 +442,7 @@ class MovimentacoesController extends Application_Controller {
                     $this->_modelMovimentacao->delete($where);
                     $this->_redirect("index/");
                 } catch (Exception $error) {
-                    echo $error->getMessage();
+                    echo $error->getMessage(); die('aki');
                 }
                 
             }                        
@@ -426,11 +455,35 @@ class MovimentacoesController extends Application_Controller {
         
         switch ($dadosMovimentacao['id_tipo_movimentacao']) {
             case self::TIPO_MOVIMENTACAO_RECEITA:
+                if ($dadosMovimentacao['id_movimentacao_pai'] != null) {
+                    $this->_formMovimentacoesReceitas->addElement('radio', 'modo_edicao', array(
+                        'label' => 'Essa movimentacao se repete, escolha um modo de edição:',
+                        'multioptions' => array(
+                            1 => 'Atualizar somente o registro atual',
+                            2 => 'Atualizar este registro e todos os anteriores',
+                            3 => 'Atualizar este registro e todos os futuros',
+                            4 => 'Atualizar todos os registros'
+                        ),
+                        'value' => 1
+                    ));
+                }
                 $this->_formMovimentacoesReceitas->populate($dadosMovimentacao);
                 $this->view->formMovimentacoes = $this->_formMovimentacoesReceitas;
                 return $this->_formMovimentacoesReceitas;
                 break;
             case self::TIPO_MOVIMENTACAO_DESPESA:
+                if ($dadosMovimentacao['id_movimentacao_pai'] != null) {
+                    $this->_formMovimentacoesDespesa->addElement('radio', 'modo_edicao', array(
+                        'label' => 'Essa movimentacao se repete, escolha um modo de edição:',
+                        'multioptions' => array(
+                            1 => 'Atualizar somente o registro atual',
+                            2 => 'Atualizar este registro e todos os anteriores',
+                            3 => 'Atualizar este registro e todos os futuros',
+                            4 => 'Atualizar todos os registros'
+                        ),
+                        'value' => 1
+                    ));
+                }
                 $this->_formMovimentacoesDespesa->populate($dadosMovimentacao);
                 $this->view->formMovimentacoes = $this->_formMovimentacoesDespesa;
                 return $this->_formMovimentacoesDespesa;
@@ -451,7 +504,6 @@ class MovimentacoesController extends Application_Controller {
         }
         
     }
-    
 
 }
 

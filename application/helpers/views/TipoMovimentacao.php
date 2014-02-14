@@ -19,10 +19,10 @@ class View_Helper_TipoMovimentacao extends Zend_View_Helper_Abstract {
         
         switch ((int)$tipoMovimentacao) {
             case 1:                
-                $img = "<img src='{$zendView->baseUrl('views/img/ball_green.png')}' title='Receita' width=15 />";
+                $img = "<img src='{$zendView->baseUrl('views/img/arrow_green.png')}' title='Receita' width=15 />";
                 break;
             case 2:
-                $img = "<img src='{$zendView->baseUrl('views/img/ball_red.png')}' title='Despesa' width=15 />";
+                $img = "<img src='{$zendView->baseUrl('views/img/arrow_red.png')}' title='Despesa' width=15 />";
                 break;
             case 3:
                 $img = "<img src='{$zendView->baseUrl('views/img/credit_card.png')}' title='Cartão de Crédito' width=15 />";

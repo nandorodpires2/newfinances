@@ -34,6 +34,11 @@ class PlanosController extends Application_Controller {
 
         $this->view->dadosUsuario = $dadosUsuario;
         
+        // busca os planos atuais
+        $this->view->planoTrimestral = $this->_modelPlanoValor->getPlanoValorUsuario(self::PLANO_TRIMESTRAL);
+        $this->view->planoSemestral = $this->_modelPlanoValor->getPlanoValorUsuario(self::PLANO_SEMESTRAL);
+        $this->view->planoAnual = $this->_modelPlanoValor->getPlanoValorUsuario(self::PLANO_ANUAL);
+        
         // envia o form dos planos pagos para a view
         $this->_formUsuariosPlanosUsuario->id_usuario->setValue($this->_session->id_usuario);
         $this->view->formPlanosUsuario = $this->_formUsuariosPlanosUsuario;
@@ -87,19 +92,24 @@ class PlanosController extends Application_Controller {
                     try {
                         $this->_modelUsuarioPlano->insert($dadosPlanoUsuarioNovo);
                         
+                        $data_encerramento = Controller_Helper_Date::getDateViewComplete($dadosPlanoUsuarioNovo['data_encerramento']);
+                        
+                        $html = new Zend_View();
+                        $html->setScriptPath(EMAILS_PATH . '/usuario/');
+
+                        // assign values
+                        $html->assign('nome_completo', $dadosUsuario->nome_completo);
+                        $html->assign('de', $dadosPlanoAtual->descricao_plano);
+                        $html->assign('para', $cobranca->descricao_plano);
+                        $html->assign('data_encerramento', $data_encerramento);
+
+                        // render view
+                        $bodyText = $html->render('plano-usuario.phtml');
+                        
                         // envia o email para o usario  
                         $mail = new Zend_Mail('utf-8');
 
-                        $data_encerramento = Controller_Helper_Date::getDateViewComplete($dadosPlanoUsuarioNovo['data_encerramento']);
-                        
-                        $message = "                            
-                            <p>Olá {$dadosUsuario->nome_completo}</p>
-                            <p>Seu plano foi alterado com sucesso!</p>                            
-                            <p>De: {$dadosPlanoAtual->descricao_plano} para: {$cobranca->descricao_plano}</p> 
-                            <p>Data Encerramento: {$data_encerramento}</p>    
-                        ";
-
-                        $mail->setBodyHtml($message);
+                        $mail->setBodyHtml($bodyText);
                         $mail->setFrom('newfinances@newfinances.com.br', 'NewFinances - Controle Financeiro');
                         $mail->addTo($dadosUsuario->email_usuario);
                         $mail->setSubject('Plano Alterado');
@@ -110,7 +120,7 @@ class PlanosController extends Application_Controller {
                         $mail = new Zend_Mail('utf-8');
 
                         $message = "                            
-                            <p>O plano do usuário {$dadosUsuario->nome_completo} foi alterado</p>                            
+                            <p>O usuário {$dadosUsuario->nome_completo} alterou seu plano</p>                            
                             <p>De: {$dadosPlanoAtual->descricao_plano} para: {$cobranca->descricao_plano}</p>
                             <p>Data Encerramento: {$data_encerramento}</p>
                         ";

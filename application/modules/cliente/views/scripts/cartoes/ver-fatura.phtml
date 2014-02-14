@@ -7,6 +7,7 @@
                     <td>Descrição</td>
                     <td>Categoria</td>
                     <td>Valor</td>
+                    <td colspan="2">Ações</td>
                 </tr>
                 <?php if ($this->lancamentosFatura->count() > 0) : ?>
                 <?php foreach ($this->lancamentosFatura as $lancamento) : ?>
@@ -15,11 +16,30 @@
                     <td><?php echo $lancamento->descricao_movimentacao; ?></td>
                     <td><?php echo $lancamento->descricao_categoria; ?></td>
                     <td class="align_right"><?php echo View_Helper_Currency::getCurrency($lancamento->valor_movimentacao); ?></td>
+                    <td class="align_center">
+                        <a href="<?php echo $this->url(array(
+                            'controller' => 'movimentacoes',
+                            'action' => 'editar-movimentacao',
+                            'id_movimentacao' => $lancamento->id_movimentacao
+                        ), null, true); ?>">
+                            <img class="img-actions" src="<?php echo $this->baseUrl('views/img/icon_edit.png'); ?>" title="Editar" />
+                        </a>
+                    </td>
+                    <td class="align_center">
+                        <a href="<?php echo $this->url(array(
+                            'controller' => 'movimentacoes',
+                            'action' => 'excluir-movimentacao',
+                            'id_movimentacao' => $lancamento->id_movimentacao
+                        ), null, true); ?>">
+                            <img class="img-actions" src="<?php echo $this->baseUrl('views/img/icon_delete.png'); ?>" title="Excluir" />
+                        </a>
+                    </td>
                 </tr>
                 <?php endforeach; ?>
                 <tr>
-                    <td colspan="3" class="align_center">TOTAL</td>
-                    <td class="align_center"><?php echo View_Helper_Currency::getCurrency($this->totalFatura->valor_fatura); ?></td>
+                    <td style="font-size: 18px; font-weight: bold;" colspan="3" class="totais totais-bg align_center">TOTAL</td>
+                    <td style="font-size: 18px; font-weight: bold;" class="totais totais-bg align_center"><?php echo View_Helper_Currency::getCurrency($this->totalFatura->valor_fatura); ?></td>
+                    <td colspan="2" class="totais-bg">&nbsp;</td>
                 </tr>
                 <?php else : ?>
                 <tr>

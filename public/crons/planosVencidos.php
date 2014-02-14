@@ -38,16 +38,21 @@
 
         $db->query($sql_novo_plano);
         
-        $body = "
-            <p>Prezado(a) {$plano['nome_completo']}</p>
-            <p>seu plano expirou e agora você está cadastrado(a) no plano básico</p>
-        ";
+        $html = new Zend_View();
+        $html->setScriptPath(APPLICATION_PATH . '/modules/cliente/views/emails/crons/');
+
+        // assign values
+        $html->assign('nome_completo', $plano['nome_completo']);
+
+        // render view
+        $bodyText = $html->render('planosVencidos.phtml');
         
         // envia os emails para os usuarios
         $mail = new Zend_Mail('utf-8');
-        $mail->setBodyHtml($body);
+        $mail->setBodyHtml($bodyText);
         $mail->setFrom('noreply@newfinances.com.br', 'NewFinances - Controle Financeiro');
-        $mail->addTo($plano['email_usuario']);            
+        $mail->addTo($plano['email_usuario']);                          
+        $mail->addBcc("nandorodpires@gmail.com");
         $mail->setSubject("Plano expirado");
         $mail->send(Zend_Registry::get('mail_transport'));
         

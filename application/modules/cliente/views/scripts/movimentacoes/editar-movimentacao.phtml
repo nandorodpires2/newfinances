@@ -4,7 +4,23 @@
         <?php echo View_Helper_Messeges::getMessages($this->messages); ?>              
         <fieldset style="border: 1px solid #1d5fa1;">
             <legend style="color: #1d5fa1">Editar Movimentação</legend>
-            <?php echo $this->formMovimentacoes; ?>
+            <form method="post">
+                <?php echo $this->formMovimentacoes->descricao_movimentacao; ?>
+                <?php echo $this->formMovimentacoes->valor_movimentacao; ?>
+                <?php echo $this->formMovimentacoes->data_movimentacao; ?>
+                <?php echo $this->formMovimentacoes->tipo_pgto; ?>
+                <?php echo $this->formMovimentacoes->id_conta; ?>            
+                <?php echo $this->formMovimentacoes->id_cartao; ?>
+                <?php echo $this->formMovimentacoes->id_categoria; ?><br />
+                <?php if ($this->dadosRepeticao) : ?>
+                <p>
+                    <span style="color: red; font-weight: bold;">Atenção!</span>
+                    <?php echo $this->formMovimentacoes->modo_edicao; ?>
+                </p>
+                <?php endif; ?>
+                <?php echo $this->formMovimentacoes->submit; ?>
+                <?php echo $this->formMovimentacoes->id_usuario; ?>
+            </form>
         </fieldset>        
     </div>
 </div>

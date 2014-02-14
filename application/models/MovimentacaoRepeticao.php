@@ -42,5 +42,22 @@ class Model_MovimentacaoRepeticao extends Zend_Db_Table {
         return $this->fetchAll($select);
     }
     
+    /**
+     * recupera o ultimo id inserido
+     */
+    public function lastInsertId() {
+        $select = $this->select()
+                ->from($this->_name, array(
+                    'last_id' => 'last_insert_id(id_movimentacao)'
+                ))
+                ->order("id_movimentacao desc")
+                ->limit(1);
+        
+        $query = $this->fetchRow($select);
+        
+        return (int)$query->last_id;
+    }
+    
+    
 }
 

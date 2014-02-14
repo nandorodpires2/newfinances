@@ -19,8 +19,8 @@ class Plugin_Movimentacao extends Zend_Controller_Plugin_Abstract {
         $modelMovimentacaoRepeticao = new Model_MovimentacaoRepeticao();
         $modelMovimentacao = new Model_Movimentacao();
         
-        $dadosProcessar = $modelMovimentacaoRepeticao->getMovimentacoesProcessar($id_usuario);        
-        
+        $dadosProcessar = $modelMovimentacaoRepeticao->getMovimentacoesProcessar($id_usuario);  
+                
         foreach ($dadosProcessar as $dados) {            
             
             if ($dados->tipo == 'parcelado') {            
@@ -35,6 +35,7 @@ class Plugin_Movimentacao extends Zend_Controller_Plugin_Abstract {
                     $dadosMovimentacao['data_movimentacao'] = $zend_Date->addMonth($i - 1)->toString("yyyy-MM-dd");    
                     $dadosMovimentacao['descricao_movimentacao'] .= ' - ' . $i . '/' . $dados->modo;    
                     $dadosMovimentacao['realizado'] = Controller_Helper_Movimentacao::getStatusMovimentacao($dadosMovimentacao['data_movimentacao'], $dadosMovimentacao['id_tipo_movimentacao']);
+                    $dadosMovimentacao['id_movimentacao_pai'] = $dados->id_movimentacao;
                     unset($dadosMovimentacao['id_movimentacao']);                   
                   
                     $modelMovimentacao->insert($dadosMovimentacao);
@@ -60,6 +61,7 @@ class Plugin_Movimentacao extends Zend_Controller_Plugin_Abstract {
                             
                             $dadosMovimentacao['data_movimentacao'] = $zendDate->addDay($i)->toString("yyyy-MM-dd");                            
                             $dadosMovimentacao['realizado'] = Controller_Helper_Movimentacao::getStatusMovimentacao($dadosMovimentacao['data_movimentacao']);
+                            $dadosMovimentacao['id_movimentacao_pai'] = $dados->id_movimentacao;
                             unset($dadosMovimentacao['id_movimentacao']);
 
                             $modelMovimentacao->insert($dadosMovimentacao);
@@ -74,6 +76,7 @@ class Plugin_Movimentacao extends Zend_Controller_Plugin_Abstract {
                             
                             $dadosMovimentacao['data_movimentacao'] = $zendDate->addWeek($i)->toString("yyyy-MM-dd");                            
                             $dadosMovimentacao['realizado'] = Controller_Helper_Movimentacao::getStatusMovimentacao($dadosMovimentacao['data_movimentacao']);
+                            $dadosMovimentacao['id_movimentacao_pai'] = $dados->id_movimentacao;
                             unset($dadosMovimentacao['id_movimentacao']);
 
                             $modelMovimentacao->insert($dadosMovimentacao);
@@ -88,6 +91,7 @@ class Plugin_Movimentacao extends Zend_Controller_Plugin_Abstract {
                             
                             $dadosMovimentacao['data_movimentacao'] = $zendDate->addMonth($i)->toString("yyyy-MM-dd");                            
                             $dadosMovimentacao['realizado'] = Controller_Helper_Movimentacao::getStatusMovimentacao($dadosMovimentacao['data_movimentacao']);
+                            $dadosMovimentacao['id_movimentacao_pai'] = $dados->id_movimentacao;
                             unset($dadosMovimentacao['id_movimentacao']);
 
                             $modelMovimentacao->insert($dadosMovimentacao);
@@ -102,6 +106,7 @@ class Plugin_Movimentacao extends Zend_Controller_Plugin_Abstract {
                             
                             $dadosMovimentacao['data_movimentacao'] = $zendDate->addYear($i)->toString("yyyy-MM-dd");                            
                             $dadosMovimentacao['realizado'] = Controller_Helper_Movimentacao::getStatusMovimentacao($dadosMovimentacao['data_movimentacao']);
+                            $dadosMovimentacao['id_movimentacao_pai'] = $dados->id_movimentacao;
                             unset($dadosMovimentacao['id_movimentacao']);
 
                             $modelMovimentacao->insert($dadosMovimentacao);

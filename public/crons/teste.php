@@ -7,8 +7,11 @@
     $html = new Zend_View();
     $html->setScriptPath(APPLICATION_PATH . '/modules/cliente/views/emails/crons/');
 
+    $last_id = 42;
+    
     // assign values
-    $html->assign('data_inicio', $data_inicio);
+    $html->assign('nome_completo', "Fernando Rodrigues");    
+    $html->assign('url_ativar', "http://newfinances.com.br/usuarios/ativar-usuario/id_usuario/{$last_id}");
 
     // render view
     $bodyText = $html->render('teste.phtml');
@@ -28,7 +31,5 @@
     } catch (Exception $e) {
         echo $e->getMessage();
     }
-    
-    echo "Fim: " . date('Y-m-d H:m:s') . "<br />";
 
 ?>

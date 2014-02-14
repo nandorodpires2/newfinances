@@ -29,20 +29,25 @@
     foreach ($notificacoes as $key => $notificacao) {
         
         $valor = $currency->toCurrency($notificacao['valor_movimentacao']);
-        
-        $body = "
-            <p><h3>NOTIFICAÇÃO DE LANÇAMENTO PENDENTE</h3></p>
-            <p>Dados:</p>
-            Data: {$notificacao['data_movimentacao']}<br/>
-            Tipo: {$notificacao['tipo_movimentacao']}<br/>
-            Descrição: {$notificacao['descricao_movimentacao']}<br/>
-            Valor: {$valor}<br/>
-        ";
-    
+            
         try {    
+            
+            $html = new Zend_View();
+            $html->setScriptPath(APPLICATION_PATH . '/modules/cliente/views/emails/crons/');
+
+            // assign values
+            $html->assign('nome_completo', $notificacao['nome_completo']);
+            $html->assign('data', $notificacao['data_movimentacao']);
+            $html->assign('tipo', $notificacao['tipo_movimentacao']);
+            $html->assign('descricao', $notificacao['descricao_movimentacao']);
+            $html->assign('valor', $valor);
+
+            // render view
+            $bodyText = $html->render('lancamentos.phtml');
+            
             // create mail object
             $mail = new Zend_Mail('utf-8');
-            $mail->setBodyHtml($body);
+            $mail->setBodyHtml($bodyText);
             $mail->setFrom('noreply@newfinances.com.br', 'NewFinances - Controle Financeiro');
             $mail->addTo($notificacao['email_usuario']);            
             $mail->setSubject('Notificação: ' . $notificacao['descricao_movimentacao']);

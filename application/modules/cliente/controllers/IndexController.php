@@ -3,7 +3,7 @@
 class IndexController extends Application_Controller {
 
     public function init() {
-        
+    
         parent::init();
                 
         // verifica se tem pelo menos uma conta cadastrada
@@ -13,7 +13,7 @@ class IndexController extends Application_Controller {
         }      
         
     }
-
+    
     public function indexAction() {     
         
         /**

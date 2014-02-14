@@ -3,9 +3,6 @@
 require_once APPLICATION_PATH . '/../library/PagSeguroLibrary/PagSeguroLibrary.php';
 
 class UsuariosController extends Application_Controller {
-
-    const URL_ATIVAR = "http://newfinances.com.br/usuarios/ativar-usuario/id_usuario/";
-    //const URL_ATIVAR = "http://localhost/newfinances/public/usuarios/ativar-usuario/id_usuario/";
     
     public $_formUsuariosLogin;
     public $_formNovoUsuario;
@@ -108,132 +105,140 @@ class UsuariosController extends Application_Controller {
                 // valida cpf 
                 if ($this->validaCPF($dadosNovoUsuario['cpf_usuario'])) {                    
                     // verifica se já existe este usuário 
-                    $verificaUsuario = $this->_modelUsuario->fetchRow("
+                    $verificaUsuarioCpf = $this->_modelUsuario->fetchRow("
                         cpf_usuario = '{$dadosNovoUsuario['cpf_usuario']}'
                     ");
 
-                    if ($verificaUsuario == null) {                    
-                        // verifica se o usuario preencheu a politica de privacidade
-                        if ($dadosNovoUsuario['politica'] == 1) {                    
-                            // verifica se a senha de confirmacao confere
-                            if ($dadosNovoUsuario['senha_usuario'] == $dadosNovoUsuario['confirma_senha']) {
+                    if ($verificaUsuarioCpf == null) {                    
+                        //verifica se email ja cadastrado
+                        $verificaUsuarioEmail = $this->_modelUsuario->fetchRow("
+                            email_usuario = '{$dadosNovoUsuario['email_usuario']}'
+                        ");
+                        if ($verificaUsuarioEmail == null) {                        
+                            // verifica se o usuario preencheu a politica de privacidade
+                            if ($dadosNovoUsuario['politica'] == 1) {                    
+                                // verifica se a senha de confirmacao confere
+                                if ($dadosNovoUsuario['senha_usuario'] == $dadosNovoUsuario['confirma_senha']) {
 
-                                // para a autenticacao
-                                $email = $dadosNovoUsuario['email_usuario'];
-                                $senha = $dadosNovoUsuario['senha_usuario'];
+                                    // para a autenticacao
+                                    $email = $dadosNovoUsuario['email_usuario'];
+                                    $senha = $dadosNovoUsuario['senha_usuario'];
 
-                                $dadosNovoUsuario['data_cadastro'] = Controller_Helper_Date::getDatetimeNowDb();
-                                $dadosNovoUsuario['data_alteracao'] = Controller_Helper_Date::getDatetimeNowDb();
-                                $dadosNovoUsuario['data_nascimento'] = Controller_Helper_Date::getDateDb($dadosNovoUsuario['data_nascimento']);
-                                $dadosNovoUsuario['ativo_usuario'] = 0;
-                                $dadosNovoUsuario['senha_usuario'] = md5($dadosNovoUsuario['senha_usuario']);
+                                    $dadosNovoUsuario['data_cadastro'] = Controller_Helper_Date::getDatetimeNowDb();
+                                    $dadosNovoUsuario['data_alteracao'] = Controller_Helper_Date::getDatetimeNowDb();
+                                    $dadosNovoUsuario['data_nascimento'] = Controller_Helper_Date::getDateDb($dadosNovoUsuario['data_nascimento']);
+                                    $dadosNovoUsuario['ativo_usuario'] = 0;
+                                    $dadosNovoUsuario['senha_usuario'] = md5($dadosNovoUsuario['senha_usuario']);
 
-                                unset($dadosNovoUsuario['confirma_senha']);
-
-                                try {
-                                    $this->_modelUsuario->insert($dadosNovoUsuario);
-                                    $last_id = $this->_modelUsuario->lastInsertId();         
-
-                                    // insere o novo usuario no plano basico
-                                    $planoBasico['id_usuario'] = $last_id;
-                                    $planoBasico['id_plano'] = self::PLANO_BASICO;
-                                    $planoBasico['data_aderido'] = Controller_Helper_Date::getDatetimeNowDb();
-                                    $planoBasico['data_encerramento'] = Controller_Helper_Date::getDataEncerramentoPlano($planoBasico['data_aderido'], 8);
-                                    $planoBasico['ativo_plano'] = 1;
-                                    $planoBasico['id_plano_valor'] = self::VALOR_PLANO_BASICO;
-
-                                    $this->_modelUsuarioPlano->insert($planoBasico);
+                                    unset($dadosNovoUsuario['confirma_senha']);
 
                                     try {
-                                        
-                                        $html = new Zend_View();
-                                        $html->setScriptPath(EMAILS_PATH . '/usuario/');
+                                        $this->_modelUsuario->insert($dadosNovoUsuario);
+                                        $last_id = $this->_modelUsuario->lastInsertId();         
 
-                                        // assign values
-                                        $html->assign('nome_completo', $dadosNovoUsuario['nome_completo']);
-                                        $html->assign('last_id', $last_id);
-                                        $html->assign('url_ativar', self::URL_ATIVAR . $last_id);
+                                        // insere o novo usuario no plano basico
+                                        $planoBasico['id_usuario'] = $last_id;
+                                        $planoBasico['id_plano'] = self::PLANO_BASICO;
+                                        $planoBasico['data_aderido'] = Controller_Helper_Date::getDatetimeNowDb();
+                                        $planoBasico['data_encerramento'] = Controller_Helper_Date::getDataEncerramentoPlano($planoBasico['data_aderido'], 8);
+                                        $planoBasico['ativo_plano'] = 1;
+                                        $planoBasico['id_plano_valor'] = self::VALOR_PLANO_BASICO;
 
-                                        // render view
-                                        $bodyText = $html->render('novo-usuario.phtml');
-                                        
-                                        // envia o email para o novo usuario                                
-                                        $mail = new Zend_Mail('utf-8');
+                                        $this->_modelUsuarioPlano->insert($planoBasico);
 
-                                        $mail->setBodyHtml($bodyText);
-                                        $mail->setFrom('newfinances@newfinances.com.br', 'NewFinances - Controle Financeiro');
-                                        $mail->addTo($dadosNovoUsuario['email_usuario']);
-                                        $mail->setSubject('Seja Bem Vindo');
+                                        try {
 
-                                        $mail->send(Zend_Registry::get('mail_transport'));
+                                            $html = new Zend_View();
+                                            $html->setScriptPath(EMAILS_PATH . '/usuario/');
 
-                                        // envia o email para o gestor do sistema
-                                        $mail = new Zend_Mail('utf-8');
+                                            // assign values
+                                            $html->assign('nome_completo', $dadosNovoUsuario['nome_completo']);
+                                            $html->assign('last_id', $last_id);
+                                            $html->assign('url_ativar', "http://newfinances.com.br/usuarios/ativar-usuario/id_usuario/{$last_id}");
 
-                                        $message = "
-                                            <p>Novo Usuário Cadastrado</p>
-                                            <p>Nome: {$dadosNovoUsuario['nome_completo']}</p>
-                                            <p>E-mail: {$dadosNovoUsuario['email_usuario']}</p>
-                                            <p>Cidade: {$dadosNovoUsuario['cidade']}</p>                                            
-                                        ";
-                                        
-                                        $mail->setBodyHtml($message);
-                                        $mail->setFrom('newfinances@newfinances.com.br', 'NewFinances - Controle Financeiro');                                                                                
-                                        $mail->setSubject('Novo Usuário');
-                                        $mail->addTo("nandorodpires@gmail.com");
-                                        $mail->send(Zend_Registry::get('mail_transport'));
-                                        
-                                        // redireciona o usuario para a mensagem de ativar a conta
-                                        $this->_redirect("usuarios/ativar");
-                                        
-                                        
-                                    } catch (Exception $error) {
-                                        $messeges = array(
-                                            array(                                         
-                                                "alert" => "Houve um problema ao mandar o e-mail: {$error->getMessage()}"
-                                            )
-                                        );
+                                            // render view
+                                            $bodyText = $html->render('novo-usuario.phtml');
+
+                                            // envia o email para o novo usuario                                
+                                            $mail = new Zend_Mail('utf-8');
+
+                                            $mail->setBodyHtml($bodyText);
+                                            $mail->setFrom('newfinances@newfinances.com.br', 'NewFinances - Controle Financeiro');
+                                            $mail->addTo($dadosNovoUsuario['email_usuario']);
+                                            $mail->setSubject('Seja Bem Vindo');
+
+                                            $mail->send(Zend_Registry::get('mail_transport'));
+
+                                            // envia o email para o gestor do sistema
+                                            $mail = new Zend_Mail('utf-8');
+
+                                            $message = "
+                                                <p>Novo Usuário Cadastrado</p>
+                                                <p>Nome: {$dadosNovoUsuario['nome_completo']}</p>
+                                                <p>E-mail: {$dadosNovoUsuario['email_usuario']}</p>
+                                                <p>Cidade: {$dadosNovoUsuario['cidade']}</p>                                            
+                                            ";
+
+                                            $mail->setBodyHtml($message);
+                                            $mail->setFrom('newfinances@newfinances.com.br', 'NewFinances - Controle Financeiro');                                                                                
+                                            $mail->setSubject('Novo Usuário');
+                                            $mail->addTo("nandorodpires@gmail.com");
+                                            $mail->send(Zend_Registry::get('mail_transport'));
+
+                                            // redireciona o usuario para a mensagem de ativar a conta
+                                            $this->_redirect("usuarios/ativar");
+
+
+                                        } catch (Exception $error) {
+                                            echo $error->getMessage(); 
+                                        }
+
+                                    } catch (Zend_Exception $error) {
+
+                                        if ($error->getCode() == 1062) {
+                                            $messeges = array(
+                                                array(                                         
+                                                    "error" => "Este e-mail já está cadastrado!"
+                                                )
+                                            );
+                                        }
 
                                         $this->view->messages = $messeges; 
-                                    }
-                                    
-                                } catch (Zend_Exception $error) {
 
-                                    if ($error->getCode() == 1062) {
-                                        $messeges = array(
-                                            array(                                         
-                                                "error" => "Este e-mail já está cadastrado!"
-                                            )
-                                        );
                                     }
 
-                                    $this->view->messages = $messeges; 
-
+                                } else {
+                                    $this->_formNovoUsuario->populate($dadosNovoUsuario);
+                                    $messeges = array(
+                                        array( 
+                                            "error" => "A senha digitada não confere com a confirmação da mesma."                          
+                                        )
+                                    );
+                                    $this->view->messages = $messeges;                                       
                                 }
-
                             } else {
                                 $this->_formNovoUsuario->populate($dadosNovoUsuario);
                                 $messeges = array(
                                     array( 
-                                        "error" => "A senha digitada não confere com a confirmação da mesma."                          
+                                        "error" => "Você deve ler e concordar com a política de privacidade para continuar o cadastro."                          
                                     )
                                 );
                                 $this->view->messages = $messeges;                                       
                             }
                         } else {
                             $this->_formNovoUsuario->populate($dadosNovoUsuario);
-                            $messeges = array(
-                                array( 
-                                    "error" => "Você deve ler e concordar com a política de privacidade para continuar o cadastro."                          
+                            $messages = array(
+                                array(
+                                    'error' => "Este e-mail já está cadastrado"
                                 )
                             );
-                            $this->view->messages = $messeges;                                       
+                            $this->view->messages = $messages;
                         }
                     } else {
                         $this->_formNovoUsuario->populate($dadosNovoUsuario);
                         $messages = array(
                             array(
-                                'error' => "Já exite um usuário com este CPF cadastrado"
+                                'error' => "Este CPF já está cadastrado"
                             )
                         );
                         $this->view->messages = $messages;                    
@@ -277,16 +282,18 @@ class UsuariosController extends Application_Controller {
         $ZendAuth = Zend_Auth::getInstance();                
         $ZendAuth->getStorage()->write($usuarioRow);   
         
+        $html = new Zend_View();
+        $html->setScriptPath(EMAILS_PATH . '/usuario/');
+
+        // assign values
+        $html->assign('nome_completo', $dadosUsuario->nome_completo);
+        
+        // render view
+        $bodyText = $html->render('ativo-usuario.phtml');
         // envia o email        
         $mail = new Zend_Mail('utf-8');
 
-        $message = "
-            <p>Olá {$dadosUsuario->nome_completo}</p>
-            <p>Seu cadastro foi ativado com sucesso!</p>
-            <p>Obrigado por fazer parte da equipe NewFinances</p>            
-        ";
-
-        $mail->setBodyHtml($message);
+        $mail->setBodyHtml($bodyText);
         $mail->setFrom('newfinances@newfinances.com.br', 'NewFinances - Controle Financeiro');
         $mail->addTo($dadosUsuario->email_usuario);
         //$mail->addTo('tiago@realter.com.br');
