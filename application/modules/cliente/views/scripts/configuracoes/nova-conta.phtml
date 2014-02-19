@@ -1,10 +1,10 @@
+<?php echo $this->headScript()->appendFile($this->baseUrl('views/js/configuracoes/nova-conta.js')); ?>
 <div id="pages">
     <div id="nova-conta">        
         <?php echo View_Helper_Messeges::getMessages($this->messages); ?>       
         <fieldset style="border-color: #F28E00;">
             <legend style="color: #F28E00"><b>Nova Conta</b></legend>
             <?php echo $this->formConfoguracoesConta; ?>
-        </fieldset>
-        
+        </fieldset>        
     </div>
 </div>

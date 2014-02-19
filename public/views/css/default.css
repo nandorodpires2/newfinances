@@ -297,6 +297,7 @@ legend { font-weight: bold; color: #696969; font-size: 15px; }
 /* fonts */
 .bold { font-weight: bold; }
 .titulo-laranja { color: #F28E00; padding: 0; }
+.color-blue { color: #1d5fa1; }
 
 /* messages */
 .message-success {

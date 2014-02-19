@@ -132,7 +132,7 @@ class Form_Default extends Zend_Form {
      */
     public function getTipoContas() {
         
-        $multiOptions = array();
+        $multiOptions = array("" => "Selecione a conta");
         
         $modelTipoConta = new Model_TipoConta();
         $tipo_contas = $modelTipoConta->fetchAll("id_tipo_conta <> 3");

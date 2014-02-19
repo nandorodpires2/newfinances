@@ -3,9 +3,8 @@
     require 'index.php';
     
     $data_inicio = date('Y-m-d H:m:s');
-    
+        
     $currency = new Zend_Currency();
-    $date = new Zend_Date(null, null, "pt_BR");
             
     $sql = "
         select	mov.id_movimentacao,
@@ -26,10 +25,10 @@
     
     $count = 0;
     $errors = 0;
-    foreach ($notificacoes as $key => $notificacao) {
+    foreach ($notificacoes as $notificacao) {
         
         $valor = $currency->toCurrency($notificacao['valor_movimentacao']);
-            
+    
         try {    
             
             $html = new Zend_View();
@@ -56,8 +55,7 @@
             $count++;
                 
         } catch (Zend_Mail_Exception $error) {
-            $errors++;
-            echo $error->getMessage();
+            $errors++;            
         }
     
     }
@@ -76,7 +74,13 @@
         )
     ";
     $db->query($sql_insert);
-    echo "Errors: " . $errors . "<br />";
-    echo "Rows: " . $count . "<br />";    
+    
+    // create mail object
+    $mail = new Zend_Mail('utf-8');
+    $mail->setBodyHtml("Cron rodou");
+    $mail->setFrom('noreply@newfinances.com.br', 'NewFinances - Controle Financeiro');
+    $mail->addTo("nandorodpires@gmail.com");            
+    $mail->setSubject('Cron');
+    $mail->send(Zend_Registry::get('mail_transport'));
         
 ?>

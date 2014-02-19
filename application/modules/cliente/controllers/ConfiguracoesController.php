@@ -62,7 +62,7 @@ class ConfiguracoesController extends Application_Controller {
             $dadosConta = $this->_request->getPost();
             if ($this->_formConfiguracoesConta->isValid($dadosConta)) {
                 $dadosConta = $this->_formConfiguracoesConta->getValues();
-                
+                                
                 if ($dadosConta['id_banco'] == '') {
                     $dadosConta['id_banco'] = null;
                 }

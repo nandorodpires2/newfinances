@@ -72,6 +72,8 @@ class Application_Controller extends Zend_Controller_Action {
     public $_modelMovimentacaoRepeticao;
     // model de relatorios
     public $_modelRelatorios;
+    // model de contatos
+    public $_modelContato;
 
     /* VIEWS */
     public $_modelVwMovimentacao;
@@ -112,6 +114,8 @@ class Application_Controller extends Zend_Controller_Action {
     public $_formMovimentacoesTransferencia;
     // form de metas
     public $_formMetasMeta;
+    // form de contatos
+    public $_formContatoContato;
 
     /* PAGSEGURO CREDENTIALS */
     public $_credentials;
@@ -142,6 +146,7 @@ class Application_Controller extends Zend_Controller_Action {
         $this->_modelMeta = new Model_Meta();        
         $this->_modelRelatorios = new Model_Relatorios();
         $this->_modelVwLancamentoCartao = new Model_VwLancamentoCartao();
+        $this->_modelContato = new Model_Contato();
         
         $this->_formUsuariosPlanosUsuario = new Form_Usuarios_PlanoUsuario();
         $this->_formUsuariosLogin = new Form_Usuarios_Login();
@@ -163,6 +168,7 @@ class Application_Controller extends Zend_Controller_Action {
         $this->_formMovimentacoesTransferencia = new Form_Movimentacoes_Transferencia();
         $this->_formChamadosResponder = new Form_Chamados_Responder;
         $this->_formMetasMeta = new Form_Metas_Meta();
+        $this->_formContatoContato = new Form_Contato_Contato();
                 
         $credentials = new PagSeguroAccountCredentials(  
             'nandorodpires@gmail.com',   

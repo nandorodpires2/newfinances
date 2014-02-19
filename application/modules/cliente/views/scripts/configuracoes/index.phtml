@@ -8,6 +8,7 @@
                 <tr>
                     <td>Descrição</td>
                     <td>Tipo Conta</td>
+                    <td>Banco</td>
                     <td>Saldo Inicial</td>   
                     <td colspan="2">Ações</td>
                 </tr>                
@@ -15,8 +16,9 @@
                 <tr>
                     <td><?php echo $conta->descricao_conta; ?></td>                    
                     <td><?php echo $conta->descricao_tipo_conta; ?></td>                    
-                    <td><?php echo View_Helper_Currency::getCurrency($conta->saldo_inicial); ?></td>
-                    <td>
+                    <td><?php echo $conta->nome_banco; ?></td>
+                    <td class="align_right"><?php echo View_Helper_Currency::getCurrency($conta->saldo_inicial); ?></td>
+                    <td class="align_center">
                         <a href="<?php echo $this->url(array(
                             'controller' => 'configuracoes',
                             'action' => 'editar-conta',
@@ -25,7 +27,7 @@
                             <img class="img-actions" src="<?php echo $this->baseUrl('views/img/icon_edit.png'); ?>" title="Editar" />
                         </a>
                     </td>
-                    <td>
+                    <td class="align_center">
                         <a href="<?php echo $this->url(array(
                             'controller' => 'configuracoes',
                             'action' => 'excluir-conta',
@@ -50,13 +52,13 @@
                 </tr>
                 <?php if ($this->cartoes->count() > 0) : ?>
                 <?php foreach ($this->cartoes as $cartao) : ?>
-                <tr>                    
-                    <td><?php echo $cartao->descricao_cartao; ?></td>
+                <tr align="center">                    
+                    <td class="align_left"><?php echo $cartao->descricao_cartao; ?></td>
                     <td><?php echo $cartao->bandeira_cartao; ?></td>
-                    <td><?php echo View_Helper_Currency::getCurrency($cartao->limite_cartao); ?></td>
+                    <td class="align_right"><?php echo View_Helper_Currency::getCurrency($cartao->limite_cartao); ?></td>
                     <td><?php echo $cartao->fechamento_cartao; ?></td>
                     <td><?php echo $cartao->vencimento_cartao; ?></td>
-                    <td>
+                    <td class="align_center">
                         <a href="<?php echo $this->url(array(
                             'controller' => 'configuracoes',
                             'action' => 'editar-cartao',
@@ -65,7 +67,7 @@
                             <img class="img-actions" src="<?php echo $this->baseUrl('views/img/icon_edit.png'); ?>" title="Editar" />
                         </a>
                     </td>
-                    <td>
+                    <td class="align_center">
                         <a href="<?php echo $this->url(array(
                             'controller' => 'configuracoes',
                             'action' => 'excluir-cartao',

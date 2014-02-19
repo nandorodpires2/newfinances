@@ -1,14 +1,33 @@
 <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/usuario/novo-usuario.js')); ?>
 <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/cliente/usuario/novo-usuario.css')); ?> 
 <div id="pages">
-    <div id="novo-usuario">
-        <h3 class="titulo-laranja">Novo Usuário</h3>
-        <?php echo View_Helper_Messeges::getMessages($this->messages); ?>              
+    <h3 class="titulo-laranja">Novo Usuário</h3>
+    <?php echo View_Helper_Messeges::getMessages($this->messages); ?>              
+    <div id="info-novo-usuario">
+        <p class="align_justify">Preencha os dados ao lado para realizar seu cadastro.</p>
+        <p class="align_justify">
+            É simples, rápido e prático. Após realizar o cadastro, você receberá
+            um e-mail para ativar sua conta.
+        </p>
+        <p class="align_justify">
+            Inicialmente após a ativação da conta você será automaticamente
+            cadastrado no plano básico.
+        </p>        
+        <p class="align_justify">
+            O NewFinances oferece 30 dias grátis para você experimentar o sistema.                        
+        </p>
+        <p class="align_justify">
+            Desde já a Equipe NewFinances Controle de Finanças agradece sua 
+            preferência.
+        </p>
+    </div>
+    <div id="novo-usuario">        
+        <p class="color-blue bold">*Todos os campos são obrigatórios.</p>
         <div class="form-nov-usuario">
             <?php echo $this->formNovoUsuario; ?>
         </div>
         <div class="termos">
-            <div id="fechar" class="fechar"><a href="#" id="fechar_box">Fechar [X]</a></div>
+            <!--<div id="fechar" class="fechar"><a href="#" id="fechar_box">Fechar [X]</a></div>-->
             <div id="politica-privacidade">
                 <?php echo $this->partial("politica/index.phtml"); ?>
             </div>

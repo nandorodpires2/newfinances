@@ -4,17 +4,8 @@
     
     $data_inicio = date("d/m/Y H:i:s");
     
-    $html = new Zend_View();
-    $html->setScriptPath(APPLICATION_PATH . '/modules/cliente/views/emails/crons/');
-
-    $last_id = 42;
-    
-    // assign values
-    $html->assign('nome_completo', "Fernando Rodrigues");    
-    $html->assign('url_ativar', "http://newfinances.com.br/usuarios/ativar-usuario/id_usuario/{$last_id}");
-
     // render view
-    $bodyText = $html->render('teste.phtml');
+    $bodyText = "<p>Teste</p>";
     
     try {
         

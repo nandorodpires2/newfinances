@@ -1,6 +1,10 @@
+<?php echo $this->headScript()->appendFile($this->baseUrl('views/js/cartoes/ver-fatura.js')); ?>
 <div id='pages'>
     <div id='cartoes-ver-fatura'>
         <div class="listar-faturas">
+            <div id="options-bar">
+                <?php echo $this->formFaturas; ?>
+            </div>
             <table class="tabless-green">
                 <tr>
                     <td>Data</td>
@@ -36,11 +40,6 @@
                     </td>
                 </tr>
                 <?php endforeach; ?>
-                <tr>
-                    <td style="font-size: 18px; font-weight: bold;" colspan="3" class="totais totais-bg align_center">TOTAL</td>
-                    <td style="font-size: 18px; font-weight: bold;" class="totais totais-bg align_center"><?php echo View_Helper_Currency::getCurrency($this->totalFatura->valor_fatura); ?></td>
-                    <td colspan="2" class="totais-bg">&nbsp;</td>
-                </tr>
                 <?php else : ?>
                 <tr>
                     <td>Nenhuma movimentação</td>

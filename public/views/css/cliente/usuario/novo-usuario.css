@@ -6,8 +6,19 @@
         Purpose of the stylesheet follows.
 */
 
-root { 
-    display: block;
+p { margin: 2px; }
+
+#info-novo-usuario {
+    float: left;
+    width: 27%;
+    padding: 5px 10px;
+    border-right: 2px solid #DCDCDC;
+}
+
+#novo-usuario {
+    float: left;
+    width: 65%;
+    margin-left: 3%;    
 }
 
 #politica-privacidade, #termo-uso {

@@ -9,6 +9,7 @@
 #cliente-politica-termo, #cliente-politica-index {
     float: left;
     width: 90%;
+    font-size: 11px;
     margin: 10px 2%;
     padding: 7px 2%;    
 }

@@ -68,6 +68,22 @@
                             'action' => 'index'
                         ), null, true); ?>"><span>Nossos Planos</span></a>
                     </li>
+                    <!--
+                    <li>
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'site',
+                            'controller' => 'vantagens',
+                            'action' => 'index'
+                        ), null, true); ?>"><span>Vantagens</span></a>
+                    </li>                    
+                    -->
+                    <li>
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'site',
+                            'controller' => 'contato',
+                            'action' => 'index'
+                        ), null, true); ?>"><span>Contato</span></a>
+                    </li>
                     <?php if (!Zend_Auth::getInstance()->hasIdentity()) : ?>
                     <li>
                         <a href="<?php echo $this->url(array(
