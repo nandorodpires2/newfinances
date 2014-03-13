@@ -1,0 +1,19 @@
+<?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/cliente/contato/index.css')); ?> 
+<div id="pages">
+    <div id="site-contato-index">
+        <?php echo View_Helper_Messeges::getMessages($this->messages); ?>    
+        <h3 class="titulo-laranja">Faça Contato</h3>
+        <div id="box-1">
+            <p>Faça contato conosco.</p>
+            <p>Envie sua dúvida, informações à respeito do sistema, cobrança, etc.</p>
+            <p>Em até 2 dias responderemos sua mensagem.</p>
+            <p>
+                Se preferir você pode enviar um e-mail para 
+                <a class="color-blue" href="mailto:contato@newfinances.com.br" target="_blank">contato@newfinances.com.br</a>.
+            </p>
+        </div>
+        <div id="box-2">
+            <?php echo $this->formContato; ?>
+        </div>
+    </div>
+</div>

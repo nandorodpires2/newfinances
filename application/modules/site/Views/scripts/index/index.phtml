@@ -1,76 +1,82 @@
+<head>
+    <!-- Facebook Conversion Code for Fernando Rodrigues -->
+    <script type="text/javascript">
+        var fb_param = {};
+        fb_param.pixel_id = '6018678121620';
+        fb_param.value = '0.00';
+        fb_param.currency = 'USD';
+        (function() {
+            var fpw = document.createElement('script');
+            fpw.async = true;
+            fpw.src = '//connect.facebook.net/en_US/fp.js';
+            var ref = document.getElementsByTagName('script')[0];
+            ref.parentNode.insertBefore(fpw, ref);
+        })();
+    </script>    
+<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/offsite_event.php?id=6018678121620&amp;value=0&amp;currency=USD" /></noscript>
+</head>
 <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/site/index/index.css')); ?> 
 <div id="pages">
     <div id="site-index-index">
         <div id='box-1'>
+            <?php echo $this->partial('partials/slider.phtml'); ?>
             <div class="sobre-sistema">
                 <p><h3>Sobre o Sistema</h3></p>
                 <p>
-                    <span class="paragrafo">
+                    <span>
                         O NewFinances é um sistema de controle financeiro no qual você
                     </span>
                     <span>
-                    poderá otimizar suas contas e gerenciar suas finanças de maneira
-                    fácil e objetiva, controlando assim com total segurança suas 
-                    receitas e despesas diárias.
+                        poderá otimizar suas contas e gerenciar suas finanças de maneira
+                        fácil e objetiva, controlando assim com total segurança suas 
+                        receitas e despesas diárias.
                     </span>
                 </p>
                 <p>
-                    <span class="paragrafo">
-                    Hoje em dia é fundamental a necessidade de termos cada vez mais 
+                    <span>
+                        Hoje em dia é fundamental a necessidade de termos cada vez mais 
                     </span>
                     <span>
-                    uma saúde financeira estável, no qual poderemos assim fazer 
-                    aqueles investimentos tão sonhados: Aquela viagem internacional 
-                    ou comprar o carro novo.
+                        uma saúde financeira estável, no qual poderemos assim fazer 
+                        aqueles investimentos tão sonhados: Aquela viagem internacional 
+                        ou comprar o carro novo.
                     </span>
                 </p>
                 <p>
-                    <span class="paragrafo">
-                    O sistema é totalmente voltado para as famílias brasileiras, 
+                    <span>
+                        O sistema é totalmente voltado para as famílias brasileiras, 
                     </span>
                     <span>
-                    por isso a necessidade de desenvolvermos algo simples e prático,
-                    simples na forma de usar o sistema e prático no qual os 
-                    resultados são facilmente visíveis.
+                        por isso a necessidade de desenvolvermos algo simples e prático,
+                        simples na forma de usar o sistema e prático no qual os 
+                        resultados são facilmente visíveis.
                     </span>
                 </p>
                 <p>
-                    <span class="paragrafo">
-                    Não perca tempo e cadastre-se agora mesmo e desfrute de todas 
+                    <span>
+                        Não perca tempo e cadastre-se agora mesmo e desfrute de todas 
                     </span>
                     <span>
-                    as vantagens de ser um(a) usuário(a) do NewFinances. 
+                        as vantagens de ser um(a) usuário(a) do NewFinances. <b>Totalmente gratuito.</b>
                     </span>
                 </p>
+                <!--
                 <p>
-                    <span class="paragrafo">
-                        São três <a href="<?php echo $this->url(array(
-                                'module' => 'site',
-                                'controller' => 'planos',
-                                'action' => 'index'
-                            ), null, true); ?>">planos</a> para você escolher. 
-                        Você poderá também 
+                    <span>
+                        São três <a href="<?php
+                        echo $this->url(array(
+                            'module' => 'site',
+                            'controller' => 'planos',
+                            'action' => 'index'
+                                ), null, true);
+                        ?>">planos</a> para você escolher.  
                     </span>
                     <span>
-                        <b>experimentar por <font size='4'>30 dias</font> o NewFinances</b> antes de aderir a 
-                        algum plano.
+                        Você também pode <b><font size='4'>experimentar por <?php echo $this->plano_experiencia; ?> dias grátis</font></b>.
                     </span>
                 </p>
+                -->
             </div>
-            <!--
-            <div class='sobre-sistema'>
-                <h3>Vantagnes do NewFinances</h3>
-                <p>
-                    <span class="paragrafo">
-                        O NewFinances Controle Financeiro possui um princípio 
-                    </span>
-                    <span> de AI (Inteligência Artificial), ou seja, ele analiza e te ajuda 
-                        a tomar as melhores decisões, inclusive "dando palpites" nas
-                        suas receitas, despesa e cartão de crédito.
-                    </span>
-                </p>
-            </div>
-            -->
         </div>
         <div id='box-2'>
             <div class='news'>
@@ -78,15 +84,19 @@
                 <script>
                     (function(d, s, id) {
                         var js, fjs = d.getElementsByTagName(s)[0];
-                        if (d.getElementById(id)) return;
-                        js = d.createElement(s); js.id = id;
+                        if (d.getElementById(id))
+                            return;
+                        js = d.createElement(s);
+                        js.id = id;
                         js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1";
                         fjs.parentNode.insertBefore(js, fjs);
                     }(document, 'script', 'facebook-jssdk'));
                 </script>
                 <div class="fb-like-box" 
                      data-href="http://www.facebook.com/sisnewfinances" 
-                     data-colorscheme="light" 
+                     data-colorscheme="light"                                                               
+                     data-header="false" 
+                     fb-xfbml-state="rendered"
                      data-show-faces="true" 
                      data-header="true" 
                      data-stream="fasle" 
@@ -107,16 +117,5 @@
                 </script>
             </div>
         </div>
-        <!--
-        <div class="box-links">
-            Porque usar o NewFinances
-        </div>
-        <div class="box-links">
-            link 2
-        </div>
-        <div class="box-links">
-            link 3
-        </div>
-        -->
     </div>
 </div>
