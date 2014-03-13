@@ -4,35 +4,28 @@
             <table class="tabless-green">                
                 <tr>
                     <td>Nome</td>
-                    <td width="100">CPF</td>
+                    <td>E-mail</td>
                     <td>Cidade</td>
                     <td>Estado</td>
                     <td>Plano</td>
                     <td>Valor Pago</td>
                     <td>Data Cadastro</td>
-                    <td>Data Encerramento</td>                    
-                    <td>Situação Plano</td>
-                    <td>Opções</th>
+                    <td>Data Encerramento</td>                                        
+                    <td>Qtde de Logins</td>
+                    <td>Último Login</td>                    
                 </tr>                
                 <?php foreach ($this->usuarios as $usuario) : ?>
-                <tr>
-                    <td><?php echo $usuario->nome_completo; ?></td>
-                    <td><?php echo $usuario->cpf_usuario; ?></td>
+                <tr class="align_center">
+                    <td class="align_left"><?php echo $usuario->nome_completo; ?></td>
+                    <td><?php echo $usuario->email_usuario; ?></td>
                     <td><?php echo $usuario->cidade; ?></td>
                     <td><?php echo $usuario->sigla_estado; ?></td>
                     <td><?php echo $usuario->descricao_plano; ?></td>
                     <td><?php echo View_Helper_Currency::getCurrency($usuario->valor_plano); ?></td>
                     <td><?php echo View_Helper_Date::getDataView($usuario->data_aderido); ?></td>
                     <td><?php echo $usuario->data_encerramento ? View_Helper_Date::getDataView($usuario->data_encerramento) : ' - '; ?></td>                    
-                    <td><?php echo $usuario->ativo_plano == 1 ? 'Ativo' : 'Inativo'; ?></td>
-                    <td>
-                        <a href="<?php echo $this->url(array(
-                            'module' => 'gestor',
-                            'controller' => 'usuarios',
-                            'action' => 'acessos',
-                            'id_usuario' => $usuario->id_usuario
-                        )); ?>">Acessos</a>
-                    </td>
+                    <td><?php echo $usuario->qtde_logins; ?></td>
+                    <td><?php echo View_Helper_Date::getDateTimeView($usuario->ultimo_login); ?></td>
                 </tr>
                 <?php endforeach; ?>                                   
             </table>

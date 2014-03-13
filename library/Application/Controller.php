@@ -39,7 +39,7 @@ class Application_Controller extends Zend_Controller_Action {
     const PLANO_TRIMESTRAL = 3;
     const PLANO_SEMESTRAL = 4;
     const PLANO_ANUAL = 5;
-
+    
     /* SESSIONS */
     public $_hasIdentity;
     public $_session;
@@ -74,6 +74,8 @@ class Application_Controller extends Zend_Controller_Action {
     public $_modelRelatorios;
     // model de contatos
     public $_modelContato;
+    // model de questionario
+    public $_modelQuestionario;
 
     /* VIEWS */
     public $_modelVwMovimentacao;
@@ -116,6 +118,8 @@ class Application_Controller extends Zend_Controller_Action {
     public $_formMetasMeta;
     // form de contatos
     public $_formContatoContato;
+    // form de questionario
+    public $_formUsuariosQuestionario;
 
     /* PAGSEGURO CREDENTIALS */
     public $_credentials;
@@ -147,6 +151,7 @@ class Application_Controller extends Zend_Controller_Action {
         $this->_modelRelatorios = new Model_Relatorios();
         $this->_modelVwLancamentoCartao = new Model_VwLancamentoCartao();
         $this->_modelContato = new Model_Contato();
+        $this->_modelQuestionario = new Model_Questionario();
         
         $this->_formUsuariosPlanosUsuario = new Form_Usuarios_PlanoUsuario();
         $this->_formUsuariosLogin = new Form_Usuarios_Login();
@@ -169,6 +174,7 @@ class Application_Controller extends Zend_Controller_Action {
         $this->_formChamadosResponder = new Form_Chamados_Responder;
         $this->_formMetasMeta = new Form_Metas_Meta();
         $this->_formContatoContato = new Form_Contato_Contato();
+        $this->_formUsuariosQuestionario = new Form_Usuarios_Questionario();
                 
         $credentials = new PagSeguroAccountCredentials(  
             'nandorodpires@gmail.com',   
@@ -188,6 +194,15 @@ class Application_Controller extends Zend_Controller_Action {
             // processa os pagamentos pendentes        
             $this->processaPagamentosPendentes();
         }
+        
+        // envia a qtde de dias do plano de experiencia para a view
+        $planoExperiencia = $this->_modelPlano->getPlanoExperiencia();
+        $dias_plano_experiencia = $planoExperiencia->tempo_plano;        
+        $this->view->plano_experiencia = $dias_plano_experiencia;
+        
+        // envia as mensagens para a view
+        $this->view->messages = Controller_Helper_Messeges::getMesseges();
+        
     }
     
     public function setLayout($layout) {

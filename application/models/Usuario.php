@@ -155,6 +155,10 @@ class Model_Usuario extends Zend_Db_Table {
                     '*'
                 ))                
                 ->setIntegrityCheck(false)
+                ->joinInner(array('ul' => 'usuario_login'), 'u.id_usuario = ul.id_usuario', array(
+                    'qtde_logins' => 'count(ul.id_usuario_login)',
+                    'ultimo_login' => 'max(ul.data)'
+                ))
                 ->joinInner(array('up' => 'usuario_plano'), 'u.id_usuario = up.id_usuario', array(
                     '*'
                 ))

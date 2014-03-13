@@ -41,6 +41,7 @@ class Form_Movimentacoes_Transferencia extends Zend_Form {
         // categoria
         $this->addElement("select", "id_categoria", array(
             'label' => 'Categoria: ',
+            'value' => 9,
             'multioptions' => $formDefault->getCategorias()
         ));
         

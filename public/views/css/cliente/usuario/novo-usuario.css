@@ -6,7 +6,7 @@
         Purpose of the stylesheet follows.
 */
 
-p { margin: 2px; }
+p { margin: 8px 0; }
 
 #info-novo-usuario {
     float: left;

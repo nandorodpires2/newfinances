@@ -203,15 +203,16 @@ class MovimentacoesController extends Application_Controller {
                         unset($dadosDespesa['opt_repetir']);
                         $dadosRepeticao['id_movimentacao'] = $this->_modelMovimentacao->lastInsertId();                    
                         $this->_modelMovimentacaoRepeticao->insert($dadosRepeticao);                    
+                        
+                        // recupera o id da movimentacao repeticao
+                        $lastId = $this->_modelMovimentacaoRepeticao->lastInsertId();
+
+                        // atualiza o id pai 
+                        $dadosUpdateMovimentacao['id_movimentacao_pai'] = $lastId;
+                        $whereUpdateMovimentacao = "id_movimentacao = " . $this->_modelMovimentacao->lastInsertId();
+                        $this->_modelMovimentacao->update($dadosUpdateMovimentacao, $whereUpdateMovimentacao);
+                        
                     }
-                    
-                    // recupera o id da movimentacao repeticao
-                    $lastId = $this->_modelMovimentacaoRepeticao->lastInsertId();
-                    
-                    // atualiza o id pai 
-                    $dadosUpdateMovimentacao['id_movimentacao_pai'] = $lastId;
-                    $whereUpdateMovimentacao = "id_movimentacao = " . $this->_modelMovimentacao->lastInsertId();
-                    $this->_modelMovimentacao->update($dadosUpdateMovimentacao, $whereUpdateMovimentacao);
                     
                     $this->_redirect("index/index");
                 } catch (Zend_Exception $error) {

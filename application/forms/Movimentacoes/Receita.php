@@ -54,6 +54,7 @@ class Form_Movimentacoes_Receita extends Zend_Form {
         $this->addElement("select", "id_categoria", array(
             'label' => 'Categoria',
             'multioptions' => $formDefault->getCategorias(),
+            'value' => 9,
             'required' => true
         ));
         

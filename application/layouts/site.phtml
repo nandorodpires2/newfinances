@@ -4,20 +4,22 @@
     <?php echo $this->headMeta(); ?>
     
     <?php header("Content-Type: text/html; charset=UTF-8",true); ?>
+    <link rel="icon" href="<?php echo $this->baseUrl('views/img/icon_logo.png'); ?>" />
     <?php echo $this->headTitle("NewFinances"); ?> 
     <!-- css -->
     <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/site.css')); ?>
     <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/default.css')); ?>
     <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/menu-site.css')); ?>         
-    <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/jquery-ui-1.10.3.css')); ?> 
+    <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/jquery-ui-1.10.3.css')); ?>     
+    <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/style1.css')); ?> 
 
     <!-- arquivos js -->
     <?php echo $this->headScript(); ?>
     
-    <body>        
+    <body>
         <div id="content-all">   
             <div id="social-area">
-                <div style="float: left; margin: 10px 0; ">   
+                <div style="float: left; margin: 10px; ">   
                     <a href="<?php echo $this->url(array(
                         'module' => 'site',
                         'controller' => 'index',
@@ -37,7 +39,7 @@
                         <img src="<?php echo $this->baseUrl('views/img/icon_google_plus_social.png'); ?>" />
                     </a>
                 </div>
-                <div style="position: absolute; top: 40px; left: 45%;">
+                <div style="position: absolute; top: 50px; left: 45%;">
                     <span style="font-size: 20px; font-weight: bold;">
                         <?php echo ($_SERVER['SERVER_NAME'] == "localhost") ? "Base de Testes" : ""; ?>
                     </span>
@@ -50,7 +52,7 @@
                             'module' => 'site',
                             'controller' => 'index',
                             'action' => 'index'
-                        ), null, true); ?>" class="current"><span>Início</span></a>
+                        ), null, true); ?>"><span>Início</span></a>
                     </li> 
                     <!--
                     <li>
@@ -59,16 +61,13 @@
                             'controller' => 'vantagens',
                             'action' => 'index'
                         ), null, true); ?>"><span>Vantagens</span></a>
-                    </li>
-                    -->
-                    <li>
+                    </li>                                        <li>
                         <a href="<?php echo $this->url(array(
                             'module' => 'site',
                             'controller' => 'planos',
                             'action' => 'index'
                         ), null, true); ?>"><span>Nossos Planos</span></a>
-                    </li>
-                    <!--
+                    </li>                    
                     <li>
                         <a href="<?php echo $this->url(array(
                             'module' => 'site',
@@ -82,7 +81,7 @@
                             'module' => 'site',
                             'controller' => 'contato',
                             'action' => 'index'
-                        ), null, true); ?>"><span>Contato</span></a>
+                        ), null, true); ?>"><span>Faça Contato</span></a>
                     </li>
                     <?php if (!Zend_Auth::getInstance()->hasIdentity()) : ?>
                     <li>
@@ -114,30 +113,33 @@
             </div>
             <div id="content">
                 <?php echo $this->layout()->content; ?>
-            </div>
-            <div id="paseguro">
-                <span><h4><b>Formas de Pagamentos:<b></h4></span>
-                <p>
-                    <img src="<?php echo $this->baseUrl('views/img/icon_cards_payment.png'); ?>" />
-                </p>
-            </div>            
+            </div> 
             <div id="footer">
+                <!--
+                <div id="paseguro">
+                    <h4><b>Formas de Pagamentos:<b></h4>
+                    <p>
+                        <img src="<?php echo $this->baseUrl('views/img/icon_cards_payment.png'); ?>" />
+                    </p>
+                </div>
+                -->
                 <p>
                     <a href="<?php echo $this->url(array(
                         'module' => 'cliente',
                         'controller' => 'politica',
                         'action' => 'termo'
                     )); ?>">Termo de Uso</a>
-                    | 
+
                     <a href="<?php echo $this->url(array(
                         'module' => 'cliente',
                         'controller' => 'politica',
                         'action' => 'index'
                     )); ?>">Política de Privacidade</a>
                 </p>
-                <p>Contato: contato@newfinances.com.br</p>
+                <p>contato@newfinances.com.br</p>
                 <span>Todos os direitos reservados.</span>
             </div>
         </div>
+        
     </body>
 </html>

@@ -120,11 +120,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         //add javascript files          
         $view->headScript()->appendFile($prefix . 'views/js/jquery-2.0.3.js');
         $view->headScript()->appendFile($prefix . 'views/js/jquery-ui-1.10.3.js');
+        $view->headScript()->appendFile($prefix . 'views/js/jquery.easing.js');
+        $view->headScript()->appendFile($prefix . 'views/js/script.js');  
         $view->headScript()->appendFile($prefix . 'views/js/jquery.ui.datepicker-pt-BR.js');
         $view->headScript()->appendFile($prefix . 'views/js/jquery.maskMoney.js');
         $view->headScript()->appendFile($prefix . 'views/js/jquery.maskedinput.js');        
         $view->headScript()->appendFile($prefix . 'views/js/application.js');
-        $view->headScript()->appendFile($prefix . 'views/js/facebook.js');        
+        $view->headScript()->appendFile($prefix . 'views/js/facebook.js');              
         
         //add it to the view renderer
         $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper(

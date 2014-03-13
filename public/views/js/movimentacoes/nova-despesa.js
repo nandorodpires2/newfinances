@@ -4,6 +4,9 @@
  */
 $(document).ready(function (){    
     
+    // focus no campo descricao
+    $("#descricao_movimentacao").focus();
+    
     $("#tipo_pgto-cartao").is();
     
     $("#parcelas-label").hide();

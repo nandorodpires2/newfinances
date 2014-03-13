@@ -28,19 +28,19 @@
     
     <body>
         <?php if($this->planoBasico) : ?>
+        <!--
         <div id="plano-basico">
             Olá Sr(a) <?php echo Zend_Auth::getInstance()->getIdentity()->nome_completo; ?>,
              você está cadastrado(a) no Plano Básico. Aproveite as vantagens de ser 
              um usuário Top.
              <p>
                  Altere seu Plano
-             </p>
-             <!--
+             </p>             
              <p>
                  <a href="">Conheça as vantagens</a>
-             </p>
-             -->
+             </p>           
         </div>
+        -->
         <?php endif; ?>
         <div id="content-all">
             <!-- loading -->
@@ -130,13 +130,14 @@
                         <?php endif; ?>             
                     </div>
                 </div>
+                <?php echo View_Helper_Messeges::getMessages($this->messages); ?>
                 <div id="faux">
                     <!-- content -->      
                     <div id="leftcolumn">               
                         <?php if (Zend_Auth::getInstance()->hasIdentity()) : ?>
                             <?php echo $this->partial("menu.phtml"); ?>
                         <?php endif; ?>                                                                    
-                    </div>
+                    </div>                    
                     <div id="rightcolumn" class="">
                         <div id="pages">
                              <div class="curtir">                            
@@ -153,9 +154,20 @@
                                 <a href="https://twitter.com/NewFinances" class="twitter-follow-button" data-show-count="false" data-lang="pt" data-dnt="true">Seguir @NewFinances</a>
                                 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
                             </div>
+                            <div class="doar">                                    
+                                <label>Ajude-nos a manter o sistema.</label>
+                                <!-- INICIO FORMULARIO BOTAO PAGSEGURO -->
+                                <form target="pagseguro" action="https://pagseguro.uol.com.br/checkout/v2/donation.html" method="post">
+                                <!-- NÃO EDITE OS COMANDOS DAS LINHAS ABAIXO -->
+                                <input type="hidden" name="receiverEmail" value="nandorodpires@gmail.com" />
+                                <input type="hidden" name="currency" value="BRL" />
+                                <input type="image" src="https://p.simg.uol.com.br/out/pagseguro/i/botoes/doacoes/160x20-doar.gif" name="submit" alt="Pague com PagSeguro - é rápido, grátis e seguro!" />
+                                </form>
+                                <!-- FINAL FORMULARIO BOTAO PAGSEGURO -->                                                                    
+                            </div>
                         </div>
                         <?php echo $this->layout()->content; ?>                                                 
-                    </div>
+                    </div>                    
                 </div>
             </div>
             <button name="to-top" id="to-top">Voltar ao topo</button>

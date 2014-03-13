@@ -1,0 +1,18 @@
+/* 
+    Document   : index
+    Created on : 20/02/2014, 18:28:59
+    Author     : Fernando Rodrigues
+    Description:
+        Purpose of the stylesheet follows.
+*/
+#box-1 {
+    float: left;
+    width: 40%;
+    padding: 5%;
+}
+
+#box-2 {
+    float: left;
+    width: 50%;    
+}
+

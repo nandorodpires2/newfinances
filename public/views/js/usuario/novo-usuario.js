@@ -5,7 +5,7 @@
 
 $(document).ready(function (){
 
-    //$("#politica-privacidade").hide();
+    $("#politica-privacidade").hide();
     $("#termo-uso").hide();
     $("#fechar").hide();
 

@@ -4,6 +4,10 @@ defined('APPLICATION_PATH')
     || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
 
 // Define path to emails layouts
+defined('EMAILS_SITE')
+    || define('EMAILS_SITE', realpath(dirname(__FILE__) . '/../application/modules/site/views/emails'));
+
+// Define path to emails layouts
 defined('EMAILS_PATH')
     || define('EMAILS_PATH', realpath(dirname(__FILE__) . '/../application/modules/cliente/views/emails'));
 

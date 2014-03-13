@@ -12,6 +12,9 @@ class UsuariosController extends Application_Controller {
     
     const PLANO_BASICO = 8;
     const VALOR_PLANO_BASICO = 9;
+    
+    // chaves das acoes das preferencias
+    const KEY_EXCLUI_LANCAMENTOS = 1;
 
     public function init() {
         
@@ -307,10 +310,30 @@ class UsuariosController extends Application_Controller {
         $modelUsuarioLogin = new Model_UsuarioLogin();
         $modelUsuarioLogin->insert($dadosInsertLog);
 
-        $this->_redirect("/planos/plano-usuario");
+        $this->_redirect("/index");
         
     }
     
+    /**
+     * preferencias dos usuarios
+     */
+    public function preferenciasAction() {
+    
+        // recupera a chave da acao
+        $key = $this->_request->getParam('key');
+        
+        if ($key == self::KEY_EXCLUI_LANCAMENTOS) {            
+            // exclui todos os lancamentos do usuario
+            $where = "id_usuario = " . $this->_session->id_usuario;
+            $this->_modelMovimentacao->delete($where);
+            
+            Controller_Helper_Messeges::setMesseges(array(
+                'success' => 'Lançamentos excluídos com sucesso!'
+            ));
+        }
+        
+    }
+
     /**
      * valida CPF usuario (Ajax)
      */
