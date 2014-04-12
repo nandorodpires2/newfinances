@@ -200,6 +200,7 @@
                 <?php if ($this->pendencias->count() > 0) : ?>                                        
                 <tr>
                     <th>Data</th>
+                    <th>Tipo</th>
                     <th>Descrição</th>
                     <th>Valor</th>
                     <th colspan="3">Ações</th>
@@ -207,6 +208,7 @@
                     <?php foreach ($this->pendencias as $pendencia) : ?>
                     <tr class="align_center">
                         <td><?php echo View_Helper_Date::getDataView($pendencia->data_movimentacao); ?></td>
+                        <td><?php echo View_Helper_TipoMovimentacao::getTipoMovimentacaoImage($pendencia->id_tipo_movimentacao); ?></td>
                         <td class="align_left"><?php echo $pendencia->descricao_movimentacao; ?></td>
                         <td class="align_right"><?php echo View_Helper_Currency::getCurrency($pendencia->valor_movimentacao); ?></td>
                         <td>

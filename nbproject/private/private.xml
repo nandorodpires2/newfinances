@@ -3,9 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/newfinances/application/modules/cliente/views/scripts/movimentacoes/nova-receita.phtml</file>
-            <file>file:/C:/wamp/www/newfinances/application/modules/cliente/views/scripts/movimentacoes/transferencia.phtml</file>
-            <file>file:/C:/wamp/www/newfinances/public/views/js/movimentacoes/transferencia.js</file>
+            <file>file:/C:/wamp/www/newfinances/application/modules/cliente/views/scripts/index/index.phtml</file>
+            <file>file:/C:/wamp/www/newfinances/application/models/VwMovimentacao.php</file>
+            <file>file:/C:/wamp/www/newfinances/application/modules/cliente/controllers/IndexController.php</file>
         </group>
     </open-files>
 </project-private>

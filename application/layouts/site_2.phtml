@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+    <?php echo $this->headMeta(); ?>
+    
+    <?php header("Content-Type: text/html; charset=UTF-8",true); ?>
+    <link rel="icon" href="<?php echo $this->baseUrl('views/img/icon_logo.png'); ?>" />
+    <?php echo $this->headTitle("NewFinances"); ?> 
+    <!-- css -->
+    <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/site.css')); ?>
+    <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/default.css')); ?>
+    <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/menu-site.css')); ?>         
+    <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/jquery-ui-1.10.3.css')); ?>     
+    <?php echo $this->headLink()->appendStylesheet($this->baseUrl('views/css/style1.css')); ?> 
+
+    <!-- arquivos js -->
+    <?php echo $this->headScript(); ?>
+    
+    <body>       
+        <?php echo $this->layout()->content; ?>
+    </body>
+</html>

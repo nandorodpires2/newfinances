@@ -14,7 +14,7 @@ class Site_IndexController extends Application_Controller {
 
     public function init() {                
         parent::init();        
-        $this->_helper->layout()->setLayout('site');
+        $this->_helper->layout()->setLayout(LAYOUT_SITE_DEFAULT);
     }
     
     public function indexAction() {

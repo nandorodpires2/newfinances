@@ -6,6 +6,7 @@
                 <td>Descrição</td>
                 <td>Tipo</td>
                 <td>Valor</td>
+                <td colspan="2">Ações</td>
             </tr>
             <?php foreach ($this->gastosCategoria as $gasto) : ?>
             <tr>
@@ -13,11 +14,33 @@
                 <td><?php echo $gasto->descricao_movimentacao; ?></td>
                 <td><?php echo $gasto->tipo_movimentacao; ?></td>
                 <td class="align_right"><?php echo View_Helper_Currency::getCurrency($gasto->valor_movimentacao); ?></td>
+                <td class="align_center">
+                    <a href="<?php echo $this->url(array(
+                        'module' => 'cliente',
+                        'controller' => 'movimentacoes',
+                        'action' => 'editar-movimentacao',
+                        'id_movimentacao' => $gasto->id_movimentacao
+                    ),null, true); ?>">
+                        <img src="<?php echo $this->baseUrl('views/img/icon_edit.png'); ?>" title="Editar" width="15"/>
+                    </a>
+                </td>
+                <td class="align_center">
+                    <a href="<?php echo $this->url(array(
+                        'module' => 'cliente',
+                        'controller' => 'movimentacoes',
+                        'action' => 'excluir-movimentacao',
+                        'id_movimentacao' => $gasto->id_movimentacao
+                    ),null, true); ?>">
+                        <img src="<?php echo $this->baseUrl('views/img/icon_delete.png'); ?>" title="Excluir" width="15"/>
+                    </a>
+                </td>
             </tr>
             <?php endforeach; ?>
             <tr>
                 <td class="totais-bg align_center" colspan="3"><span class="totais">TOTAL</span></td>
-                <td class="totais-bg">&nbsp;</td>
+                <td colspan="3" class="totais-bg align_center">
+                    <span class="totais"><?php echo View_Helper_Currency::getCurrency($this->totalGastoCategoria); ?></span>
+                </td>
             </tr>
         </table>
     </div>
