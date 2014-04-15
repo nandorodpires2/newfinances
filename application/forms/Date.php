@@ -20,7 +20,14 @@ class Form_Date extends Zend_Form {
         
         // date
         $this->addElement('text', 'date', array(
-            'size' => '1px'
+            'size' => '1px',
+            'decorators' => array(
+                'ViewHelper',
+                'Description',
+                'Errors',                
+                array(array('td' => 'HtmlTag'), array('tag' => 'td')),
+                array('Label', array('tag' => 'td')),
+            )
         ));
                 
     }
