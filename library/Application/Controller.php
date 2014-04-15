@@ -120,6 +120,8 @@ class Application_Controller extends Zend_Controller_Action {
     public $_formContatoContato;
     // form de questionario
     public $_formUsuariosQuestionario;
+    // form de busca por data
+    public $_formDate;
 
     /* PAGSEGURO CREDENTIALS */
     public $_credentials;
@@ -175,6 +177,7 @@ class Application_Controller extends Zend_Controller_Action {
         $this->_formMetasMeta = new Form_Metas_Meta();
         $this->_formContatoContato = new Form_Contato_Contato();
         $this->_formUsuariosQuestionario = new Form_Usuarios_Questionario();
+        $this->_formDate = new Form_Date();
                 
         $credentials = new PagSeguroAccountCredentials(  
             'nandorodpires@gmail.com',   

@@ -3,7 +3,16 @@
 <?php echo $this->headScript()->appendFile($this->baseUrl('views/js/movimentacoes/index.js')); ?>
 <div id="pages">
     <div id="index-index">
-        <h3 class=" margim-top-10px margim-left-10px titulo-laranja">Lançamentos do Dia</h3>
+        
+        <div class="filter-date">            
+            <p>
+                <label>Selecione uma data: </label>
+                <img id="date-choise" src="<?php echo $this->baseUrl('views/img/icon_calendar.png'); ?>" width="30px"/>
+                <?php echo $this->formDate; ?>
+            </p>            
+        </div>
+        
+        <h3 class=" margim-top-10px margim-left-10px titulo-laranja">Lançamentos de <?php echo $this->date; ?></h3>        
         <div class="box">            
             <?php if ($this->movimentacoes->count() > 0) : ?>
                 <div id="subtitulo-lista">
@@ -311,12 +320,33 @@
                     <th>Data</th>
                     <th>Descrição</th>
                     <th>Valor</th>
+                    <th colspan="2">Ações</th>
                 </tr>
                 <?php foreach ($this->receitas as $receita) : ?>
                 <tr class="align_center">
                     <td><?php echo View_Helper_Date::getDataView($receita->data_movimentacao); ?></td>
                     <td class="align_left"><?php echo $receita->descricao_movimentacao; ?></td>
                     <td><?php echo View_Helper_Currency::getCurrency($receita->valor_movimentacao); ?></td>
+                    <td>
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'cliente',
+                            'controller' => 'movimentacoes',
+                            'action' => 'editar-movimentacao',
+                            'id_movimentacao' => $receita->id_movimentacao
+                        )); ?>">
+                            <img src="<?php echo $this->baseUrl('views/img/icon_edit.png'); ?>" title="Editar" width="15"/>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'cliente',
+                            'controller' => 'movimentacoes',
+                            'action' => 'excluir-movimentacao',
+                            'id_movimentacao' => $receita->id_movimentacao
+                        )); ?>">
+                            <img src="<?php echo $this->baseUrl('views/img/icon_delete.png'); ?>" title="Excluir" width="15"/>
+                        </a>
+                    </td>                    
                 </tr>
                 <?php endforeach; ?>
                 <?php else : ?>
@@ -333,12 +363,33 @@
                     <th>Data</th>
                     <th>Descrição</th>
                     <th>Valor</th>
+                    <th colspan="2">Ações</th>
                 </tr>
                     <?php foreach ($this->despesas as $despesa) : ?>
                     <tr class="align_center">
                         <td><?php echo View_Helper_Date::getDataView($despesa->data_movimentacao); ?></td>
                         <td class="align_left"><?php echo $despesa->descricao_movimentacao; ?></td>
                         <td><?php echo View_Helper_Currency::getCurrency($despesa->valor_movimentacao); ?></td>
+                        <td>
+                            <a href="<?php echo $this->url(array(
+                                'module' => 'cliente',
+                                'controller' => 'movimentacoes',
+                                'action' => 'editar-movimentacao',
+                                'id_movimentacao' => $despesa->id_movimentacao
+                            )); ?>">
+                                <img src="<?php echo $this->baseUrl('views/img/icon_edit.png'); ?>" title="Editar" width="15"/>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="<?php echo $this->url(array(
+                                'module' => 'cliente',
+                                'controller' => 'movimentacoes',
+                                'action' => 'excluir-movimentacao',
+                                'id_movimentacao' => $despesa->id_movimentacao
+                            )); ?>">
+                                <img src="<?php echo $this->baseUrl('views/img/icon_delete.png'); ?>" title="Excluir" width="15"/>
+                            </a>
+                        </td>
                     </tr>
                     <?php endforeach; ?>
                 <?php else : ?>

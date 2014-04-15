@@ -16,12 +16,16 @@ class IndexController extends Application_Controller {
     
     public function indexAction() {     
         
+        $this->view->formDate = $this->_formDate;
+        
         /**
          * busca as movimentacoes do dia
-         */        
-        $data = date("Y-m-d");
+         */                
+        $data = Controller_Helper_Date::getDateDb($this->_request->getParam("date", date('d/m/Y')));
+        
         $movimentacoes = $this->_modelVwMovimentacao->getMovimentacoesData($data, $this->_session->id_usuario);        
         $this->view->movimentacoes = $movimentacoes;
+        $this->view->date = Controller_Helper_Date::getDateViewComplete($data);
                 
         // busca as faturas do mes
         $faturasCartoes = $this->_modelVwLancamentoCartao->getFaturasAtual($this->_session->id_usuario);
