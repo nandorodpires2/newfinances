@@ -10,7 +10,14 @@
             <?php echo View_Helper_Currency::getCurrency($this->dadosMovimentacao->valor_movimentacao); ?>
         </p>
         <form method="post">
-            <p>
+            <p class="lancamento" style="color: #0000CD;">Essa movimentacao se repete. O que deseja fazer:</p>
+            <p class="lancamento">
+                <input type="radio" name="opt-delete" value="0"/>Excluir somente essa
+                <input type="radio" name="opt-delete" value="1"/>Excluir essa e as anteriores
+                <input type="radio" name="opt-delete" value="2"/>Excluir essa e as posteriores
+                <input type="radio" name="opt-delete" value="3"/>Excluir todas
+            </p>
+            <p class="lancamento">
                 <input type="submit" class="submit" name="btnResposta" value="Sim Apagar" />
                 <input type="submit" class="submit" name="btnResposta" value="Cancelar" />
             </p>        

@@ -188,5 +188,16 @@ class Model_Movimentacao extends Zend_Db_Table {
         
     }
     
+    /**
+     * retorna se existe movimentacao pai para movimentacoes recorrentes
+     */
+    public function getIdMovimentacaoPai($id_movimentacao) {
+        $movimentacao = $this->fetchRow("id_movimentacao = {$id_movimentacao}");
+        if ($movimentacao->id_movimentacao_pai) {
+            return $movimentacao->id_movimentacao_pai;
+        }
+        return null;
+    }
+    
 }
 
