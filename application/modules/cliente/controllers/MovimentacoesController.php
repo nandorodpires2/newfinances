@@ -422,6 +422,10 @@ class MovimentacoesController extends Application_Controller {
         $dadosMovimentacao = $this->_modelMovimentacao->getDadosMovimentacao($idMovimentacao, $this->_session->id_usuario);
         $this->view->dadosMovimentacao = $dadosMovimentacao;
         
+        // verificar se a movimentacao se repete                
+        $id_movimentacao_pai = $this->_modelMovimentacao->getIdMovimentacaoPai($idMovimentacao);
+        $this->view->id_movimentacao_pai = $id_movimentacao_pai;
+        
         if ($this->_request->isPost()) {
             $dadosExclusao = $this->_request->getPost();
             
@@ -431,19 +435,24 @@ class MovimentacoesController extends Application_Controller {
                 
             } else {                                
                 
-                $dadosVwMovimentacao = $this->_modelVwMovimentacao->fetchRow("id_movimentacao = {$idMovimentacao}");
+                if (!$id_movimentacao_pai) {
+                    
+                    $dadosVwMovimentacao = $this->_modelVwMovimentacao->fetchRow("id_movimentacao = {$idMovimentacao}");
                 
-                if ($dadosVwMovimentacao->id_tipo_movimentacao == 4) {
-                    $where = "id_movimentacao in ({$idMovimentacao}, {$dadosVwMovimentacao->id_movimentacao_origem})";
-                } else {               
-                    $where = "id_movimentacao = " . $idMovimentacao;
-                }
-                
-                try {
-                    $this->_modelMovimentacao->delete($where);
-                    $this->_redirect("index/");
-                } catch (Exception $error) {
-                    echo $error->getMessage(); die('aki');
+                    if ($dadosVwMovimentacao->id_tipo_movimentacao == 4) {
+                        $where = "id_movimentacao in ({$idMovimentacao}, {$dadosVwMovimentacao->id_movimentacao_origem})";
+                    } else {               
+                        $where = "id_movimentacao = " . $idMovimentacao;
+                    }
+
+                    try {
+                        $this->_modelMovimentacao->delete($where);
+                        $this->_redirect("index/");
+                    } catch (Exception $error) {
+                        echo $error->getMessage(); die('aki');
+                    }
+                } else {
+                    die('Essa movimentacao se repete');
                 }
                 
             }                        
