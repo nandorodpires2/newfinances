@@ -427,14 +427,10 @@ class MovimentacoesController extends Application_Controller {
         $this->view->id_movimentacao_pai = $id_movimentacao_pai;
         
         if ($this->_request->isPost()) {
-            $dadosExclusao = $this->_request->getPost();
-            
-            if ($dadosExclusao['btnResposta'] == 'Cancelar') {
-                
-                $this->_redirect("movimentacoes/");
-                
-            } else {                                
-                
+            $dadosExclusao = $this->_request->getPost();            
+            if ($dadosExclusao['btnResposta'] == 'Cancelar') {                
+                $this->_redirect("movimentacoes/");                
+            } else {                               
                 if (!$id_movimentacao_pai) {
                     
                     $dadosVwMovimentacao = $this->_modelVwMovimentacao->fetchRow("id_movimentacao = {$idMovimentacao}");
@@ -452,9 +448,37 @@ class MovimentacoesController extends Application_Controller {
                         echo $error->getMessage(); die('aki');
                     }
                 } else {
-                    die('Essa movimentacao se repete');
-                }
-                
+                    
+                    $opt_delete = $dadosExclusao['opt-delete'];
+                    $where = "";
+                    
+                    switch ($opt_delete) {
+                        case 0: // atual
+                            $where .= "id_movimentacao = {$id_movimentacao}";
+                            break;
+                        case 1: // atual e anteriores
+                            $where .= "id_movimentacao_pai = {$id_movimentacao_pai} and data_movimentacao <= '{$dadosMovimentacao['data_movimentacao']}'";
+                            break;
+                        case 2: // atual e posteriores
+                            $where .= "id_movimentacao_pai = {$id_movimentacao_pai} and data_movimentacao >= '{$dadosMovimentacao['data_movimentacao']}'";
+                            break;
+                        case 3: // todos
+                            $where .= "id_movimentacao_pai = {$id_movimentacao_pai}";
+                            break;
+                        default:
+                            break;
+                    }
+                    
+                    Zend_Debug::dump($where);
+                    
+                    try {
+                        $this->_modelMovimentacao->delete($where);
+                        $this->_redirect("index/");
+                    } catch (Exception $error) {
+                        echo $error->getMessage(); die('aki');
+                    }                   
+                    
+                }                
             }                        
             
         }
