@@ -330,7 +330,7 @@ class MovimentacoesController extends Application_Controller {
             
             // verifica se a movimentacao se repete
             if ($dadosMovimentacao['id_movimentacao_pai'] != null) {                 
-                $this->view->dadosRepeticao = false;                
+                $this->view->dadosRepeticao = true;                
             } else {
                 $this->view->dadosRepeticao = false;
             }
@@ -342,60 +342,64 @@ class MovimentacoesController extends Application_Controller {
                 $dadosMovimentacaoUpdate = $this->_request->getPost();
                 if ($formUpdate->isValid($dadosMovimentacaoUpdate)) {
                     $dadosMovimentacaoUpdate = $formUpdate->getValues();
-                    
-                    Zend_Debug::dump($dadosMovimentacaoUpdate);
-                    
-                    if (isset ($dadosMovimentacaoUpdate['tipo_pgto'])) {                    
-                        if ($dadosMovimentacaoUpdate['tipo_pgto'] == 'conta') {
-                            $dadosMovimentacaoUpdate['id_tipo_movimentacao'] = self::TIPO_MOVIMENTACAO_DESPESA;
-                            $dadosMovimentacaoUpdate['id_cartao'] = null;
-                        } else {
-                            $dadosMovimentacaoUpdate['id_tipo_movimentacao'] = self::TIPO_MOVIMENTACAO_CARTAO;
-                            $dadosMovimentacaoUpdate['id_conta'] = null;
-                        }                    
-                        unset($dadosMovimentacaoUpdate['tipo_pgto']);
-                    }
-                    
-                    $dadosMovimentacaoUpdate['data_movimentacao'] = Controller_Helper_Date::getDateDb($dadosMovimentacaoUpdate['data_movimentacao']);
-                    
-                    if ($dadosMovimentacao['id_tipo_movimentacao'] == self::TIPO_MOVIMENTACAO_TRANSFERENCIA ||
-                        $dadosMovimentacao['id_tipo_movimentacao'] == self::TIPO_MOVIMENTACAO_RECEITA    
-                        ) {
-                        $dadosMovimentacaoUpdate['valor_movimentacao'] = View_Helper_Currency::setCurrencyDb($dadosMovimentacaoUpdate['valor_movimentacao']) * -1;
-                    } else {
-                        $dadosMovimentacaoUpdate['valor_movimentacao'] = View_Helper_Currency::setCurrencyDb($dadosMovimentacaoUpdate['valor_movimentacao']);
-                    }
                                         
-                    if ( isset ($dadosMovimentacaoUpdate['id_conta_origem'])) {
-                        $id_conta_origem = $dadosMovimentacaoUpdate['id_conta_origem'];
-                        unset($dadosMovimentacaoUpdate['id_conta_origem']);
-                    }
+                    if ($dadosMovimentacaoUpdate['modo_edicao'] == 1) {
                     
-                    // retirando os campos que nao serao usados                    
-                    unset($dadosMovimentacaoUpdate['opt_repetir']);
-                    unset($dadosMovimentacaoUpdate['modo_repeticao']);
-                    unset($dadosMovimentacaoUpdate['parcelas']);
-                    unset($dadosMovimentacaoUpdate['repetir']);                    
-                    unset($dadosMovimentacaoUpdate['modo_edicao']);                    
-                    
-                    $whereUpdate = "id_movimentacao = " . $idMovimentacao;
-                    
-                    try {
-                        $this->_modelMovimentacao->update($dadosMovimentacaoUpdate, $whereUpdate);
-                                                
-                        // atualizando a movimentacao de origem no caso de transferencia
-                        $idMovimentacao++;
-                        $whereOrigem = "id_movimentacao = " . $idMovimentacao;
-                        $dadosMovimentacaoUpdate['id_conta'] = $id_conta_origem;
-                        $dadosMovimentacaoUpdate['valor_movimentacao'] *= -1; 
-
-                        if ($dadosMovimentacao['id_tipo_movimentacao'] == self::TIPO_MOVIMENTACAO_TRANSFERENCIA) {                        
-                            $this->_modelMovimentacao->update($dadosMovimentacaoUpdate, $whereOrigem);
+                        if (isset ($dadosMovimentacaoUpdate['tipo_pgto'])) {                    
+                            if ($dadosMovimentacaoUpdate['tipo_pgto'] == 'conta') {
+                                $dadosMovimentacaoUpdate['id_tipo_movimentacao'] = self::TIPO_MOVIMENTACAO_DESPESA;
+                                $dadosMovimentacaoUpdate['id_cartao'] = null;
+                            } else {
+                                $dadosMovimentacaoUpdate['id_tipo_movimentacao'] = self::TIPO_MOVIMENTACAO_CARTAO;
+                                $dadosMovimentacaoUpdate['id_conta'] = null;
+                            }                    
+                            unset($dadosMovimentacaoUpdate['tipo_pgto']);
                         }
-                        
-                        $this->_redirect("index/index");
-                    } catch (Exception $erro) {
-                        echo $erro->getMessage();
+
+                        $dadosMovimentacaoUpdate['data_movimentacao'] = Controller_Helper_Date::getDateDb($dadosMovimentacaoUpdate['data_movimentacao']);
+
+                        if ($dadosMovimentacao['id_tipo_movimentacao'] == self::TIPO_MOVIMENTACAO_TRANSFERENCIA ||
+                            $dadosMovimentacao['id_tipo_movimentacao'] == self::TIPO_MOVIMENTACAO_RECEITA    
+                            ) {
+                            $dadosMovimentacaoUpdate['valor_movimentacao'] = View_Helper_Currency::setCurrencyDb($dadosMovimentacaoUpdate['valor_movimentacao']) * -1;
+                        } else {
+                            $dadosMovimentacaoUpdate['valor_movimentacao'] = View_Helper_Currency::setCurrencyDb($dadosMovimentacaoUpdate['valor_movimentacao']);
+                        }
+
+                        if ( isset ($dadosMovimentacaoUpdate['id_conta_origem'])) {
+                            $id_conta_origem = $dadosMovimentacaoUpdate['id_conta_origem'];
+                            unset($dadosMovimentacaoUpdate['id_conta_origem']);
+                        }
+
+                        // retirando os campos que nao serao usados                    
+                        unset($dadosMovimentacaoUpdate['opt_repetir']);
+                        unset($dadosMovimentacaoUpdate['modo_repeticao']);
+                        unset($dadosMovimentacaoUpdate['parcelas']);
+                        unset($dadosMovimentacaoUpdate['repetir']);                    
+                        unset($dadosMovimentacaoUpdate['modo_edicao']);                    
+
+                        $whereUpdate = "id_movimentacao = " . $idMovimentacao;
+
+                        try {
+                            $this->_modelMovimentacao->update($dadosMovimentacaoUpdate, $whereUpdate);
+
+                            // atualizando a movimentacao de origem no caso de transferencia
+                            $idMovimentacao++;
+                            $whereOrigem = "id_movimentacao = " . $idMovimentacao;
+                            $dadosMovimentacaoUpdate['id_conta'] = $id_conta_origem;
+                            $dadosMovimentacaoUpdate['valor_movimentacao'] *= -1; 
+
+                            if ($dadosMovimentacao['id_tipo_movimentacao'] == self::TIPO_MOVIMENTACAO_TRANSFERENCIA) {                        
+                                $this->_modelMovimentacao->update($dadosMovimentacaoUpdate, $whereOrigem);
+                            }
+
+                            $this->_redirect("index/index");
+                        } catch (Exception $erro) {
+                            echo $erro->getMessage();
+                        }
+                    
+                    } else {
+                        die('atualizar outros');
                     }
                                     
                 }
