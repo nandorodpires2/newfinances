@@ -433,7 +433,7 @@ class MovimentacoesController extends Application_Controller {
         if ($this->_request->isPost()) {
             $dadosExclusao = $this->_request->getPost();            
             if ($dadosExclusao['btnResposta'] == 'Cancelar') {                
-                $this->_redirect("movimentacoes/");                
+                $this->_redirect("index/");                
             } else {                               
                 if (!$id_movimentacao_pai) {
                     
