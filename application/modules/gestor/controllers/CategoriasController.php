@@ -41,5 +41,31 @@ class Gestor_CategoriasController extends Application_Controller {
         
     }
     
+    public function editarCategoriaAction() {
+        
+        $id_categoria = $this->_getParam('id_categoria');
+        
+        $dadosCategoria = $this->_modelCategoria->fetchRow("id_categoria = {$id_categoria}");
+        $this->_formNovaCategoria->populate($dadosCategoria->toArray());
+        $this->view->form = $this->_formNovaCategoria;
+        
+        if ($this->_request->isPost()) {
+            $dadosUpdate = $this->_request->getPost();
+            if ($this->_formNovaCategoria->isValid($dadosUpdate)) {
+                $dadosUpdate = $this->_formNovaCategoria->getValues();
+                
+                $where = "id_categoria = {$id_categoria}";
+                try {
+                    $this->_modelCategoria->update($dadosUpdate, $where);
+                    $this->_redirect('gestor/categorias/');
+                } catch (Exception $ex) {
+                    echo $ex->getMessage();
+                }
+                
+            }
+        }
+        
+    }
+    
 }
 

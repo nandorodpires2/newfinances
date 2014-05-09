@@ -21,8 +21,13 @@
                     <td><?php echo $categoria->descricao_categoria; ?></td>
                     <td class="align_center"><?php echo $categoria->ativo_categoria ? 'Sim' : 'Não'; ?></td>
                     <td class="align_center">
-                        <a href="">
-                            <img src="<?php echo $this->baseUrl("views/img/icon_edit.png"); ?>" width="20" />
+                        <a href="<?php echo $this->url(array(
+                            'module' => 'gestor',
+                            'controller' => 'categorias',
+                            'action' => 'editar-categoria',
+                            'id_categoria' => $categoria->id_categoria
+                        )); ?>"> 
+                            <img src="<?php echo $this->baseUrl("views/img/icon_edit.png"); ?>" width="20" title="Editar Categoria" />
                         </a>
                     </td>
                     <td class="align_center">
