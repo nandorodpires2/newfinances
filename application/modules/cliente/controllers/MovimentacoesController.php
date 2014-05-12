@@ -427,7 +427,7 @@ class MovimentacoesController extends Application_Controller {
         if ($this->_request->isPost()) {
             $dadosExclusao = $this->_request->getPost();            
             if ($dadosExclusao['btnResposta'] == 'Cancelar') {                
-                $this->_redirect("movimentacoes/");                
+                $this->_redirect("index/");                
             } else {                               
                 if (!$id_movimentacao_pai) {
                     
@@ -452,7 +452,7 @@ class MovimentacoesController extends Application_Controller {
                     
                     switch ($opt_delete) {
                         case 0: // atual
-                            $where .= "id_movimentacao = {$id_movimentacao}";
+                            $where .= "id_movimentacao = {$idMovimentacao}";
                             break;
                         case 1: // atual e anteriores
                             $where .= "id_movimentacao_pai = {$id_movimentacao_pai} and data_movimentacao <= '{$dadosMovimentacao['data_movimentacao']}'";
@@ -466,8 +466,6 @@ class MovimentacoesController extends Application_Controller {
                         default:
                             break;
                     }
-                    
-                    Zend_Debug::dump($where);
                     
                     try {
                         $this->_modelMovimentacao->delete($where);
