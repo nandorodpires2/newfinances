@@ -5,14 +5,3 @@
         <group/>
     </open-files>
 </project-private>
-<?xml version="1.0" encoding="UTF-8"?>
-<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/wamp/www/newfinances/application/modules/cliente/controllers/MovimentacoesController.php</file>
-            <file>file:/C:/wamp/www/newfinances/application/modules/cliente/views/scripts/movimentacoes/editar-movimentacao.phtml</file>
-            <file>file:/C:/wamp/www/newfinances/public/crons/lancamentos.php</file>
-        </group>
-    </open-files>
-</project-private>
