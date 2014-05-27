@@ -80,6 +80,7 @@ class Application_Controller extends Zend_Controller_Action {
     /* VIEWS */
     public $_modelVwMovimentacao;
     public $_modelVwLancamentoCartao;
+    public $_modelVwMetasCategorias;
 
     /* FORMS */
     public $_formUsuariosPlanosUsuario;
@@ -154,6 +155,7 @@ class Application_Controller extends Zend_Controller_Action {
         $this->_modelVwLancamentoCartao = new Model_VwLancamentoCartao();
         $this->_modelContato = new Model_Contato();
         $this->_modelQuestionario = new Model_Questionario();
+        $this->_modelVwMetasCategorias = new Model_VwMetasCategorias();
         
         $this->_formUsuariosPlanosUsuario = new Form_Usuarios_PlanoUsuario();
         $this->_formUsuariosLogin = new Form_Usuarios_Login();

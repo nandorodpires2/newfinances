@@ -82,7 +82,10 @@ class MovimentacoesController extends Application_Controller {
             $dadosReceita = $this->_request->getPost();
             if ($this->_formMovimentacoesReceitas->isValid($dadosReceita)) {
                 $dadosReceita = $this->_formMovimentacoesReceitas->getValues();
-                                
+                
+                $nova_receita = (int)$dadosReceita['nova_receita'];
+                unset($dadosReceita['nova_receita']);
+                
                 $dadosReceita['id_tipo_movimentacao'] = self::TIPO_MOVIMENTACAO_RECEITA;
                 
                 $dadosReceita['realizado'] = Controller_Helper_Movimentacao::getStatusMovimentacao($dadosReceita['data_movimentacao']);
@@ -133,7 +136,11 @@ class MovimentacoesController extends Application_Controller {
                     $whereUpdateMovimentacao = "id_movimentacao = " . $this->_modelMovimentacao->lastInsertId();
                     $this->_modelMovimentacao->update($dadosUpdateMovimentacao, $whereUpdateMovimentacao);
                     
-                    $this->_redirect("index/index");
+                    if ($nova_receita) {
+                        $this->_redirect("movimentacoes/nova-receita");
+                    } else {
+                        $this->_redirect("index/index");
+                    }
                 } catch (Zend_Exception $error) {
                     echo $error->getMessage();
                 }

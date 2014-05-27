@@ -46,4 +46,11 @@ class RelatoriosController extends Application_Controller {
         
     }
     
+    public function categoriasAction() {
+        
+        $metasCategorias = $this->_modelVwMetasCategorias->getMetasCategoriasMes($this->_session->id_usuario);
+        $this->view->metasCategorias = $metasCategorias;
+        
+    }
+    
 }

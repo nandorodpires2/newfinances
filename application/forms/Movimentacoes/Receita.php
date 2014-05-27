@@ -58,6 +58,10 @@ class Form_Movimentacoes_Receita extends Zend_Form {
             'required' => true
         ));
         
+        // nova receita
+        $this->addElement("checkbox", "nova_receita", array(
+            'label' => 'Inserir nova receita'
+        ));        
         
         // option parcelar
         $this->addElement("checkbox", "opt_repetir", array(
