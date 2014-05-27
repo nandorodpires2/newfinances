@@ -71,7 +71,7 @@ function status(id_movimentacao, status) {
             $("#loading").show();
         },
         success: function(dados) { 
-            window.location.reload();             
+            window.location.reload();			
         },
         error: function(error) {
             alert('Houve um erro');
