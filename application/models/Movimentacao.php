@@ -193,6 +193,7 @@ class Model_Movimentacao extends Zend_Db_Table {
      */
     public function getIdMovimentacaoPai($id_movimentacao) {
         $movimentacao = $this->fetchRow("id_movimentacao = {$id_movimentacao}");
+        
         if ($movimentacao->id_movimentacao_pai) {
             return $movimentacao->id_movimentacao_pai;
         }
